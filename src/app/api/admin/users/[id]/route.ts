@@ -1,0 +1,114 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { getDb } from "@/lib/db";
+import { users, enrollments, subscriptions, courses, aiChatHistory } from "@/lib/db/schema";
+import { eq, sql } from "drizzle-orm";
+
+export const dynamic = "force-dynamic";
+
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.user_metadata?.role !== "admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const { id } = await params;
+    const db = getDb();
+
+    const [targetUser] = await db.select().from(users).where(eq(users.id, id));
+    if (!targetUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Enrollments with course names
+    const userEnrollments = await db
+      .select({
+        id: enrollments.id,
+        courseName: courses.nameEn,
+        status: enrollments.status,
+        planType: enrollments.planType,
+        createdAt: enrollments.createdAt,
+      })
+      .from(enrollments)
+      .leftJoin(courses, eq(enrollments.courseId, courses.id))
+      .where(eq(enrollments.studentId, id));
+
+    // Subscriptions with course names
+    const userSubs = await db
+      .select({
+        id: subscriptions.id,
+        planType: subscriptions.planType,
+        status: subscriptions.status,
+        amountUsd: subscriptions.amountUsd,
+        courseName: courses.nameEn,
+      })
+      .from(subscriptions)
+      .leftJoin(courses, eq(subscriptions.courseId, courses.id))
+      .where(eq(subscriptions.studentId, id));
+
+    // Chat sessions (grouped)
+    const chatSessions = await db.execute(sql`
+      SELECT session_id as "sessionId",
+             COUNT(*) as "messageCount",
+             MAX(content) as "lastMessage"
+      FROM ai_chat_history
+      WHERE student_id = ${id}
+      GROUP BY session_id
+      ORDER BY MAX(created_at) DESC
+      LIMIT 10
+    `);
+
+    return NextResponse.json({
+      ...targetUser,
+      enrollments: userEnrollments,
+      subscriptions: userSubs,
+      chatSessions: chatSessions.rows,
+    });
+  } catch (error) {
+    console.error("Admin user detail error:", error);
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+  }
+}
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.user_metadata?.role !== "admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const { id } = await params;
+    const body = await request.json();
+    const db = getDb();
+
+    const updates: Record<string, unknown> = {};
+    if (typeof body.role === "string" && ["student", "teacher", "admin"].includes(body.role)) {
+      updates.role = body.role;
+    }
+    if (typeof body.isBanned === "boolean") {
+      updates.isBanned = body.isBanned;
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return NextResponse.json({ error: "No valid fields" }, { status: 400 });
+    }
+
+    updates.updatedAt = new Date();
+
+    await db.update(users).set(updates).where(eq(users.id, id));
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Admin user update error:", error);
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+  }
+}
