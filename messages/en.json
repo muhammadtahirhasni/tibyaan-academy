@@ -153,12 +153,34 @@
     "plan2Price": "From $18/mo",
     "viewPricing": "View Full Pricing"
   },
+  "socialLinks": {
+    "title": "Connect With Us",
+    "subtitle": "Follow Tibyaan Academy on social media for updates, tips & Islamic reminders",
+    "youtube": "YouTube",
+    "youtubeDesc": "Watch Quran lessons, tutorials & student showcases",
+    "linkedin": "LinkedIn",
+    "linkedinDesc": "Professional updates & career opportunities",
+    "x": "X (Twitter)",
+    "xDesc": "Daily Islamic reminders & news",
+    "facebook": "Facebook",
+    "facebookDesc": "Join our community & stay connected",
+    "instagram": "Instagram",
+    "instagramDesc": "Behind the scenes & student achievements"
+  },
   "cta": {
     "title": "5 Days Completely Free — No Card Required",
     "subtitle": "Start now and see how Tibyaan works for you",
     "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email",
     "button": "Start Free Trial"
+  },
+  "errorPages": {
+    "notFoundTitle": "Page Not Found",
+    "notFoundDescription": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to Home",
+    "errorTitle": "Something Went Wrong",
+    "errorDescription": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try Again"
   },
   "footer": {
     "tagline": "Clarity in Every Lesson",

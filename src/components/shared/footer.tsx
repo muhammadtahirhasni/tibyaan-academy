@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { Link, useRouter, usePathname } from "@/i18n/navigation";
+import { Youtube, Linkedin, Facebook, Instagram } from "lucide-react";
 
 const languages = [
   { value: "ur", label: "اردو" },
@@ -12,10 +13,11 @@ const languages = [
 ];
 
 const socials = [
-  { name: "YouTube", href: "#" },
-  { name: "Instagram", href: "#" },
-  { name: "Facebook", href: "#" },
-  { name: "WhatsApp", href: "#" },
+  { name: "YouTube", href: "https://www.youtube.com/channel/UCBU7Fc9ZjYU42SHfSQM9_rg", icon: Youtube },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/tibyaan-academy-0263b73bb/", icon: Linkedin },
+  { name: "X", href: "https://x.com/TibyaanAcademy", icon: ({ className }: { className?: string }) => <svg viewBox="0 0 24 24" className={className} fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
+  { name: "Facebook", href: "https://web.facebook.com/profile.php?id=61576509186955", icon: Facebook },
+  { name: "Instagram", href: "https://www.instagram.com/tibyaanacademy/", icon: Instagram },
 ];
 
 export function Footer() {
@@ -41,9 +43,12 @@ export function Footer() {
                 <a
                   key={s.name}
                   href={s.href}
-                  className="text-sm opacity-60 hover:opacity-100 transition-opacity"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                  className="opacity-60 hover:opacity-100 transition-opacity"
                 >
-                  {s.name}
+                  <s.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>

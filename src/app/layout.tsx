@@ -23,7 +23,13 @@ const organizationJsonLd = {
   url: BASE_URL,
   description:
     "Modern Digital Madrasah for Quran & Islamic Sciences — live teachers + AI Ustaz",
-  sameAs: [],
+  sameAs: [
+    "https://www.youtube.com/channel/UCBU7Fc9ZjYU42SHfSQM9_rg",
+    "https://www.linkedin.com/in/tibyaan-academy-0263b73bb/",
+    "https://x.com/TibyaanAcademy",
+    "https://web.facebook.com/profile.php?id=61576509186955",
+    "https://www.instagram.com/tibyaanacademy/",
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",

@@ -283,6 +283,23 @@ export async function getTeacherCircles(teacherId: string) {
 }
 
 /**
+ * Get enrolled students for a circle (with email + name)
+ */
+export async function getCircleEnrolledStudents(circleId: string) {
+  const db = getDb();
+
+  return db
+    .select({
+      id: users.id,
+      email: users.email,
+      fullName: users.fullName,
+    })
+    .from(darsCircleEnrollments)
+    .innerJoin(users, eq(darsCircleEnrollments.studentId, users.id))
+    .where(eq(darsCircleEnrollments.circleId, circleId));
+}
+
+/**
  * Get circles scheduled within next hour that are 'upcoming'
  */
 export async function getUpcomingReminders() {

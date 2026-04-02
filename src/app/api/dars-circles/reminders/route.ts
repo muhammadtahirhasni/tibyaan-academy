@@ -1,35 +1,93 @@
 import { NextResponse } from "next/server";
-import { getUpcomingReminders } from "@/lib/db/dars-circle-queries";
+import { getUpcomingReminders, getCircleEnrolledStudents } from "@/lib/db/dars-circle-queries";
 
 /**
  * GET /api/dars-circles/reminders — Cron endpoint
- * Find circles starting within 1 hour, could be used to send notifications.
- * For now, just logs the upcoming circles.
+ * Find circles starting within 1 hour and send email reminders to enrolled students.
  */
 export async function GET() {
   try {
     const upcomingCircles = await getUpcomingReminders();
 
     if (upcomingCircles.length === 0) {
-      console.log("[dars-circle-reminders] No circles starting within the next hour.");
       return NextResponse.json({
         message: "No upcoming circles",
         count: 0,
       });
     }
 
+    const apiKey = process.env.RESEND_API_KEY;
+    let emailsSent = 0;
+
     for (const { circle, teacher } of upcomingCircles) {
+      const circleTitle = circle.titleEn || circle.titleUr || "Dars Circle";
+      const scheduledTime = circle.scheduledAt.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+
+      // Get enrolled students
+      const students = await getCircleEnrolledStudents(circle.id);
+
+      if (students.length === 0) continue;
+
+      // Send email reminders via Resend
+      if (apiKey) {
+        for (const student of students) {
+          try {
+            await fetch("https://api.resend.com/emails", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${apiKey}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                from: "Tibyaan Academy <notifications@tibyaan.com>",
+                to: [student.email],
+                subject: `Reminder: "${circleTitle}" starts soon`,
+                html: `
+                  <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
+                    <h2 style="color: #15803d;">Dars Circle Reminder</h2>
+                    <p>Assalamu Alaikum ${student.fullName || "Student"},</p>
+                    <p>Your dars circle <strong>"${circleTitle}"</strong> is starting soon!</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                      <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #666;">Teacher</td>
+                        <td style="padding: 8px;">${teacher.fullName}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #666;">Time</td>
+                        <td style="padding: 8px;">${scheduledTime}</td>
+                      </tr>
+                      ${circle.meetingLink ? `
+                      <tr>
+                        <td style="padding: 8px; font-weight: bold; color: #666;">Link</td>
+                        <td style="padding: 8px;"><a href="${circle.meetingLink}" style="color: #15803d;">Join Meeting</a></td>
+                      </tr>` : ""}
+                    </table>
+                    <p style="margin-top: 16px; color: #999; font-size: 12px;">
+                      Tibyaan Academy — Modern Digital Madrasah
+                    </p>
+                  </div>
+                `,
+              }),
+            });
+            emailsSent++;
+          } catch (emailErr) {
+            console.error(`[dars-circle-reminders] Email failed for ${student.email}:`, emailErr);
+          }
+        }
+      }
+
       console.log(
-        `[dars-circle-reminders] Circle "${circle.titleEn || circle.titleUr || circle.id}" ` +
-        `by ${teacher.fullName} scheduled at ${circle.scheduledAt.toISOString()} ` +
-        `(${circle.currentStudents}/${circle.maxStudents} students)`
+        `[dars-circle-reminders] Circle "${circleTitle}" — sent ${students.length} reminders`
       );
-      // TODO: Send push notifications / emails to enrolled students
     }
 
     return NextResponse.json({
-      message: `Found ${upcomingCircles.length} circle(s) starting soon`,
+      message: `Processed ${upcomingCircles.length} circle(s), sent ${emailsSent} emails`,
       count: upcomingCircles.length,
+      emailsSent,
       circles: upcomingCircles.map(({ circle, teacher }) => ({
         id: circle.id,
         title: circle.titleEn || circle.titleUr,
@@ -41,7 +99,7 @@ export async function GET() {
   } catch (error) {
     console.error("[dars-circle-reminders] Error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch reminders" },
+      { error: "Failed to process reminders" },
       { status: 500 }
     );
   }

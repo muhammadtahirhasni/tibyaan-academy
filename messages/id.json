@@ -153,12 +153,34 @@
     "plan2Price": "Mulai $18/bln",
     "viewPricing": "Lihat Semua Harga"
   },
+  "socialLinks": {
+    "title": "Terhubung Dengan Kami",
+    "subtitle": "Ikuti Tibyaan Academy di media sosial untuk update, tips & pengingat Islami",
+    "youtube": "YouTube",
+    "youtubeDesc": "Tonton pelajaran Quran, tutorial & showcase siswa",
+    "linkedin": "LinkedIn",
+    "linkedinDesc": "Pembaruan profesional & peluang karier",
+    "x": "X (Twitter)",
+    "xDesc": "Pengingat Islami harian & berita",
+    "facebook": "Facebook",
+    "facebookDesc": "Bergabunglah dengan komunitas kami & tetap terhubung",
+    "instagram": "Instagram",
+    "instagramDesc": "Di balik layar & pencapaian siswa"
+  },
   "cta": {
     "title": "5 Hari Gratis Sepenuhnya — Tanpa Kartu",
     "subtitle": "Mulai sekarang dan lihat bagaimana Tibyaan bekerja untuk Anda",
     "namePlaceholder": "Nama Anda",
     "emailPlaceholder": "Email Anda",
     "button": "Mulai Uji Coba Gratis"
+  },
+  "errorPages": {
+    "notFoundTitle": "Halaman Tidak Ditemukan",
+    "notFoundDescription": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+    "backHome": "Kembali ke Beranda",
+    "errorTitle": "Terjadi Kesalahan",
+    "errorDescription": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi.",
+    "tryAgain": "Coba Lagi"
   },
   "footer": {
     "tagline": "Kejelasan di Setiap Pelajaran",

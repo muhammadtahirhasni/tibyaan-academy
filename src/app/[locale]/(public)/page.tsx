@@ -7,6 +7,7 @@ import { HowItWorksSection } from "@/components/homepage/how-it-works-section";
 import { TestimonialsSection } from "@/components/homepage/testimonials-section";
 import { TrustSignalsSection } from "@/components/homepage/trust-signals-section";
 import { PricingTeaserSection } from "@/components/homepage/pricing-teaser-section";
+import { SocialLinksSection } from "@/components/homepage/social-links-section";
 import { CtaSection } from "@/components/homepage/cta-section";
 import { Footer } from "@/components/shared/footer";
 
@@ -74,6 +75,7 @@ export default function HomePage() {
         <TestimonialsSection />
         <TrustSignalsSection />
         <PricingTeaserSection />
+        <SocialLinksSection />
         <CtaSection />
       </main>
       <Footer />
