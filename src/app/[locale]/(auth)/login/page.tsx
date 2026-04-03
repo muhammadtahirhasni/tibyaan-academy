@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,8 @@ export default function LoginPage() {
   const tc = useTranslations("common");
   const params = useParams();
   const locale = params.locale as string;
+  const searchParams = useSearchParams();
+  const confirmPending = searchParams.get("confirmed") === "pending";
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -69,6 +71,13 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent className="space-y-4">
+          {/* Email confirmation pending */}
+          {confirmPending && (
+            <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-sm text-emerald-700 dark:text-emerald-300 text-center">
+              Account created! Please check your email to confirm, then login.
+            </div>
+          )}
+
           {/* Google OAuth */}
           <form action={handleGoogleLogin}>
             <Button

@@ -52,29 +52,23 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
     setUploadProgress(0);
 
     try {
-      // Step 1: Get presigned URL
+      // Upload file via FormData to our API
+      const formData = new FormData();
+      formData.append("title", title.trim());
+      if (description.trim()) formData.append("description", description.trim());
+      formData.append("file", file);
+
+      setUploadProgress(10);
       const res = await fetch("/api/videos/upload", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: title.trim(),
-          description: description.trim() || undefined,
-          contentType: file.type || "video/mp4",
-        }),
+        body: formData,
       });
 
-      if (!res.ok) throw new Error("Failed to get upload URL");
-      const { uploadUrl, videoId } = await res.json();
-
-      // Step 2: Upload directly to Supabase Storage
-      setUploadProgress(10);
-      const uploadRes = await fetch(uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": file.type || "video/mp4" },
-        body: file,
-      });
-
-      if (!uploadRes.ok) throw new Error("Upload to storage failed");
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Upload failed");
+      }
+      const { videoId } = await res.json();
       setUploadProgress(100);
 
       // Add to local state

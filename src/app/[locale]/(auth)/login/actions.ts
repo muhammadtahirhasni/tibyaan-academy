@@ -21,7 +21,19 @@ export async function loginWithEmail(formData: FormData) {
     return { error: error.message };
   }
 
-  const dashboardPath = await getDashboardPath(data.user.id, locale);
+  // Also mark onboarding as done for returning users
+  if (data.user.user_metadata?.needs_onboarding !== false) {
+    await supabase.auth.updateUser({
+      data: { needs_onboarding: false },
+    });
+  }
+
+  const metadataRole = data.user.user_metadata?.role as string | undefined;
+  const dashboardPath = await getDashboardPath(
+    data.user.id,
+    locale,
+    metadataRole
+  );
   redirect(dashboardPath);
 }
 

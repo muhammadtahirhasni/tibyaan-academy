@@ -70,6 +70,20 @@ export async function getPresignedDownloadUrl(
 }
 
 /**
+ * Ensure a storage bucket exists (creates if missing)
+ */
+async function ensureBucket(bucket: string) {
+  const supabase = getAdminClient();
+  const { data } = await supabase.storage.getBucket(bucket);
+  if (!data) {
+    await supabase.storage.createBucket(bucket, {
+      public: true,
+      fileSizeLimit: 104857600, // 100MB
+    });
+  }
+}
+
+/**
  * Upload a file to Supabase Storage from the server
  */
 export async function uploadToStorage(
@@ -79,6 +93,10 @@ export async function uploadToStorage(
   bucket = VIDEOS_BUCKET
 ): Promise<string> {
   const supabase = getAdminClient();
+
+  // Auto-create bucket if it doesn't exist
+  await ensureBucket(bucket);
+
   const { error } = await supabase.storage
     .from(bucket)
     .upload(key, body, {

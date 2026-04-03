@@ -14,7 +14,7 @@ export async function signupWithEmail(formData: FormData) {
   const language = formData.get("language") as string;
   const locale = formData.get("locale") as string;
 
-  const { error } = await supabase.auth.signUp({
+  const { error, data } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -22,6 +22,7 @@ export async function signupWithEmail(formData: FormData) {
         full_name: fullName,
         role: role || "student",
         preferred_language: language || "ur",
+        needs_onboarding: true,
       },
     },
   });
@@ -37,5 +38,13 @@ export async function signupWithEmail(formData: FormData) {
     role: role || "student",
   }).catch(() => {});
 
-  redirect(`/${locale}/onboarding`);
+  // If email confirmation is required, user won't have a session yet
+  // Check if we got a session (auto-confirm enabled)
+  if (data.session) {
+    // User is logged in — go to onboarding
+    redirect(`/${locale}/onboarding`);
+  } else {
+    // Email confirmation required — redirect to login with a message
+    redirect(`/${locale}/login?confirmed=pending`);
+  }
 }
