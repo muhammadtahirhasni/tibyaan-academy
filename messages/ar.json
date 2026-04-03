@@ -70,7 +70,19 @@
     "classesPerWeek": "كم حصة في الأسبوع؟",
     "trialActivated": "بدأت تجربتك المجانية لمدة 5 أيام!",
     "trialMessage": "بسم الله — ابدأ التعلم!",
-    "goToDashboard": "اذهب إلى لوحة التحكم"
+    "goToDashboard": "اذهب إلى لوحة التحكم",
+    "teacherTitle": "إعداد المعلم",
+    "teacherStep1Title": "عن نفسك",
+    "teacherStep2Title": "التخصصات والخبرة",
+    "teacherStep3Title": "مرحباً!",
+    "bio": "نبذة",
+    "bioPlaceholder": "أخبرنا عن خبرتك التدريسية ومؤهلاتك...",
+    "specializations": "التخصصات",
+    "selectSpecializations": "اختر المواد التي يمكنك تدريسها",
+    "yearsExperience": "سنوات الخبرة",
+    "yearsExperiencePlaceholder": "سنوات الخبرة في التدريس",
+    "teacherTrialMessage": "بسم الله — ملفك التعريفي كمعلم جاهز!",
+    "goToTeacherDashboard": "اذهب إلى لوحة المعلم"
   },
   "hero": {
     "headline": "المدرسة الرقمية الحديثة للقرآن والعلوم الإسلامية",

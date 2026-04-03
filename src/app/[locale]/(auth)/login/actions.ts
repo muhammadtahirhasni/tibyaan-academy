@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import { getDashboardPath } from "@/lib/auth/get-dashboard-path";
 
 export async function loginWithEmail(formData: FormData) {
   const supabase = await createClient();
@@ -11,7 +12,7 @@ export async function loginWithEmail(formData: FormData) {
   const password = formData.get("password") as string;
   const locale = formData.get("locale") as string;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error, data } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -20,7 +21,8 @@ export async function loginWithEmail(formData: FormData) {
     return { error: error.message };
   }
 
-  redirect(`/${locale}/student/dashboard`);
+  const dashboardPath = await getDashboardPath(data.user.id, locale);
+  redirect(dashboardPath);
 }
 
 export async function loginWithGoogle(locale: string) {

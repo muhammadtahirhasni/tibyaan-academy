@@ -70,7 +70,19 @@
     "classesPerWeek": "Combien de cours par semaine ?",
     "trialActivated": "Votre essai gratuit de 5 jours a commencé !",
     "trialMessage": "Bismillah — Commencez à apprendre !",
-    "goToDashboard": "Aller au tableau de bord"
+    "goToDashboard": "Aller au tableau de bord",
+    "teacherTitle": "Configuration enseignant",
+    "teacherStep1Title": "À propos de vous",
+    "teacherStep2Title": "Spécialisations et expérience",
+    "teacherStep3Title": "Bienvenue !",
+    "bio": "Biographie",
+    "bioPlaceholder": "Parlez-nous de votre expérience et qualifications...",
+    "specializations": "Spécialisations",
+    "selectSpecializations": "Sélectionnez les matières que vous pouvez enseigner",
+    "yearsExperience": "Années d'expérience",
+    "yearsExperiencePlaceholder": "Années d'expérience en enseignement",
+    "teacherTrialMessage": "Bismillah — Votre profil enseignant est prêt !",
+    "goToTeacherDashboard": "Aller au tableau enseignant"
   },
   "hero": {
     "headline": "La Madrassa Numérique Moderne pour le Coran et les Sciences Islamiques",

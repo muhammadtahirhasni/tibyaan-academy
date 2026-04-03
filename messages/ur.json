@@ -70,7 +70,19 @@
     "classesPerWeek": "ہفتے میں کتنی کلاسز؟",
     "trialActivated": "آپ کا 5 دن کا مفت ٹرائل شروع!",
     "trialMessage": "بسم اللہ — پڑھائی شروع کریں!",
-    "goToDashboard": "ڈیش بورڈ پر جائیں"
+    "goToDashboard": "ڈیش بورڈ پر جائیں",
+    "teacherTitle": "استاد سیٹ اپ",
+    "teacherStep1Title": "آپ کے بارے میں",
+    "teacherStep2Title": "مہارتیں اور تجربہ",
+    "teacherStep3Title": "خوش آمدید!",
+    "bio": "تعارف",
+    "bioPlaceholder": "اپنے تدریسی تجربے اور قابلیت کے بارے میں بتائیں...",
+    "specializations": "مہارتیں",
+    "selectSpecializations": "وہ مضامین منتخب کریں جو آپ پڑھا سکتے ہیں",
+    "yearsExperience": "تجربے کے سال",
+    "yearsExperiencePlaceholder": "تدریس کے سالوں کا تجربہ",
+    "teacherTrialMessage": "بسم اللہ — آپ کا استاد پروفائل تیار ہے!",
+    "goToTeacherDashboard": "ٹیچر ڈیش بورڈ پر جائیں"
   },
   "hero": {
     "headline": "قرآن و اسلامی علوم کا جدید ڈیجیٹل مدرسہ",

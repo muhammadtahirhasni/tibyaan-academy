@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { getDashboardPath } from "@/lib/auth/get-dashboard-path";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl;
@@ -11,20 +12,22 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      // Check if user is new (needs onboarding)
       const {
         data: { user },
       } = await supabase.auth.getUser();
 
-      if (user?.user_metadata?.needs_onboarding !== false) {
-        return NextResponse.redirect(
-          new URL(`/${locale}/onboarding`, origin)
-        );
-      }
+      if (user) {
+        // New users need onboarding
+        if (user.user_metadata?.needs_onboarding !== false) {
+          return NextResponse.redirect(
+            new URL(`/${locale}/onboarding`, origin)
+          );
+        }
 
-      return NextResponse.redirect(
-        new URL(`/${locale}/student/dashboard`, origin)
-      );
+        // Existing users go to their role-specific dashboard
+        const dashboardPath = await getDashboardPath(user.id, locale);
+        return NextResponse.redirect(new URL(dashboardPath, origin));
+      }
     }
   }
 

@@ -70,7 +70,19 @@
     "classesPerWeek": "Berapa kelas per minggu?",
     "trialActivated": "Uji Coba Gratis 5 Hari Anda Telah Dimulai!",
     "trialMessage": "Bismillah — Mulai Belajar!",
-    "goToDashboard": "Ke Dashboard"
+    "goToDashboard": "Ke Dashboard",
+    "teacherTitle": "Pengaturan Guru",
+    "teacherStep1Title": "Tentang Anda",
+    "teacherStep2Title": "Spesialisasi & Pengalaman",
+    "teacherStep3Title": "Selamat Datang!",
+    "bio": "Bio",
+    "bioPlaceholder": "Ceritakan tentang pengalaman mengajar dan kualifikasi Anda...",
+    "specializations": "Spesialisasi",
+    "selectSpecializations": "Pilih mata pelajaran yang dapat Anda ajarkan",
+    "yearsExperience": "Tahun Pengalaman",
+    "yearsExperiencePlaceholder": "Tahun pengalaman mengajar",
+    "teacherTrialMessage": "Bismillah — Profil guru Anda sudah siap!",
+    "goToTeacherDashboard": "Ke Dashboard Guru"
   },
   "hero": {
     "headline": "Madrasah Digital Modern untuk Al-Quran & Ilmu Islam",

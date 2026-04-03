@@ -70,7 +70,19 @@
     "classesPerWeek": "How many classes per week?",
     "trialActivated": "Your 5-Day Free Trial Has Started!",
     "trialMessage": "Bismillah — Start Learning!",
-    "goToDashboard": "Go to Dashboard"
+    "goToDashboard": "Go to Dashboard",
+    "teacherTitle": "Teacher Setup",
+    "teacherStep1Title": "About You",
+    "teacherStep2Title": "Specializations & Experience",
+    "teacherStep3Title": "Welcome!",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about your teaching experience and qualifications...",
+    "specializations": "Specializations",
+    "selectSpecializations": "Select the subjects you can teach",
+    "yearsExperience": "Years of Experience",
+    "yearsExperiencePlaceholder": "Years of teaching experience",
+    "teacherTrialMessage": "Bismillah — Your teacher profile is ready!",
+    "goToTeacherDashboard": "Go to Teacher Dashboard"
   },
   "hero": {
     "headline": "Modern Digital Madrasah for Quran & Islamic Sciences",
