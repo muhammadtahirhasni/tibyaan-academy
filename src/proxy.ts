@@ -18,6 +18,17 @@ function getLocaleFromPathname(pathname: string): string {
   return match ? match[1] : "ur";
 }
 
+function getDashboardByRole(role: string | undefined, locale: string): string {
+  switch (role) {
+    case "admin":
+      return `/${locale}/admin/dashboard`;
+    case "teacher":
+      return `/${locale}/teacher/dashboard`;
+    default:
+      return `/${locale}/student/dashboard`;
+  }
+}
+
 export async function proxy(request: NextRequest) {
   // Run intl middleware first for locale detection and routing
   const intlResponse = intlMiddleware(request);
@@ -36,6 +47,7 @@ export async function proxy(request: NextRequest) {
   // Only check auth for protected or auth routes
   if (isProtectedRoute || isAuthRoute) {
     const { user } = await updateSession(request, intlResponse);
+    const role = user?.user_metadata?.role as string | undefined;
 
     // Not logged in trying to access protected route → redirect to login
     if (!user && isProtectedRoute) {
@@ -44,31 +56,36 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    // Logged in trying to access auth pages → redirect to dashboard
+    // Logged in trying to access auth pages (except onboarding) → redirect to role-based dashboard
     if (user && isAuthRoute && !pathWithoutLocale.startsWith("/onboarding")) {
-      return NextResponse.redirect(
-        new URL(`/${locale}/student/dashboard`, request.url)
-      );
+      const dashboardPath = getDashboardByRole(role, locale);
+      return NextResponse.redirect(new URL(dashboardPath, request.url));
     }
 
     // Role-based access control for admin routes
     if (user && pathWithoutLocale.startsWith("/admin")) {
-      const role = user.user_metadata?.role;
       if (role !== "admin") {
-        const redirectPath = role === "teacher"
-          ? `/${locale}/teacher/dashboard`
-          : `/${locale}/student/dashboard`;
+        const redirectPath = getDashboardByRole(role, locale);
         return NextResponse.redirect(new URL(redirectPath, request.url));
       }
     }
 
     // Role-based access control for teacher routes
     if (user && pathWithoutLocale.startsWith("/teacher")) {
-      const role = user.user_metadata?.role;
       if (role !== "teacher" && role !== "admin") {
-        return NextResponse.redirect(
-          new URL(`/${locale}/student/dashboard`, request.url)
-        );
+        const redirectPath = getDashboardByRole(role, locale);
+        return NextResponse.redirect(new URL(redirectPath, request.url));
+      }
+    }
+
+    // Role-based access control for student routes
+    if (user && pathWithoutLocale.startsWith("/student")) {
+      if (role !== "student" && role !== undefined) {
+        // Admin/teacher shouldn't be on student routes
+        if (role === "admin" || role === "teacher") {
+          const redirectPath = getDashboardByRole(role, locale);
+          return NextResponse.redirect(new URL(redirectPath, request.url));
+        }
       }
     }
   }
