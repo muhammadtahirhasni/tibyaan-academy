@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { getDashboardPath } from "@/lib/auth/get-dashboard-path";
+import { getUserById } from "@/lib/db/queries";
 
 export async function loginWithEmail(formData: FormData) {
   const supabase = await createClient();
@@ -21,18 +22,26 @@ export async function loginWithEmail(formData: FormData) {
     return { error: error.message };
   }
 
-  // Also mark onboarding as done for returning users
-  if (data.user.user_metadata?.needs_onboarding !== false) {
+  // Sync role from Neon DB to Supabase metadata
+  // This ensures proxy.ts always has the correct role
+  const dbUser = await getUserById(data.user.id).catch(() => null);
+  const dbRole = dbUser?.role;
+  const metadataRole = data.user.user_metadata?.role as string | undefined;
+
+  if (dbRole && dbRole !== metadataRole) {
+    await supabase.auth.updateUser({
+      data: { role: dbRole, needs_onboarding: false },
+    });
+  } else if (data.user.user_metadata?.needs_onboarding !== false) {
     await supabase.auth.updateUser({
       data: { needs_onboarding: false },
     });
   }
 
-  const metadataRole = data.user.user_metadata?.role as string | undefined;
   const dashboardPath = await getDashboardPath(
     data.user.id,
     locale,
-    metadataRole
+    dbRole || metadataRole
   );
   redirect(dashboardPath);
 }

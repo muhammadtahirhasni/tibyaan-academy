@@ -30,8 +30,13 @@ export async function GET(request: NextRequest) {
           );
         }
 
-        // Existing user or onboarding already done — mark complete and go to dashboard
-        if (user.user_metadata?.needs_onboarding !== false) {
+        // Sync role from Neon DB to Supabase metadata (same as login)
+        const dbRole = dbUser?.role;
+        if (dbRole && dbRole !== metadataRole) {
+          await supabase.auth.updateUser({
+            data: { role: dbRole, needs_onboarding: false },
+          });
+        } else if (user.user_metadata?.needs_onboarding !== false) {
           await supabase.auth.updateUser({
             data: { needs_onboarding: false },
           });
@@ -40,7 +45,7 @@ export async function GET(request: NextRequest) {
         const dashboardPath = await getDashboardPath(
           user.id,
           locale,
-          metadataRole
+          dbRole || metadataRole
         );
         return NextResponse.redirect(new URL(dashboardPath, origin));
       }
