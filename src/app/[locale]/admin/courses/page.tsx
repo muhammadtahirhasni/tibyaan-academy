@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, startTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, X, Check } from "lucide-react";
 
@@ -35,16 +35,18 @@ export default function AdminCoursesPage() {
   const [showAdd, setShowAdd] = useState(false);
   const [form, setForm] = useState(emptyCourse);
 
-  const fetchCourses = () => {
-    setLoading(true);
+  const fetchCourses = useCallback(() => {
     fetch("/api/admin/courses")
       .then((res) => res.json())
       .then((d) => setCourses(d.courses ?? []))
       .catch(() => {})
       .finally(() => setLoading(false));
-  };
+  }, []);
 
-  useEffect(() => { fetchCourses(); }, []);
+  useEffect(() => {
+    startTransition(() => setLoading(true));
+    fetchCourses();
+  }, [fetchCourses]);
 
   const handleCreate = async () => {
     await fetch("/api/admin/courses", {

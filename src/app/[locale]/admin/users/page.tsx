@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef, startTransition } from "react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Search, Shield, Ban, UserCheck } from "lucide-react";
@@ -23,11 +23,12 @@ export default function AdminUsersPage() {
   const [roleFilter, setRoleFilter] = useState("");
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const searchRef = useRef(search);
+  useEffect(() => { searchRef.current = search; });
 
-  const fetchUsers = () => {
-    setLoading(true);
+  const doFetch = useCallback(() => {
     const params = new URLSearchParams({ page: String(page), limit: "20" });
-    if (search) params.set("search", search);
+    if (searchRef.current) params.set("search", searchRef.current);
     if (roleFilter) params.set("role", roleFilter);
     fetch(`/api/admin/users?${params}`)
       .then((res) => res.json())
@@ -37,9 +38,17 @@ export default function AdminUsersPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  };
+  }, [page, roleFilter]);
 
-  useEffect(() => { fetchUsers(); }, [page, roleFilter]);
+  useEffect(() => {
+    startTransition(() => setLoading(true));
+    doFetch();
+  }, [page, roleFilter, doFetch]);
+
+  const fetchUsers = useCallback(() => {
+    setLoading(true);
+    doFetch();
+  }, [doFetch]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

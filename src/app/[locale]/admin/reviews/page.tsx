@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, startTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, Check, X, Award, AlertTriangle } from "lucide-react";
 
@@ -23,16 +23,18 @@ export default function AdminReviewsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("pending");
 
-  const fetchReviews = () => {
-    setLoading(true);
+  const fetchReviews = useCallback(() => {
     fetch(`/api/admin/reviews?filter=${filter}`)
       .then((res) => res.json())
       .then((d) => setReviews(d.reviews ?? []))
       .catch(() => {})
       .finally(() => setLoading(false));
-  };
+  }, [filter]);
 
-  useEffect(() => { fetchReviews(); }, [filter]);
+  useEffect(() => {
+    startTransition(() => setLoading(true));
+    fetchReviews();
+  }, [filter, fetchReviews]);
 
   const handleAction = async (id: string, action: string) => {
     await fetch(`/api/admin/reviews/${id}`, {
@@ -40,6 +42,7 @@ export default function AdminReviewsPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action }),
     });
+    setLoading(true);
     fetchReviews();
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, startTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -53,8 +53,10 @@ export function HarfTraceGame({ onBack, onScore }: Props) {
 
   useEffect(() => {
     clearCanvas();
-    setStrokeCount(0);
-    setTraceComplete(false);
+    startTransition(() => {
+      setStrokeCount(0);
+      setTraceComplete(false);
+    });
   }, [letterIdx, clearCanvas]);
 
   const getPos = (e: React.MouseEvent | React.TouchEvent) => {

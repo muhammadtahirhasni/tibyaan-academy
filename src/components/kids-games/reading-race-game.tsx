@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, startTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -35,7 +35,7 @@ export function ReadingRaceGame({ onBack, onScore }: Props) {
   useEffect(() => {
     if (!started || gameOver) return;
     if (timer <= 0) {
-      setGameOver(true);
+      startTransition(() => setGameOver(true));
       return;
     }
     const interval = setInterval(() => setTimer((t) => t - 1), 1000);

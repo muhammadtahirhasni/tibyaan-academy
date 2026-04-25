@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -52,10 +53,11 @@ export function DashboardClient({
   locale,
 }: DashboardProps) {
   const t = useTranslations("dashboard");
+  const [now] = useState(() => Date.now());
 
   const trialCourses = enrolledCourses.filter((c) => c.status === "trial");
   const trialDaysLeft = trialCourses[0]?.trialEndDate
-    ? Math.max(0, Math.ceil((new Date(trialCourses[0].trialEndDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+    ? Math.max(0, Math.ceil((new Date(trialCourses[0].trialEndDate).getTime() - now) / (1000 * 60 * 60 * 24)))
     : null;
 
   return (

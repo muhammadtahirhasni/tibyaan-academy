@@ -64,6 +64,14 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
         body: formData,
       });
 
+      if (res.status === 429) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || "Daily limit reached. You can upload 1 video per day.");
+        setUploading(false);
+        setUploadProgress(0);
+        return;
+      }
+
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Upload failed");

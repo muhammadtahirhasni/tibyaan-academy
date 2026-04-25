@@ -8,6 +8,15 @@ import { ArrowLeft, Star, RotateCcw } from "lucide-react";
 
 const haroof = ["ا", "ب", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س"];
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 interface Props {
   onBack: () => void;
   onScore: (s: number) => void;
@@ -22,15 +31,6 @@ export function HarfDragGame({ onBack, onScore }: Props) {
   const [matched, setMatched] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
-
-  function shuffleArray<T>(arr: T[]): T[] {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
 
   const handleSelect = (harf: string) => {
     if (matched.has(harf)) return;

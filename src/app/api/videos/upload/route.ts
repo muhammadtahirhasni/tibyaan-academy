@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
 import { users, teacherVideos } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq, gte, sql } from "drizzle-orm";
 import { uploadToStorage, getVideoKey } from "@/lib/r2/client";
 import { randomUUID } from "crypto";
 
@@ -30,6 +30,29 @@ export async function POST(request: NextRequest) {
 
   if (!dbUser[0] || !["teacher", "admin"].includes(dbUser[0].role)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  // Daily upload limit: 1 video per teacher per day (admins exempt)
+  if (dbUser[0].role === "teacher") {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayUploads = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(teacherVideos)
+      .where(
+        and(
+          eq(teacherVideos.teacherId, authUser.id),
+          gte(teacherVideos.createdAt, todayStart)
+        )
+      );
+
+    if ((todayUploads[0]?.count ?? 0) >= 1) {
+      return NextResponse.json(
+        { error: "Daily limit reached. You can upload 1 video per day." },
+        { status: 429 }
+      );
+    }
   }
 
   try {

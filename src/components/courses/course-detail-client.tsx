@@ -103,6 +103,7 @@ export default function CourseDetailClient() {
   const tp = useTranslations("coursesPage");
 
   const course = courseData[slug];
+  const [showAllSyllabus, setShowAllSyllabus] = useState(false);
 
   if (!course) {
     return (
@@ -128,7 +129,6 @@ export default function CourseDetailClient() {
   const Icon = course.icon;
   const k = course.key;
   const syllabus = getSyllabus(k);
-  const [showAllSyllabus, setShowAllSyllabus] = useState(false);
   const isHifz = k === "hifz";
   const visibleSyllabus = isHifz && !showAllSyllabus ? syllabus.slice(0, 5) : syllabus;
 
