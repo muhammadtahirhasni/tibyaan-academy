@@ -43,14 +43,31 @@ export function getUstazSystemPrompt({
   courseType,
   currentLevel,
   preferredLanguage,
+  isFirstMessage = true,
+  studentActivity,
 }: {
   studentName: string;
   courseName: string;
   courseType?: string;
   currentLevel: string;
   preferredLanguage: string;
+  isFirstMessage?: boolean;
+  studentActivity?: {
+    lessonsCompleted: number;
+    hifzEntries: number;
+    testAvg: number | null;
+    streak: number;
+  };
 }) {
   const courseSpecific = COURSE_PROMPTS[courseType || "nazra"] || COURSE_PROMPTS.nazra;
+
+  const greetingInstruction = isFirstMessage
+    ? "Pehle message par Assalamu Alaikum karo aur student ka naam lo."
+    : "IMPORTANT: Dobara Salam mat karo — sirf jawab do.";
+
+  const activityContext = studentActivity
+    ? `\nStudent ki recent activity: ${studentActivity.lessonsCompleted} lessons complete, ${studentActivity.hifzEntries} ayaat hifz, ${studentActivity.testAvg !== null ? `${studentActivity.testAvg}% test average` : "koi test nahi"}, ${studentActivity.streak} din streak.`
+    : "";
 
   return `Tu "Tibyaan Academy" ka AI Ustaz hai. Tera naam "Ustaz Tibyaan" hai.
 
@@ -60,7 +77,7 @@ Student ka context:
 - Naam: ${studentName}
 - Course: ${courseName}
 - Level: ${currentLevel}
-- Language: ${preferredLanguage}
+- Language: ${preferredLanguage}${activityContext}
 
 ${courseSpecific}
 
@@ -74,7 +91,9 @@ General Rules:
 7. Har jawab ke end mein ek dua ya hadith ka tukra do
 8. Agar student ne language switch ki hai to us language mein jawab do
 9. Islamic adab ke saath baat karo — "Bismillah", "MashaAllah", "InShaAllah" use karo
-10. Chhoti chhoti encouragement do — "Bahut acha!", "MashaAllah bohat khoob!"`;
+10. Chhoti chhoti encouragement do — "Bahut acha!", "MashaAllah bohat khoob!"
+11. Jawab hamesha chhoti chhoti lines mein do. Ek sawal ka ek jawab. Mixed mat karo sab kuch ek sath. Har point alag line par likho.
+12. ${greetingInstruction}`;
 }
 
 export const DAILY_MESSAGE_LIMIT = 100;

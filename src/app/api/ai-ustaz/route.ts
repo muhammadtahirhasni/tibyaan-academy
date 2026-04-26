@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
-import { aiChatHistory } from "@/lib/db/schema";
-import { eq, and, asc } from "drizzle-orm";
+import { aiChatHistory, lessons, hifzTracker, weeklyTests, enrollments } from "@/lib/db/schema";
+import { eq, and, asc, count, avg } from "drizzle-orm";
 import { getUstazSystemPrompt, DAILY_MESSAGE_LIMIT } from "@/lib/claude/ustaz";
 
 export async function POST(request: NextRequest) {
@@ -33,16 +33,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "AI service not configured" }, { status: 500 });
     }
 
-    const systemPrompt = getUstazSystemPrompt({
-      studentName: studentName || "Student",
-      courseName: courseName || "Nazra Quran",
-      courseType: courseType || "nazra",
-      currentLevel: currentLevel || "Level 1",
-      preferredLanguage: preferredLanguage || "English",
-    });
-
     // Load persisted history if sessionId provided and user authenticated
     let messages: Array<{ role: string; content: string }> = [];
+    let persistedHistory: typeof messages = [];
 
     if (user && sessionId) {
       const db = getDb();
@@ -57,19 +50,89 @@ export async function POST(request: NextRequest) {
         )
         .orderBy(asc(aiChatHistory.createdAt));
 
-      messages = persisted.slice(-20).map((m) => ({
+      persistedHistory = persisted.slice(-20).map((m) => ({
         role: m.role,
         content: m.content,
       }));
+      messages = [...persistedHistory];
     } else if (chatHistory && Array.isArray(chatHistory)) {
       // Fallback to client-sent history for non-authenticated users
       for (const msg of chatHistory.slice(-20)) {
-        messages.push({
+        persistedHistory.push({
           role: msg.role === "user" ? "user" : "assistant",
           content: msg.content,
         });
       }
+      messages = [...persistedHistory];
     }
+
+    // Determine if this is the first message in the conversation
+    const isFirstMessage = persistedHistory.length === 0;
+
+    // Try to fetch student activity for context
+    let studentActivity: {
+      lessonsCompleted: number;
+      hifzEntries: number;
+      testAvg: number | null;
+      streak: number;
+    } | undefined;
+
+    if (user) {
+      try {
+        const db = getDb();
+        // Get enrollment IDs
+        const userEnrollments = await db
+          .select({ id: enrollments.id })
+          .from(enrollments)
+          .where(eq(enrollments.studentId, user.id));
+
+        if (userEnrollments.length > 0) {
+          const enrollmentIds = userEnrollments.map((e) => e.id);
+
+          // Count completed lessons
+          const [lessonsResult] = await db
+            .select({ count: count() })
+            .from(lessons)
+            .where(
+              and(
+                eq(lessons.isCompleted, true),
+                eq(lessons.enrollmentId, enrollmentIds[0])
+              )
+            );
+
+          // Count hifz entries
+          const [hifzResult] = await db
+            .select({ count: count() })
+            .from(hifzTracker)
+            .where(eq(hifzTracker.studentId, user.id));
+
+          // Get test average
+          const [testResult] = await db
+            .select({ avg: avg(weeklyTests.scorePercentage) })
+            .from(weeklyTests)
+            .where(eq(weeklyTests.enrollmentId, enrollmentIds[0]));
+
+          studentActivity = {
+            lessonsCompleted: Number(lessonsResult?.count ?? 0),
+            hifzEntries: Number(hifzResult?.count ?? 0),
+            testAvg: testResult?.avg ? Math.round(parseFloat(testResult.avg)) : null,
+            streak: 0,
+          };
+        }
+      } catch {
+        // If fetching activity fails, just proceed without it
+      }
+    }
+
+    const systemPrompt = getUstazSystemPrompt({
+      studentName: studentName || "Student",
+      courseName: courseName || "Nazra Quran",
+      courseType: courseType || "nazra",
+      currentLevel: currentLevel || "Level 1",
+      preferredLanguage: preferredLanguage || "English",
+      isFirstMessage,
+      studentActivity,
+    });
 
     messages.push({ role: "user", content: message });
 

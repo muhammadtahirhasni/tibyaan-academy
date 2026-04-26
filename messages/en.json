@@ -45,7 +45,9 @@
     "roleTeacher": "Teacher",
     "acceptTerms": "I agree to the Terms & Conditions",
     "termsLink": "Terms & Conditions",
-    "startTrial": "Start 5-Day Free Trial"
+    "startTrial": "Start 5-Day Free Trial",
+    "parentWhatsapp": "Parent WhatsApp Number",
+    "parentWhatsappPlaceholder": "+92-300-1234567"
   },
   "onboarding": {
     "title": "Let's Get Started!",
@@ -158,11 +160,11 @@
     "huffaz": "Huffaz"
   },
   "pricingTeaser": {
-    "title": "Starting from just $18/month",
+    "title": "Starting from just $23/month",
     "plan1": "Plan 1: Human Teacher + AI",
     "plan2": "Plan 2: AI Only",
-    "plan1Price": "From $25/mo",
-    "plan2Price": "From $18/mo",
+    "plan1Price": "From $40/mo",
+    "plan2Price": "From $23/mo",
     "viewPricing": "View Full Pricing"
   },
   "socialLinks": {
@@ -834,6 +836,7 @@
     "sidebarVideos": "Videos",
     "sidebarRecordings": "Recordings",
     "sidebarMatches": "Matches",
+    "sidebarScheduleRequests": "Schedule Requests",
     "sidebarAgents": "Agent Logs",
     "sidebarAIMonitor": "AI Monitor",
     "sidebarReviews": "Reviews",
@@ -1172,5 +1175,27 @@
     "confirmedDesc": "Your teacher will be notified. You'll receive a confirmation soon.",
     "errorSubmitting": "Failed to submit request",
     "errorConfirming": "Failed to confirm slot"
+  },
+  "teacherCta": {
+    "title": "Become a Tibyaan Teacher",
+    "subtitle": "Share your Islamic knowledge and earn income from home",
+    "benefit1": "Earn $40-50/month per student",
+    "benefit2": "Teach from anywhere in the world",
+    "benefit3": "AI tools to help you teach better",
+    "benefit4": "Flexible schedule, you decide hours",
+    "joinButton": "Join as Teacher",
+    "alreadyTeacher": "Already a teacher? Sign in"
+  },
+  "teacherVideos": {
+    "title": "Learn from Our Teachers",
+    "subtitle": "Watch sample tilawat and lessons from our verified teachers",
+    "viewProfile": "View Profile",
+    "views": "views"
+  },
+  "dailyDarsSection": {
+    "title": "Daily Dars",
+    "subtitle": "Benefit from our daily Islamic lessons and reminders",
+    "readMore": "Read More",
+    "viewAll": "View All Dars"
   }
 }

@@ -18,9 +18,11 @@ import {
   Star,
   AlertCircle,
   Plus,
+  IdCard,
 } from "lucide-react";
 
 interface DashboardProps {
+  userId: string;
   userName: string;
   enrolledCourses: {
     id: string;
@@ -46,6 +48,7 @@ interface DashboardProps {
 }
 
 export function DashboardClient({
+  userId,
   userName,
   enrolledCourses,
   stats,
@@ -60,8 +63,34 @@ export function DashboardClient({
     ? Math.max(0, Math.ceil((new Date(trialCourses[0].trialEndDate).getTime() - now) / (1000 * 60 * 60 * 24)))
     : null;
 
+  const studentId = `TBA-${userId.substring(0, 8).toUpperCase()}`;
+
   return (
     <div className="space-y-6">
+      {/* Student Info Card */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="flex items-center justify-between rounded-xl border bg-card px-5 py-3"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <IdCard className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Student ID</p>
+            <p className="font-mono font-semibold text-sm text-foreground tracking-wide">{studentId}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-medium">
+            Student
+          </span>
+          <span className="text-sm font-medium text-foreground hidden sm:block">{userName}</span>
+        </div>
+      </motion.div>
+
       {/* Welcome Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

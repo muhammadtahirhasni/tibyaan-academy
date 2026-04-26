@@ -17,6 +17,8 @@ interface UserDetail {
   enrollments: { id: string; courseName: string; status: string; planType: string; createdAt: string }[];
   subscriptions: { id: string; planType: string; status: string; amountUsd: string; courseName: string }[];
   chatSessions: { sessionId: string; messageCount: number; lastMessage: string }[];
+  teacherProfile: { specializations: string[] | null; bio: string | null; yearsExperience: number | null } | null;
+  parentWhatsapp: string | null;
 }
 
 export default function AdminUserDetailPage() {
@@ -105,6 +107,49 @@ export default function AdminUserDetailPage() {
               <p className="text-sm text-muted-foreground">Language</p>
               <p className="font-medium uppercase">{user.preferredLanguage}</p>
             </div>
+            {user.role === "student" && (
+              <div>
+                <p className="text-sm text-muted-foreground">Student ID</p>
+                <p className="font-mono font-medium text-primary">
+                  TBA-{user.id.substring(0, 8).toUpperCase()}
+                </p>
+              </div>
+            )}
+            {user.role === "student" && (
+              <div>
+                <p className="text-sm text-muted-foreground">Parent WhatsApp</p>
+                <p className="font-medium">
+                  {user.parentWhatsapp || (
+                    <span className="text-muted-foreground text-sm">Not provided</span>
+                  )}
+                </p>
+              </div>
+            )}
+            {user.role === "teacher" && user.teacherProfile && (
+              <div className="sm:col-span-2">
+                <p className="text-sm text-muted-foreground">Teaching Specializations</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {user.teacherProfile.specializations && user.teacherProfile.specializations.length > 0 ? (
+                    user.teacherProfile.specializations.map((s) => (
+                      <span
+                        key={s}
+                        className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 px-2 py-0.5 rounded-full"
+                      >
+                        {s}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-sm text-muted-foreground">Not specified</span>
+                  )}
+                </div>
+              </div>
+            )}
+            {user.role === "teacher" && user.teacherProfile?.yearsExperience != null && (
+              <div>
+                <p className="text-sm text-muted-foreground">Years of Experience</p>
+                <p className="font-medium">{user.teacherProfile.yearsExperience} years</p>
+              </div>
+            )}
           </div>
         </div>
       )}

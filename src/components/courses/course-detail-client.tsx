@@ -53,8 +53,8 @@ const courseData: Record<
     color: "emerald",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     heroGradient: "from-emerald-600/10 via-background to-emerald-600/5",
-    plan1Price: "$25",
-    plan2Price: "$18",
+    plan1Price: "$40",
+    plan2Price: "$23",
     duration: "3-6 months",
   },
   "hifz-quran": {
@@ -63,8 +63,8 @@ const courseData: Record<
     color: "amber",
     iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     heroGradient: "from-amber-600/10 via-background to-amber-600/5",
-    plan1Price: "$30",
-    plan2Price: "$22",
+    plan1Price: "$45",
+    plan2Price: "$27",
     duration: "2-4 years",
   },
   "arabic-language": {
@@ -73,8 +73,8 @@ const courseData: Record<
     color: "blue",
     iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     heroGradient: "from-blue-600/10 via-background to-blue-600/5",
-    plan1Price: "$28",
-    plan2Price: "$20",
+    plan1Price: "$43",
+    plan2Price: "$25",
     duration: "6-12 months",
   },
   "aalim-course": {
@@ -83,8 +83,8 @@ const courseData: Record<
     color: "purple",
     iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     heroGradient: "from-purple-600/10 via-background to-purple-600/5",
-    plan1Price: "$35",
-    plan2Price: "$25",
+    plan1Price: "$50",
+    plan2Price: "$30",
     duration: "2-8 years",
   },
 };
@@ -237,13 +237,49 @@ export default function CourseDetailClient() {
                   transition={{ duration: 0.4, delay: i * 0.05 }}
                   className="flex items-start gap-4 p-5 rounded-xl bg-card border shadow-sm"
                 >
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-primary">{section.id}</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">
-                      {t(section.titleKey)}
-                    </p>
+                  {/* Book Image */}
+                  {section.bookImage ? (
+                    <div className="shrink-0 w-14 text-center">
+                      <img
+                        src={section.bookImage}
+                        alt={section.bookName ?? "Book"}
+                        width={56}
+                        height={72}
+                        className="w-14 h-[72px] object-cover rounded shadow-sm border border-muted mx-auto"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = "none";
+                          const fallback = (e.target as HTMLImageElement).nextElementSibling;
+                          if (fallback) (fallback as HTMLElement).style.display = "flex";
+                        }}
+                      />
+                      <div
+                        className="w-14 h-[72px] rounded bg-primary/10 hidden items-center justify-center mx-auto"
+                        style={{ display: "none" }}
+                      >
+                        <BookOpen className="w-6 h-6 text-primary" />
+                      </div>
+                      {section.bookName && (
+                        <p className="text-[9px] text-muted-foreground mt-1 leading-tight line-clamp-2">
+                          {section.bookName}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <span className="text-sm font-bold text-primary">{section.id}</span>
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      {section.bookImage && (
+                        <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                          <span className="text-[10px] font-bold text-primary">{section.id}</span>
+                        </div>
+                      )}
+                      <p className="text-sm font-semibold text-foreground">
+                        {t(section.titleKey)}
+                      </p>
+                    </div>
                     <p className="text-xs text-muted-foreground mt-1">
                       {t(section.descKey)}
                     </p>

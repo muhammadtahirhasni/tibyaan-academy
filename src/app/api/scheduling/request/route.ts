@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
-import { scheduleRequests } from "@/lib/db/schema";
+import { scheduleRequests, users } from "@/lib/db/schema";
+import { sql } from "drizzle-orm";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+// TBA-XXXXXXXX format (8 hex chars after TBA-)
+const SHORT_ID_REGEX = /^TBA-([0-9a-f]{8})$/i;
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,29 +19,59 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { teacherId, courseId, timezone, preferredDays, preferredTime } =
+    const { teacherId: rawTeacherId, courseId, timezone, preferredDays, preferredTime } =
       await request.json();
 
-    if (!teacherId || !courseId || !timezone) {
+    if (!rawTeacherId || !courseId || !timezone) {
       return NextResponse.json(
         { error: "teacherId, courseId, and timezone are required" },
         { status: 400 }
       );
     }
 
-    if (!UUID_REGEX.test(teacherId) || !UUID_REGEX.test(courseId)) {
+    const db = getDb();
+
+    // Resolve teacher ID — accept UUID or TBA-XXXXXXXX short ID
+    let resolvedTeacherId: string;
+    if (UUID_REGEX.test(rawTeacherId)) {
+      resolvedTeacherId = rawTeacherId;
+    } else {
+      const shortMatch = SHORT_ID_REGEX.exec(rawTeacherId);
+      if (!shortMatch) {
+        return NextResponse.json(
+          { error: "Invalid teacher ID format. Use UUID or TBA-XXXXXXXX format." },
+          { status: 400 }
+        );
+      }
+      // Find teacher whose UUID starts with the 8 hex chars
+      const prefix = shortMatch[1].toLowerCase();
+      const [foundTeacher] = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(sql`lower(${users.id}::text) like ${prefix + "%"}`)
+        .limit(1);
+
+      if (!foundTeacher) {
+        return NextResponse.json(
+          { error: "Teacher not found with that ID." },
+          { status: 404 }
+        );
+      }
+      resolvedTeacherId = foundTeacher.id;
+    }
+
+    if (!UUID_REGEX.test(courseId)) {
       return NextResponse.json(
-        { error: "teacherId and courseId must be valid UUIDs" },
+        { error: "courseId must be a valid UUID" },
         { status: 400 }
       );
     }
 
-    const db = getDb();
     const [created] = await db
       .insert(scheduleRequests)
       .values({
         studentId: user.id,
-        teacherId,
+        teacherId: resolvedTeacherId,
         courseId,
         timezone,
         preferredDays: preferredDays || [],

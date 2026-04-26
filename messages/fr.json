@@ -45,7 +45,9 @@
     "roleTeacher": "Enseignant",
     "acceptTerms": "J'accepte les conditions générales",
     "termsLink": "Conditions générales",
-    "startTrial": "Commencer l'essai gratuit de 5 jours"
+    "startTrial": "Commencer l'essai gratuit de 5 jours",
+    "parentWhatsapp": "Numéro WhatsApp des parents",
+    "parentWhatsappPlaceholder": "+33-6-12345678"
   },
   "onboarding": {
     "title": "Commençons !",
@@ -158,11 +160,11 @@
     "huffaz": "Huffaz"
   },
   "pricingTeaser": {
-    "title": "À partir de seulement $18/mois",
+    "title": "Starting from just $23/month",
     "plan1": "Plan 1 : Enseignant + IA",
     "plan2": "Plan 2 : IA uniquement",
-    "plan1Price": "À partir de $25/mois",
-    "plan2Price": "À partir de $18/mois",
+    "plan1Price": "From $40/mo",
+    "plan2Price": "From $23/mo",
     "viewPricing": "Voir tous les tarifs"
   },
   "socialLinks": {
@@ -834,6 +836,7 @@
     "sidebarVideos": "Vidéos",
     "sidebarRecordings": "Enregistrements",
     "sidebarMatches": "Correspondances",
+    "sidebarScheduleRequests": "Demandes de Planning",
     "sidebarAgents": "Journaux des agents",
     "sidebarAIMonitor": "Moniteur IA",
     "sidebarReviews": "Avis",
@@ -1172,5 +1175,27 @@
     "confirmedDesc": "Votre enseignant sera notifié. Vous recevrez une confirmation bientôt.",
     "errorSubmitting": "Échec de la soumission",
     "errorConfirming": "Échec de la confirmation"
+  },
+  "teacherCta": {
+    "title": "Devenez enseignant chez Tibyaan",
+    "subtitle": "Partagez vos connaissances islamiques et gagnez un revenu depuis chez vous",
+    "benefit1": "Gagnez 40-50$ par mois par élève",
+    "benefit2": "Enseignez de n'importe où dans le monde",
+    "benefit3": "Outils IA pour mieux enseigner",
+    "benefit4": "Horaires flexibles, vous choisissez vos heures",
+    "joinButton": "Rejoindre en tant qu'enseignant",
+    "alreadyTeacher": "Déjà enseignant ? Se connecter"
+  },
+  "teacherVideos": {
+    "title": "Apprenez de nos enseignants",
+    "subtitle": "Regardez des exemples de tilawat et leçons de nos enseignants vérifiés",
+    "viewProfile": "Voir le profil",
+    "views": "vues"
+  },
+  "dailyDarsSection": {
+    "title": "Dars quotidien",
+    "subtitle": "Profitez de nos leçons islamiques quotidiennes et rappels",
+    "readMore": "Lire plus",
+    "viewAll": "Voir tous les dars"
   }
 }

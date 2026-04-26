@@ -45,7 +45,9 @@
     "roleTeacher": "معلم",
     "acceptTerms": "أوافق على الشروط والأحكام",
     "termsLink": "الشروط والأحكام",
-    "startTrial": "ابدأ التجربة المجانية 5 أيام"
+    "startTrial": "ابدأ التجربة المجانية 5 أيام",
+    "parentWhatsapp": "رقم واتساب ولي الأمر",
+    "parentWhatsappPlaceholder": "+966-50-1234567"
   },
   "onboarding": {
     "title": "لنبدأ!",
@@ -158,11 +160,11 @@
     "huffaz": "حافظ"
   },
   "pricingTeaser": {
-    "title": "ابتداءً من $18/شهر فقط",
+    "title": "Starting from just $23/month",
     "plan1": "الخطة 1: معلم + ذكاء اصطناعي",
     "plan2": "الخطة 2: ذكاء اصطناعي فقط",
-    "plan1Price": "من $25/شهر",
-    "plan2Price": "من $18/شهر",
+    "plan1Price": "From $40/mo",
+    "plan2Price": "From $23/mo",
     "viewPricing": "عرض الأسعار الكاملة"
   },
   "socialLinks": {
@@ -834,6 +836,7 @@
     "sidebarVideos": "مقاطع الفيديو",
     "sidebarRecordings": "التسجيلات",
     "sidebarMatches": "المطابقات",
+    "sidebarScheduleRequests": "طلبات الجدول",
     "sidebarAgents": "سجلات الوكيل",
     "sidebarAIMonitor": "مراقب الذكاء",
     "sidebarReviews": "المراجعات",
@@ -1172,5 +1175,27 @@
     "confirmedDesc": "سيتم إخطار معلمك. ستتلقى تأكيداً قريباً.",
     "errorSubmitting": "فشل في إرسال الطلب",
     "errorConfirming": "فشل في التأكيد"
+  },
+  "teacherCta": {
+    "title": "كن معلماً في أكاديمية تبيان",
+    "subtitle": "شارك علمك الإسلامي واكسب دخلاً من المنزل",
+    "benefit1": "اكسب $40-50 شهرياً لكل طالب",
+    "benefit2": "علّم من أي مكان في العالم",
+    "benefit3": "أدوات الذكاء الاصطناعي لمساعدتك في التدريس",
+    "benefit4": "جدول مرن، أنت تحدد الساعات",
+    "joinButton": "انضم كمعلم",
+    "alreadyTeacher": "معلم بالفعل؟ سجل دخولك"
+  },
+  "teacherVideos": {
+    "title": "تعلم من معلمينا",
+    "subtitle": "شاهد نماذج التلاوة والدروس من معلمينا المعتمدين",
+    "viewProfile": "عرض الملف الشخصي",
+    "views": "مشاهدة"
+  },
+  "dailyDarsSection": {
+    "title": "الدرس اليومي",
+    "subtitle": "استفد من دروسنا الإسلامية اليومية والتذكيرات",
+    "readMore": "اقرأ المزيد",
+    "viewAll": "عرض جميع الدروس"
   }
 }

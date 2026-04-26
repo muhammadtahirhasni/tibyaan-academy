@@ -9,10 +9,11 @@ import {
   Calendar,
   Clock,
   Globe,
-  Sparkles,
   CheckCircle2,
   Send,
+  Info,
 } from "lucide-react";
+import { COURSES } from "@/lib/data/courses";
 
 const DAYS = [
   "Monday",
@@ -24,13 +25,6 @@ const DAYS = [
   "Sunday",
 ];
 
-interface Suggestion {
-  day: string;
-  time: string;
-  score: number;
-  reason: string;
-}
-
 export default function StudentSchedulePage() {
   const t = useTranslations("scheduling");
 
@@ -39,14 +33,10 @@ export default function StudentSchedulePage() {
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
   const [teacherId, setTeacherId] = useState("");
-  const [courseId, setCourseId] = useState("");
-  const [requestId, setRequestId] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [selectedCourseId, setSelectedCourseId] = useState<string>(COURSES[0].id);
   const [loading, setLoading] = useState(false);
-  const [confirming, setConfirming] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  // Auto-detect timezone
   useEffect(() => {
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   }, []);
@@ -58,33 +48,27 @@ export default function StudentSchedulePage() {
   };
 
   const handleSubmitRequest = async () => {
-    if (!teacherId || !courseId) return;
+    if (!teacherId.trim() || !selectedCourseId) return;
     setLoading(true);
     try {
       const res = await fetch("/api/scheduling/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          teacherId,
-          courseId,
+          teacherId: teacherId.trim(),
+          courseId: selectedCourseId,
           timezone,
           preferredDays,
           preferredTime: { start: startTime, end: endTime },
         }),
       });
 
-      if (!res.ok) throw new Error("Failed");
-      const data = await res.json();
-      setRequestId(data.id);
-
-      // Get AI suggestions
-      const sugRes = await fetch(
-        `/api/scheduling/suggestions?requestId=${data.id}`
-      );
-      if (sugRes.ok) {
-        const sugData = await sugRes.json();
-        setSuggestions(sugData.suggestions || []);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || t("errorSubmitting"));
+        return;
       }
+      setSubmitted(true);
     } catch {
       alert(t("errorSubmitting"));
     } finally {
@@ -92,32 +76,9 @@ export default function StudentSchedulePage() {
     }
   };
 
-  const handleConfirmSlot = async (slot: { day: string; time: string }) => {
-    if (!requestId) return;
-    setConfirming(true);
-    try {
-      const res = await fetch("/api/scheduling/confirm", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ requestId, selectedSlot: slot }),
-      });
-      if (res.ok) {
-        setConfirmed(true);
-      }
-    } catch {
-      alert(t("errorConfirming"));
-    } finally {
-      setConfirming(false);
-    }
-  };
+  const selectedCourse = COURSES.find((c) => c.id === selectedCourseId);
 
-  const getScoreColor = (score: number) => {
-    if (score >= 0.8) return "text-emerald-600 bg-emerald-100 dark:bg-emerald-950/30";
-    if (score >= 0.5) return "text-amber-600 bg-amber-100 dark:bg-amber-950/30";
-    return "text-red-600 bg-red-100 dark:bg-red-950/30";
-  };
-
-  if (confirmed) {
+  if (submitted) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <motion.div
@@ -128,9 +89,18 @@ export default function StudentSchedulePage() {
           <CheckCircle2 className="w-10 h-10 text-emerald-600" />
         </motion.div>
         <h2 className="text-2xl font-bold text-foreground mb-2">
-          {t("confirmed")}
+          Request Submitted!
         </h2>
-        <p className="text-muted-foreground">{t("confirmedDesc")}</p>
+        <p className="text-muted-foreground text-center max-w-md">
+          Your schedule request has been sent to the Admin for approval. You will be notified once it is approved and your class is scheduled.
+        </p>
+        <Button
+          className="mt-6"
+          variant="outline"
+          onClick={() => setSubmitted(false)}
+        >
+          Submit Another Request
+        </Button>
       </div>
     );
   }
@@ -146,161 +116,173 @@ export default function StudentSchedulePage() {
         <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
       </motion.div>
 
-      {suggestions.length === 0 ? (
-        /* Preference Form */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="rounded-xl border bg-card p-6 space-y-6"
-        >
-          {/* Timezone */}
+      {/* Course IDs Info Box */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="rounded-xl border bg-primary/5 border-primary/20 p-4"
+      >
+        <div className="flex items-start gap-2">
+          <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <Globe className="w-4 h-4" />
-              {t("timezone")}
-            </label>
-            <input
-              type="text"
-              value={timezone}
-              onChange={(e) => setTimezone(e.target.value)}
-              className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-              readOnly
-            />
-          </div>
-
-          {/* Teacher & Course IDs */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium text-foreground">
-                {t("teacherId")}
-              </label>
-              <input
-                type="text"
-                value={teacherId}
-                onChange={(e) => setTeacherId(e.target.value)}
-                placeholder={t("teacherIdPlaceholder")}
-                className="mt-1 w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-foreground">
-                {t("courseId")}
-              </label>
-              <input
-                type="text"
-                value={courseId}
-                onChange={(e) => setCourseId(e.target.value)}
-                placeholder={t("courseIdPlaceholder")}
-                className="mt-1 w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
-          </div>
-
-          {/* Preferred Days */}
-          <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <Calendar className="w-4 h-4" />
-              {t("preferredDays")}
-            </label>
+            <p className="text-sm font-medium text-foreground mb-2">Course IDs for Reference</p>
             <div className="flex flex-wrap gap-2">
-              {DAYS.map((day) => (
-                <button
-                  key={day}
-                  onClick={() => toggleDay(day)}
-                  className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors ${
-                    preferredDays.includes(day)
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background hover:bg-muted"
-                  }`}
-                >
-                  {day.slice(0, 3)}
-                </button>
+              {COURSES.map((c) => (
+                <span key={c.id} className="inline-flex items-center gap-1.5 text-xs bg-background border rounded-full px-3 py-1">
+                  <span className="font-mono font-bold text-primary">{c.shortId}</span>
+                  <span className="text-muted-foreground">→ {c.nameEn}</span>
+                </span>
               ))}
             </div>
           </div>
+        </div>
+      </motion.div>
 
-          {/* Preferred Time */}
+      {/* Form */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="rounded-xl border bg-card p-6 space-y-6"
+      >
+        {/* Timezone */}
+        <div>
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+            <Globe className="w-4 h-4" />
+            {t("timezone")}
+          </label>
+          <input
+            type="text"
+            value={timezone}
+            onChange={(e) => setTimezone(e.target.value)}
+            className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+          />
+        </div>
+
+        {/* Teacher ID & Course Selection */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <Clock className="w-4 h-4" />
-              {t("preferredTime")}
+            <label className="text-sm font-medium text-foreground">
+              {t("teacherId")}
             </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-              />
-              <span className="text-muted-foreground">{t("to")}</span>
-              <input
-                type="time"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
+            <p className="text-xs text-muted-foreground mb-1">Enter your teacher&apos;s ID (ask your teacher or Admin)</p>
+            <input
+              type="text"
+              value={teacherId}
+              onChange={(e) => setTeacherId(e.target.value)}
+              placeholder="TBA-XXXXXXXX or UUID"
+              className="mt-1 w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+            />
           </div>
-
-          <Button
-            onClick={handleSubmitRequest}
-            disabled={loading || !teacherId || !courseId}
-            className="w-full gap-2"
-          >
-            <Sparkles className="w-4 h-4" />
-            {loading ? t("findingSlots") : t("getAISuggestions")}
-          </Button>
-        </motion.div>
-      ) : (
-        /* AI Suggestions */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-4"
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">
-              {t("aiSuggestions")}
-            </h3>
-          </div>
-
-          {suggestions.map((sug, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="rounded-xl border bg-card p-5 hover:shadow-md transition-shadow"
+          <div>
+            <label className="text-sm font-medium text-foreground">
+              Select Course
+            </label>
+            <p className="text-xs text-muted-foreground mb-1">Choose the course you want to schedule</p>
+            <select
+              value={selectedCourseId}
+              onChange={(e) => setSelectedCourseId(e.target.value)}
+              className="mt-1 w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
             >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <p className="text-lg font-semibold text-foreground">
-                    {sug.day} — {sug.time}
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {sug.reason}
-                  </p>
-                </div>
-                <Badge className={getScoreColor(sug.score)}>
-                  {Math.round(sug.score * 100)}% {t("match")}
-                </Badge>
-              </div>
-              <Button
-                onClick={() =>
-                  handleConfirmSlot({ day: sug.day, time: sug.time })
-                }
-                disabled={confirming}
-                variant="outline"
-                size="sm"
-                className="gap-2"
+              {COURSES.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.shortId} — {c.nameEn}
+                </option>
+              ))}
+            </select>
+            {selectedCourse && (
+              <p className="mt-1 text-xs text-primary font-mono">{selectedCourse.shortId}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Preferred Days */}
+        <div>
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+            <Calendar className="w-4 h-4" />
+            {t("preferredDays")}
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {DAYS.map((day) => (
+              <button
+                key={day}
+                onClick={() => toggleDay(day)}
+                className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors ${
+                  preferredDays.includes(day)
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background hover:bg-muted"
+                }`}
               >
-                <Send className="w-4 h-4" />
-                {t("selectSlot")}
-              </Button>
-            </motion.div>
-          ))}
+                {day.slice(0, 3)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Preferred Time */}
+        <div>
+          <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
+            <Clock className="w-4 h-4" />
+            {t("preferredTime")}
+          </label>
+          <div className="flex items-center gap-3">
+            <input
+              type="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+            />
+            <span className="text-muted-foreground">{t("to")}</span>
+            <input
+              type="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+            />
+          </div>
+        </div>
+
+        {/* Info about Admin approval */}
+        <div className="rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-3 flex items-start gap-2">
+          <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-700 dark:text-amber-300">
+            Your schedule request will be reviewed and approved by the Admin. You will be notified once your class time is confirmed.
+          </p>
+        </div>
+
+        <Button
+          onClick={handleSubmitRequest}
+          disabled={loading || !teacherId.trim() || !selectedCourseId}
+          className="w-full gap-2"
+        >
+          <Send className="w-4 h-4" />
+          {loading ? "Submitting..." : "Submit Schedule Request"}
+        </Button>
+      </motion.div>
+
+      {/* Summary */}
+      {selectedCourse && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="rounded-xl border bg-card p-4"
+        >
+          <p className="text-xs font-medium text-muted-foreground mb-2">Request Summary</p>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline">
+              Course: {selectedCourse.nameEn} ({selectedCourse.shortId})
+            </Badge>
+            {preferredDays.length > 0 && (
+              <Badge variant="outline">
+                Days: {preferredDays.map((d) => d.slice(0, 3)).join(", ")}
+              </Badge>
+            )}
+            <Badge variant="outline">
+              Time: {startTime} – {endTime}
+            </Badge>
+          </div>
         </motion.div>
       )}
     </div>

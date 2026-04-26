@@ -13,6 +13,8 @@ import {
   Clock,
   RefreshCw,
   Search,
+  User,
+  Phone,
 } from "lucide-react";
 
 interface ReportEntry {
@@ -32,6 +34,15 @@ export default function ParentReportsPage() {
   const [sendingId, setSendingId] = useState<string | null>(null);
   const [studentIdInput, setStudentIdInput] = useState("");
   const [bulkSending, setBulkSending] = useState(false);
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookedUpStudent, setLookedUpStudent] = useState<{
+    id: string;
+    name: string;
+    email: string;
+    parentWhatsapp: string | null;
+    studentCode: string;
+  } | null>(null);
+  const [lookupError, setLookupError] = useState<string | null>(null);
 
   const fetchReports = async () => {
     setLoading(true);
@@ -52,17 +63,40 @@ export default function ParentReportsPage() {
     fetchReports();
   }, []);
 
-  const handleSendSingle = async () => {
+  const handleLookup = async () => {
     if (!studentIdInput.trim()) return;
-    setSendingId(studentIdInput);
+    setLookupLoading(true);
+    setLookedUpStudent(null);
+    setLookupError(null);
+    try {
+      const res = await fetch(`/api/parent-reports/lookup?studentId=${encodeURIComponent(studentIdInput.trim())}`);
+      if (res.ok) {
+        const data = await res.json();
+        setLookedUpStudent(data.student);
+      } else {
+        const err = await res.json();
+        setLookupError(err.error || "Student not found");
+      }
+    } catch {
+      setLookupError("Lookup failed");
+    } finally {
+      setLookupLoading(false);
+    }
+  };
+
+  const handleSendSingle = async (studentId?: string) => {
+    const targetId = studentId || lookedUpStudent?.id || studentIdInput.trim();
+    if (!targetId) return;
+    setSendingId(targetId);
     try {
       const res = await fetch("/api/parent-reports/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ studentId: studentIdInput }),
+        body: JSON.stringify({ studentId: targetId }),
       });
       if (res.ok) {
         setStudentIdInput("");
+        setLookedUpStudent(null);
         fetchReports();
       } else {
         const err = await res.json();
@@ -129,25 +163,70 @@ export default function ParentReportsPage() {
           {t("sendReport")}
         </h3>
 
-        {/* Single send */}
-        <div className="flex gap-3 mb-4">
-          <div className="flex-1">
-            <input
-              type="text"
-              value={studentIdInput}
-              onChange={(e) => setStudentIdInput(e.target.value)}
-              placeholder={t("studentIdPlaceholder")}
-              className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-            />
+        {/* Student Lookup */}
+        <div className="space-y-3 mb-4">
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <input
+                type="text"
+                value={studentIdInput}
+                onChange={(e) => {
+                  setStudentIdInput(e.target.value);
+                  setLookedUpStudent(null);
+                  setLookupError(null);
+                }}
+                onKeyDown={(e) => e.key === "Enter" && handleLookup()}
+                placeholder={t("studentIdPlaceholder")}
+                className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+            <Button
+              variant="outline"
+              onClick={handleLookup}
+              disabled={lookupLoading || !studentIdInput.trim()}
+              className="gap-2"
+            >
+              <Search className="w-4 h-4" />
+              {lookupLoading ? "Searching..." : "Lookup"}
+            </Button>
           </div>
-          <Button
-            onClick={handleSendSingle}
-            disabled={!!sendingId || !studentIdInput.trim()}
-            className="gap-2"
-          >
-            <Send className="w-4 h-4" />
-            {sendingId ? t("sending") : t("sendSingle")}
-          </Button>
+
+          {lookupError && (
+            <p className="text-sm text-red-500">{lookupError}</p>
+          )}
+
+          {lookedUpStudent && (
+            <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <User className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="font-medium text-sm">{lookedUpStudent.name}</p>
+                  <p className="text-xs text-muted-foreground font-mono">{lookedUpStudent.studentCode}</p>
+                </div>
+              </div>
+              {lookedUpStudent.parentWhatsapp ? (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Phone className="w-4 h-4" />
+                  <span>{lookedUpStudent.parentWhatsapp}</span>
+                </div>
+              ) : (
+                <p className="text-xs text-amber-600">No parent WhatsApp on file</p>
+              )}
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  onClick={() => handleSendSingle(lookedUpStudent.id)}
+                  disabled={!!sendingId || !lookedUpStudent.parentWhatsapp}
+                  className="gap-2"
+                >
+                  <Send className="w-3 h-3" />
+                  {sendingId === lookedUpStudent.id ? t("sending") : "Send This Week's Report"}
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bulk send */}

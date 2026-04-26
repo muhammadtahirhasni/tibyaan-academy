@@ -60,6 +60,7 @@ export default async function DashboardPage({
 
   return (
     <DashboardClient
+      userId={user.id}
       userName={userName}
       enrolledCourses={enrolledCourses}
       stats={stats}

@@ -13,6 +13,7 @@ export async function signupWithEmail(formData: FormData) {
   const role = formData.get("role") as string;
   const language = formData.get("language") as string;
   const locale = formData.get("locale") as string;
+  const parentWhatsapp = (formData.get("parentWhatsapp") as string) || null;
 
   const { error, data } = await supabase.auth.signUp({
     email,
@@ -23,6 +24,7 @@ export async function signupWithEmail(formData: FormData) {
         role: role || "student",
         preferred_language: language || "ur",
         needs_onboarding: true,
+        parent_whatsapp: parentWhatsapp || null,
       },
     },
   });

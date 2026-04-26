@@ -111,6 +111,7 @@ export default function AdminUsersPage() {
               <tr>
                 <th className="text-start px-4 py-3 font-medium">{t("userDetail")}</th>
                 <th className="text-start px-4 py-3 font-medium">{t("email")}</th>
+                <th className="text-start px-4 py-3 font-medium">Student ID</th>
                 <th className="text-start px-4 py-3 font-medium">{t("role")}</th>
                 <th className="text-start px-4 py-3 font-medium">{t("status")}</th>
                 <th className="text-start px-4 py-3 font-medium">{t("joined")}</th>
@@ -120,13 +121,13 @@ export default function AdminUsersPage() {
             <tbody className="divide-y">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                  <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
                     Loading...
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                  <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
                     {t("noResults")}
                   </td>
                 </tr>
@@ -142,6 +143,15 @@ export default function AdminUsersPage() {
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">{user.email}</td>
+                    <td className="px-4 py-3">
+                      {user.role === "student" ? (
+                        <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-0.5 rounded">
+                          TBA-{user.id.substring(0, 8).toUpperCase()}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
+                    </td>
                     <td className="px-4 py-3">
                       <select
                         value={user.role}

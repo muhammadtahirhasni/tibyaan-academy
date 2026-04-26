@@ -45,7 +45,9 @@
     "roleTeacher": "استاد",
     "acceptTerms": "میں شرائط و ضوابط سے متفق ہوں",
     "termsLink": "شرائط و ضوابط",
-    "startTrial": "5 دن مفت شروع کریں"
+    "startTrial": "5 دن مفت شروع کریں",
+    "parentWhatsapp": "والدین کا واٹس ایپ نمبر",
+    "parentWhatsappPlaceholder": "+92-300-1234567"
   },
   "onboarding": {
     "title": "آئیے شروع کرتے ہیں!",
@@ -158,11 +160,11 @@
     "huffaz": "حفاظ"
   },
   "pricingTeaser": {
-    "title": "صرف $18/ماہ سے شروع",
+    "title": "Starting from just $23/month",
     "plan1": "پلان 1: انسانی استاد + AI",
     "plan2": "پلان 2: صرف AI",
-    "plan1Price": "From $25/mo",
-    "plan2Price": "From $18/mo",
+    "plan1Price": "From $40/mo",
+    "plan2Price": "From $23/mo",
     "viewPricing": "پوری قیمتیں دیکھیں"
   },
   "socialLinks": {
@@ -834,6 +836,7 @@
     "sidebarVideos": "ویڈیوز",
     "sidebarRecordings": "ریکارڈنگز",
     "sidebarMatches": "میچنگ",
+    "sidebarScheduleRequests": "شیڈول درخواستیں",
     "sidebarAgents": "ایجنٹ لاگز",
     "sidebarAIMonitor": "AI مانیٹر",
     "sidebarReviews": "جائزے",
@@ -1172,5 +1175,27 @@
     "confirmedDesc": "آپ کے استاذ کو مطلع کیا جائے گا۔",
     "errorSubmitting": "درخواست بھیجنے میں ناکامی",
     "errorConfirming": "تصدیق میں ناکامی"
+  },
+  "teacherCta": {
+    "title": "تبیان اکیڈمی میں استاذ بنیں",
+    "subtitle": "اپنا اسلامی علم شیئر کریں اور گھر سے آمدنی کمائیں",
+    "benefit1": "فی طالب علم $40-50 ماہانہ کمائیں",
+    "benefit2": "دنیا میں کہیں سے بھی پڑھائیں",
+    "benefit3": "بہتر تدریس کے لیے AI ٹولز",
+    "benefit4": "لچکدار شیڈول، آپ خود اوقات طے کریں",
+    "joinButton": "استاذ بنیں",
+    "alreadyTeacher": "پہلے سے استاذ ہیں؟ لاگ ان کریں"
+  },
+  "teacherVideos": {
+    "title": "ہمارے اساتذہ سے سیکھیں",
+    "subtitle": "ہمارے تصدیق شدہ اساتذہ کی تلاوت اور دروس دیکھیں",
+    "viewProfile": "پروفائل دیکھیں",
+    "views": "مناظر"
+  },
+  "dailyDarsSection": {
+    "title": "روزانہ درس",
+    "subtitle": "ہمارے روزانہ اسلامی دروس اور نصیحتوں سے فائدہ اٹھائیں",
+    "readMore": "مزید پڑھیں",
+    "viewAll": "تمام دروس دیکھیں"
   }
 }

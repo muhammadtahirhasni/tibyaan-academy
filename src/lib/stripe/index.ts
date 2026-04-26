@@ -14,10 +14,10 @@ export function getStripe(): Stripe {
 
 // Course pricing configuration (monthly USD)
 export const COURSE_PRICES = {
-  nazra: { plan1: 25, plan2: 18 },
-  hifz: { plan1: 30, plan2: 22 },
-  arabic: { plan1: 28, plan2: 20 },
-  aalim: { plan1: 35, plan2: 25 },
+  nazra: { plan1: 40, plan2: 23 },
+  hifz: { plan1: 45, plan2: 27 },
+  arabic: { plan1: 43, plan2: 25 },
+  aalim: { plan1: 50, plan2: 30 },
 } as const;
 
 export type CourseType = keyof typeof COURSE_PRICES;

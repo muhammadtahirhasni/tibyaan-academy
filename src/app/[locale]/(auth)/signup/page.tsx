@@ -44,6 +44,7 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("student");
 
   async function handleSignup(formData: FormData) {
     if (!termsAccepted) return;
@@ -186,7 +187,11 @@ export default function SignupPage() {
             {/* Role Select */}
             <div className="space-y-2">
               <Label>{t("selectRole")}</Label>
-              <Select name="role" defaultValue="student">
+              <Select
+                name="role"
+                defaultValue="student"
+                onValueChange={(val) => setSelectedRole(val ?? "student")}
+              >
                 <SelectTrigger className="h-12">
                   <SelectValue />
                 </SelectTrigger>
@@ -196,6 +201,20 @@ export default function SignupPage() {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Parent WhatsApp — shown only for students */}
+            {selectedRole === "student" && (
+              <div className="space-y-2">
+                <Label htmlFor="parentWhatsapp">{t("parentWhatsapp")}</Label>
+                <Input
+                  id="parentWhatsapp"
+                  name="parentWhatsapp"
+                  type="tel"
+                  placeholder={t("parentWhatsappPlaceholder")}
+                  className="h-12"
+                />
+              </div>
+            )}
 
             {/* Terms Checkbox */}
             <div className="flex items-center gap-2">

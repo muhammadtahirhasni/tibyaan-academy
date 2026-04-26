@@ -9,6 +9,9 @@ import { TrustSignalsSection } from "@/components/homepage/trust-signals-section
 import { PricingTeaserSection } from "@/components/homepage/pricing-teaser-section";
 import { SocialLinksSection } from "@/components/homepage/social-links-section";
 import { CtaSection } from "@/components/homepage/cta-section";
+import { TeacherCtaSection } from "@/components/homepage/teacher-cta-section";
+import { TeacherVideosSection } from "@/components/homepage/teacher-videos-section";
+import { DailyDarsSection } from "@/components/homepage/daily-dars-section";
 import { Footer } from "@/components/shared/footer";
 
 const BASE_URL = "https://tibyaan.com";
@@ -71,10 +74,13 @@ export default function HomePage() {
         <HeroSection />
         <FeaturesSection />
         <CoursesSection />
+        <TeacherVideosSection />
         <HowItWorksSection />
+        <DailyDarsSection />
         <TestimonialsSection />
         <TrustSignalsSection />
         <PricingTeaserSection />
+        <TeacherCtaSection />
         <SocialLinksSection />
         <CtaSection />
       </main>

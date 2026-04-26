@@ -3,13 +3,14 @@ import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
 import { users, teacherVideos } from "@/lib/db/schema";
 import { and, eq, gte, sql } from "drizzle-orm";
-import { uploadToStorage, getVideoKey } from "@/lib/r2/client";
+import { getPresignedUploadUrl, getPublicUrl, getVideoKey } from "@/lib/r2/client";
 import { randomUUID } from "crypto";
 
 /**
  * POST /api/videos/upload
- * Teacher uploads a video file directly.
- * Uses multipart form data: title, description?, file
+ * Teacher requests a presigned upload URL for direct browser upload.
+ * Body (JSON): { title, description?, contentType, fileName }
+ * Returns: { signedUrl, videoId, key }
  */
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
@@ -56,10 +57,13 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const formData = await request.formData();
-    const title = formData.get("title") as string;
-    const description = (formData.get("description") as string) || null;
-    const file = formData.get("file") as File | null;
+    const body = await request.json();
+    const { title, description, contentType, fileName } = body as {
+      title: string;
+      description?: string;
+      contentType: string;
+      fileName: string;
+    };
 
     if (!title?.trim()) {
       return NextResponse.json(
@@ -68,31 +72,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!file || file.size === 0) {
+    if (!contentType || !fileName) {
       return NextResponse.json(
-        { error: "Video file is required" },
-        { status: 400 }
-      );
-    }
-
-    // Max 100MB
-    if (file.size > 100 * 1024 * 1024) {
-      return NextResponse.json(
-        { error: "File too large. Maximum 100MB." },
+        { error: "contentType and fileName are required" },
         { status: 400 }
       );
     }
 
     const videoId = randomUUID();
-    const ext = file.type === "video/webm" ? "webm" : "mp4";
+    const ext = contentType === "video/webm" ? "webm" : "mp4";
     const key = getVideoKey(authUser.id, videoId, ext);
-    const contentType = file.type || "video/mp4";
 
-    // Upload file to Supabase Storage
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const publicUrl = await uploadToStorage(key, buffer, contentType);
+    // Get a presigned signed upload URL for direct browser upload
+    const signedUrl = await getPresignedUploadUrl(key, contentType);
 
-    // Create DB record
+    // Compute the future public URL
+    const publicUrl = getPublicUrl(key);
+
+    // Create DB record with status "pending"
     const [video] = await db
       .insert(teacherVideos)
       .values({
@@ -107,20 +104,15 @@ export async function POST(request: NextRequest) {
       .returning();
 
     return NextResponse.json({
+      signedUrl,
       videoId: video.id,
-      videoUrl: publicUrl,
+      key,
     });
   } catch (err) {
-    console.error("Video upload error:", err);
+    console.error("Video upload presign error:", err);
     return NextResponse.json(
       { error: "Upload failed. Please try again." },
       { status: 500 }
     );
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};

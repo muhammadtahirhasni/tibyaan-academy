@@ -45,7 +45,9 @@
     "roleTeacher": "Guru",
     "acceptTerms": "Saya setuju dengan Syarat & Ketentuan",
     "termsLink": "Syarat & Ketentuan",
-    "startTrial": "Mulai Uji Coba Gratis 5 Hari"
+    "startTrial": "Mulai Uji Coba Gratis 5 Hari",
+    "parentWhatsapp": "Nomor WhatsApp Orang Tua",
+    "parentWhatsappPlaceholder": "+62-812-3456789"
   },
   "onboarding": {
     "title": "Ayo Mulai!",
@@ -158,11 +160,11 @@
     "huffaz": "Huffaz"
   },
   "pricingTeaser": {
-    "title": "Mulai dari $18/bulan saja",
+    "title": "Starting from just $23/month",
     "plan1": "Paket 1: Guru + AI",
     "plan2": "Paket 2: AI Saja",
-    "plan1Price": "Mulai $25/bln",
-    "plan2Price": "Mulai $18/bln",
+    "plan1Price": "From $40/mo",
+    "plan2Price": "From $23/mo",
     "viewPricing": "Lihat Semua Harga"
   },
   "socialLinks": {
@@ -834,6 +836,7 @@
     "sidebarVideos": "Video",
     "sidebarRecordings": "Rekaman",
     "sidebarMatches": "Pencocokan",
+    "sidebarScheduleRequests": "Permintaan Jadwal",
     "sidebarAgents": "Log Agen",
     "sidebarAIMonitor": "Monitor AI",
     "sidebarReviews": "Ulasan",
@@ -1172,5 +1175,27 @@
     "confirmedDesc": "Guru Anda akan diberitahu. Anda akan menerima konfirmasi segera.",
     "errorSubmitting": "Gagal mengirim permintaan",
     "errorConfirming": "Gagal mengkonfirmasi"
+  },
+  "teacherCta": {
+    "title": "Jadilah Guru Tibyaan",
+    "subtitle": "Bagikan ilmu Islam Anda dan hasilkan pendapatan dari rumah",
+    "benefit1": "Hasilkan $40-50/bulan per siswa",
+    "benefit2": "Mengajar dari mana saja di dunia",
+    "benefit3": "Alat AI untuk membantu Anda mengajar lebih baik",
+    "benefit4": "Jadwal fleksibel, Anda yang menentukan jam",
+    "joinButton": "Bergabung sebagai Guru",
+    "alreadyTeacher": "Sudah menjadi guru? Masuk"
+  },
+  "teacherVideos": {
+    "title": "Belajar dari Guru Kami",
+    "subtitle": "Tonton contoh tilawat dan pelajaran dari guru terverifikasi kami",
+    "viewProfile": "Lihat Profil",
+    "views": "tayangan"
+  },
+  "dailyDarsSection": {
+    "title": "Dars Harian",
+    "subtitle": "Manfaatkan pelajaran Islam harian dan pengingat kami",
+    "readMore": "Baca Selengkapnya",
+    "viewAll": "Lihat Semua Dars"
   }
 }

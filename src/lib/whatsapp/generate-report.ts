@@ -9,7 +9,7 @@ import {
   enrollments,
   studentStreaks,
 } from "@/lib/db/schema";
-import { eq, and, gte, lte, desc } from "drizzle-orm";
+import { eq, and, gte, lte } from "drizzle-orm";
 
 interface WeeklyReportData {
   weekStart: string;
@@ -34,74 +34,104 @@ export async function generateWeeklyReport(
   const weekEnd = now.toISOString().split("T")[0];
 
   // Get student profile for parent whatsapp
-  const [profile] = await db
-    .select({
-      parentWhatsapp: studentProfiles.parentWhatsapp,
-      fullName: users.fullName,
-    })
-    .from(studentProfiles)
-    .innerJoin(users, eq(studentProfiles.userId, users.id))
-    .where(eq(studentProfiles.userId, studentId))
-    .limit(1);
+  let profile: { parentWhatsapp: string | null; fullName: string | null } | undefined;
+  try {
+    const [row] = await db
+      .select({
+        parentWhatsapp: studentProfiles.parentWhatsapp,
+        fullName: users.fullName,
+      })
+      .from(studentProfiles)
+      .innerJoin(users, eq(studentProfiles.userId, users.id))
+      .where(eq(studentProfiles.userId, studentId))
+      .limit(1);
+    profile = row;
+  } catch {
+    profile = { parentWhatsapp: null, fullName: "Student" };
+  }
 
   // Get enrollment IDs
-  const studentEnrollments = await db
-    .select({ id: enrollments.id })
-    .from(enrollments)
-    .where(eq(enrollments.studentId, studentId));
-
-  const enrollmentIds = studentEnrollments.map((e) => e.id);
+  let enrollmentIds: string[] = [];
+  try {
+    const studentEnrollments = await db
+      .select({ id: enrollments.id })
+      .from(enrollments)
+      .where(eq(enrollments.studentId, studentId));
+    enrollmentIds = studentEnrollments.map((e) => e.id);
+  } catch {
+    enrollmentIds = [];
+  }
 
   // Attendance (classes in the past week)
   let attendance = { present: 0, total: 0 };
   if (enrollmentIds.length > 0) {
-    const weekClasses = await db
-      .select()
-      .from(classes)
-      .where(
-        and(
-          gte(classes.scheduledAt, weekAgo),
-          lte(classes.scheduledAt, now)
-        )
-      );
+    try {
+      const weekClasses = await db
+        .select()
+        .from(classes)
+        .where(
+          and(
+            gte(classes.scheduledAt, weekAgo),
+            lte(classes.scheduledAt, now)
+          )
+        );
 
-    const studentClasses = weekClasses.filter((c) =>
-      enrollmentIds.includes(c.enrollmentId)
-    );
-    attendance = {
-      total: studentClasses.length,
-      present: studentClasses.filter((c) => c.status === "completed").length,
-    };
+      const studentClasses = weekClasses.filter((c) =>
+        enrollmentIds.includes(c.enrollmentId)
+      );
+      attendance = {
+        total: studentClasses.length,
+        present: studentClasses.filter((c) => c.status === "completed").length,
+      };
+    } catch {
+      attendance = { present: 0, total: 0 };
+    }
   }
 
   // Lessons completed this week
   let lessonsCompleted = 0;
   if (enrollmentIds.length > 0) {
-    const weekLessons = await db
-      .select()
-      .from(lessons)
-      .where(
-        and(
-          gte(lessons.completedAt, weekAgo),
-          lte(lessons.completedAt, now)
-        )
-      );
+    try {
+      const weekLessons = await db
+        .select()
+        .from(lessons)
+        .where(
+          and(
+            gte(lessons.completedAt, weekAgo),
+            lte(lessons.completedAt, now),
+            eq(lessons.isCompleted, true)
+          )
+        );
 
-    lessonsCompleted = weekLessons.filter(
-      (l) => l.isCompleted && enrollmentIds.includes(l.enrollmentId)
-    ).length;
+      lessonsCompleted = weekLessons.filter(
+        (l) => enrollmentIds.includes(l.enrollmentId)
+      ).length;
+    } catch {
+      lessonsCompleted = 0;
+    }
   }
 
   // Hifz progress this week
-  const hifzRecords = await db
-    .select()
-    .from(hifzTracker)
-    .where(
-      and(
-        eq(hifzTracker.studentId, studentId),
-        gte(hifzTracker.createdAt, weekAgo)
-      )
-    );
+  type HifzRecord = { type: string; ayahFrom: number; ayahTo: number };
+  let hifzRecords: HifzRecord[] = [];
+  try {
+    const rows = await db
+      .select({
+        type: hifzTracker.type,
+        ayahFrom: hifzTracker.ayahFrom,
+        ayahTo: hifzTracker.ayahTo,
+      })
+      .from(hifzTracker)
+      .where(
+        and(
+          eq(hifzTracker.studentId, studentId),
+          gte(hifzTracker.createdAt, weekAgo)
+        )
+      );
+    hifzRecords = rows;
+  } catch {
+    hifzRecords = [];
+  }
 
   const newAyaat = hifzRecords
     .filter((h) => h.type === "sabaq")
@@ -113,34 +143,42 @@ export async function generateWeeklyReport(
   // Test scores
   const testScores: number[] = [];
   if (enrollmentIds.length > 0) {
-    const weekTests = await db
-      .select()
-      .from(weeklyTests)
-      .where(
-        and(
-          gte(weeklyTests.createdAt, weekAgo),
-          lte(weeklyTests.createdAt, now)
-        )
-      );
+    try {
+      const weekTests = await db
+        .select()
+        .from(weeklyTests)
+        .where(
+          and(
+            gte(weeklyTests.createdAt, weekAgo),
+            lte(weeklyTests.createdAt, now)
+          )
+        );
 
-    for (const test of weekTests) {
-      if (
-        enrollmentIds.includes(test.enrollmentId) &&
-        test.scorePercentage
-      ) {
-        testScores.push(parseFloat(test.scorePercentage));
+      for (const test of weekTests) {
+        if (
+          enrollmentIds.includes(test.enrollmentId) &&
+          test.scorePercentage
+        ) {
+          testScores.push(parseFloat(test.scorePercentage));
+        }
       }
+    } catch {
+      // leave testScores empty
     }
   }
 
   // Streak
-  const [streakData] = await db
-    .select()
-    .from(studentStreaks)
-    .where(eq(studentStreaks.studentId, studentId))
-    .limit(1);
-
-  const streak = streakData?.currentStreak ?? 0;
+  let streak = 0;
+  try {
+    const [streakData] = await db
+      .select()
+      .from(studentStreaks)
+      .where(eq(studentStreaks.studentId, studentId))
+      .limit(1);
+    streak = streakData?.currentStreak ?? 0;
+  } catch {
+    streak = 0;
+  }
 
   // Generate summary text
   const studentName = profile?.fullName ?? "Student";
