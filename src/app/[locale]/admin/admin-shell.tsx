@@ -25,6 +25,8 @@ import {
   ChevronLeft,
   Shield,
   MessageSquare,
+  Users2,
+  Award,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -36,6 +38,8 @@ const navItems = [
   { key: "sidebarRecordings", href: "/admin/recordings", icon: Disc },
   { key: "sidebarMatches", href: "/admin/matches", icon: UserCheck },
   { key: "sidebarScheduleRequests", href: "/admin/schedule-requests", icon: CalendarClock },
+  { key: "sidebarDarsCircles", href: "/admin/dars-circles", icon: Users2 },
+  { key: "sidebarCertificates", href: "/admin/certificates", icon: Award },
   { key: "sidebarAgents", href: "/admin/agents", icon: Activity },
   { key: "sidebarAIMonitor", href: "/admin/ai-monitor", icon: Bot },
   { key: "sidebarReviews", href: "/admin/reviews", icon: Star },

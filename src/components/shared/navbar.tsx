@@ -20,6 +20,7 @@ const navLinks = [
   { href: "/about" as const, key: "about" as const },
   { href: "/blog" as const, key: "blog" as const },
   { href: "/pricing" as const, key: "pricing" as const },
+  { href: "/contact" as const, key: "contact" as const },
 ];
 
 export function Navbar() {

@@ -160,11 +160,11 @@
     "huffaz": "حافظ"
   },
   "pricingTeaser": {
-    "title": "Starting from just $23/month",
+    "title": "Starting from just $38/month",
     "plan1": "الخطة 1: معلم + ذكاء اصطناعي",
     "plan2": "الخطة 2: ذكاء اصطناعي فقط",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $23/mo",
+    "plan1Price": "From $55/mo",
+    "plan2Price": "From $38/mo",
     "viewPricing": "عرض الأسعار الكاملة"
   },
   "socialLinks": {
@@ -837,6 +837,8 @@
     "sidebarRecordings": "التسجيلات",
     "sidebarMatches": "المطابقات",
     "sidebarScheduleRequests": "طلبات الجدول",
+    "sidebarDarsCircles": "حلقات الدرس",
+    "sidebarCertificates": "الشهادات",
     "sidebarAgents": "سجلات الوكيل",
     "sidebarAIMonitor": "مراقب الذكاء",
     "sidebarReviews": "المراجعات",

@@ -84,10 +84,10 @@ export default async function ContactPage() {
                   {t("emailDesc")}
                 </p>
                 <a
-                  href="mailto:support@tibyaan.com"
+                  href="mailto:academytibyaan@gmail.com"
                   className="mt-4 inline-block text-primary font-medium hover:underline"
                 >
-                  support@tibyaan.com
+                  academytibyaan@gmail.com
                 </a>
               </div>
 
@@ -103,12 +103,12 @@ export default async function ContactPage() {
                   {t("whatsappDesc")}
                 </p>
                 <a
-                  href="https://wa.me/1234567890"
+                  href="https://wa.me/923129114002"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-block text-green-600 font-medium hover:underline"
                 >
-                  {t("whatsappLink")}
+                  +92-312-9114002
                 </a>
               </div>
             </div>

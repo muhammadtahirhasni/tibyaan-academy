@@ -25,6 +25,51 @@ const DAYS = [
   "Sunday",
 ];
 
+// Comprehensive world timezones list
+const WORLD_TIMEZONES = [
+  "Pacific/Midway",
+  "Pacific/Honolulu",
+  "America/Anchorage",
+  "America/Los_Angeles",
+  "America/Denver",
+  "America/Chicago",
+  "America/New_York",
+  "America/Caracas",
+  "America/Halifax",
+  "America/St_Johns",
+  "America/Sao_Paulo",
+  "America/Argentina/Buenos_Aires",
+  "America/Noronha",
+  "Atlantic/Azores",
+  "Atlantic/Cape_Verde",
+  "Europe/London",
+  "Europe/Berlin",
+  "Europe/Paris",
+  "Europe/Rome",
+  "Europe/Istanbul",
+  "Europe/Moscow",
+  "Asia/Dubai",
+  "Asia/Kabul",
+  "Asia/Karachi",
+  "Asia/Kolkata",
+  "Asia/Kathmandu",
+  "Asia/Dhaka",
+  "Asia/Yangon",
+  "Asia/Bangkok",
+  "Asia/Singapore",
+  "Asia/Shanghai",
+  "Asia/Tokyo",
+  "Asia/Seoul",
+  "Australia/Sydney",
+  "Pacific/Auckland",
+  "Pacific/Fiji",
+  "Africa/Cairo",
+  "Africa/Johannesburg",
+  "Africa/Nairobi",
+  "Africa/Lagos",
+  "Africa/Accra",
+];
+
 export default function StudentSchedulePage() {
   const t = useTranslations("scheduling");
 
@@ -152,12 +197,17 @@ export default function StudentSchedulePage() {
             <Globe className="w-4 h-4" />
             {t("timezone")}
           </label>
-          <input
-            type="text"
+          <select
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
             className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-          />
+          >
+            {WORLD_TIMEZONES.map((tz) => (
+              <option key={tz} value={tz}>
+                {tz.replace(/_/g, " ")}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Teacher ID & Course Selection */}
@@ -220,27 +270,38 @@ export default function StudentSchedulePage() {
           </div>
         </div>
 
-        {/* Preferred Time */}
+        {/* Preferred Time (24-hour) */}
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
             <Clock className="w-4 h-4" />
-            {t("preferredTime")}
+            {t("preferredTime")} (24-hour format)
           </label>
           <div className="flex items-center gap-3">
-            <input
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-            />
-            <span className="text-muted-foreground">{t("to")}</span>
-            <input
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-            />
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-muted-foreground">From</span>
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                min="00:00"
+                max="23:59"
+                className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+            <span className="text-muted-foreground mt-5">{t("to")}</span>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-muted-foreground">To</span>
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                min="00:00"
+                max="23:59"
+                className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
           </div>
+          <p className="mt-1 text-xs text-muted-foreground">All times are in your selected timezone: <span className="font-medium text-foreground">{timezone}</span></p>
         </div>
 
         {/* Info about Admin approval */}
@@ -281,6 +342,9 @@ export default function StudentSchedulePage() {
             )}
             <Badge variant="outline">
               Time: {startTime} – {endTime}
+            </Badge>
+            <Badge variant="outline">
+              TZ: {timezone}
             </Badge>
           </div>
         </motion.div>

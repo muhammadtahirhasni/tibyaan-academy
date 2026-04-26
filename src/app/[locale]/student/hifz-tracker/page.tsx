@@ -19,7 +19,7 @@ import {
 // Sample data for Quran Juz
 const juzData = Array.from({ length: 30 }, (_, i) => ({
   juz: i + 1,
-  memorized: i < 2 ? 100 : i === 2 ? 45 : 0,
+  memorized: 0,
 }));
 
 // Sample surahs
@@ -102,8 +102,8 @@ export default function HifzTrackerPage() {
   const [calMonth, setCalMonth] = useState(currentMonth);
   const [calYear, setCalYear] = useState(currentYear);
 
-  const totalAyaat = 6236;
-  const memorizedAyaat = 564;
+  const totalAyaat = 6666;
+  const memorizedAyaat = 0;
   const memorizedPercentage = Math.round((memorizedAyaat / totalAyaat) * 100);
 
   const daysInMonth = getDaysInMonth(calMonth, calYear);
@@ -141,7 +141,7 @@ export default function HifzTrackerPage() {
         <div className="flex items-center gap-3 bg-card border rounded-xl px-4 py-3">
           <Flame className="w-6 h-6 text-amber-500" />
           <div>
-            <p className="text-lg font-bold text-foreground">12</p>
+            <p className="text-lg font-bold text-foreground">0</p>
             <p className="text-xs text-muted-foreground">{t("streak")}</p>
           </div>
         </div>
@@ -155,9 +155,9 @@ export default function HifzTrackerPage() {
             value: `${memorizedAyaat}/${totalAyaat}`,
             extra: `${memorizedPercentage}%`,
           },
-          { label: t("surahsComplete"), value: "8", extra: "/114" },
-          { label: t("juzComplete"), value: "2", extra: "/30" },
-          { label: t("streak"), value: "12", extra: "days" },
+          { label: t("surahsComplete"), value: "0", extra: "/114" },
+          { label: t("juzComplete"), value: "0", extra: "/30" },
+          { label: t("streak"), value: "0", extra: "days" },
         ].map((stat, i) => (
           <motion.div
             key={stat.label}

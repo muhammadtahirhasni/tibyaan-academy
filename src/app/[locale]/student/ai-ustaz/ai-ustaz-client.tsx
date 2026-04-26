@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +41,132 @@ const languages = [
 
 function generateSessionId() {
   return crypto.randomUUID();
+}
+
+function renderMarkdown(content: string) {
+  const lines = content.split("\n");
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (!line.trim()) {
+      i++;
+      continue;
+    }
+
+    // Heading
+    if (line.startsWith("### ")) {
+      elements.push(
+        <h4 key={i} className="font-bold text-foreground text-sm mt-3 mb-1">
+          {line.replace("### ", "")}
+        </h4>
+      );
+    } else if (line.startsWith("## ")) {
+      elements.push(
+        <h3 key={i} className="font-bold text-foreground text-base mt-4 mb-2 border-b border-muted pb-1">
+          {line.replace("## ", "")}
+        </h3>
+      );
+    } else if (line.startsWith("# ")) {
+      elements.push(
+        <h2 key={i} className="font-bold text-primary text-lg mt-4 mb-2">
+          {line.replace("# ", "")}
+        </h2>
+      );
+    }
+    // Quran Ayat block
+    else if (
+      line.toLowerCase().startsWith("**ayat") ||
+      line.toLowerCase().startsWith("**quran") ||
+      line.toLowerCase().startsWith("**verse") ||
+      line.toLowerCase().startsWith("آيت") ||
+      line.toLowerCase().startsWith("قرآن")
+    ) {
+      elements.push(
+        <div key={i} className="my-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 p-3">
+          <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1">
+            📖 Quran Ayat
+          </div>
+          <p className="text-sm text-foreground">{formatInline(line)}</p>
+        </div>
+      );
+    }
+    // Hadith block
+    else if (
+      line.toLowerCase().startsWith("**hadith") ||
+      line.toLowerCase().startsWith("hadith") ||
+      line.toLowerCase().startsWith("حدیث")
+    ) {
+      elements.push(
+        <div key={i} className="my-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-3">
+          <div className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-1">
+            📜 Hadith
+          </div>
+          <p className="text-sm text-foreground">{formatInline(line)}</p>
+        </div>
+      );
+    }
+    // Bullet points
+    else if (line.startsWith("- ") || line.startsWith("• ")) {
+      const bullets: string[] = [];
+      while (i < lines.length && (lines[i].startsWith("- ") || lines[i].startsWith("• "))) {
+        bullets.push(lines[i].replace(/^[-•]\s/, ""));
+        i++;
+      }
+      elements.push(
+        <ul key={i} className="space-y-1 my-2 ps-3">
+          {bullets.map((b, bi) => (
+            <li key={bi} className="flex items-start gap-2 text-sm">
+              <span className="text-primary mt-0.5 shrink-0">•</span>
+              <span>{formatInline(b)}</span>
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+    // Numbered list
+    else if (/^\d+\.\s/.test(line)) {
+      const items: string[] = [];
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        items.push(lines[i].replace(/^\d+\.\s/, ""));
+        i++;
+      }
+      elements.push(
+        <ol key={i} className="space-y-1 my-2 ps-3 list-decimal list-inside">
+          {items.map((it, ii) => (
+            <li key={ii} className="text-sm">{formatInline(it)}</li>
+          ))}
+        </ol>
+      );
+      continue;
+    }
+    // Regular paragraph
+    else {
+      elements.push(
+        <p key={i} className="text-sm leading-relaxed mb-1">
+          {formatInline(line)}
+        </p>
+      );
+    }
+    i++;
+  }
+  return elements;
+}
+
+function formatInline(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith("*") && part.endsWith("*")) {
+      return <em key={i} className="italic">{part.slice(1, -1)}</em>;
+    }
+    return part;
+  });
 }
 
 export function AIUstazClient({
@@ -379,14 +505,18 @@ export function AIUstazClient({
                   </div>
                 )}
                 <div
-                  className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm ${
+                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-md"
+                      ? "bg-primary text-primary-foreground rounded-br-md text-sm"
                       : "bg-muted text-foreground rounded-bl-md"
                   }`}
                 >
-                  {msg.content || (
-                    <span className="flex items-center gap-2 text-muted-foreground">
+                  {msg.role === "user" ? (
+                    msg.content
+                  ) : msg.content ? (
+                    <div className="space-y-1">{renderMarkdown(msg.content)}</div>
+                  ) : (
+                    <span className="flex items-center gap-2 text-muted-foreground text-sm">
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
                       {t("thinking")}
                     </span>

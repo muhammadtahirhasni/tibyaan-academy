@@ -275,10 +275,8 @@ export default function OnboardingPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="country">{t("country")}</Label>
-                    <Input
+                    <select
                       id="country"
-                      type="text"
-                      placeholder={t("countryPlaceholder")}
                       value={studentData.country}
                       onChange={(e) =>
                         setStudentData({
@@ -286,8 +284,45 @@ export default function OnboardingPage() {
                           country: e.target.value,
                         })
                       }
-                      className="h-12"
-                    />
+                      className="w-full h-12 rounded-lg border bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+                    >
+                      <option value="">{t("countryPlaceholder")}</option>
+                      <option value="Pakistan">🇵🇰 Pakistan</option>
+                      <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                      <option value="UAE">🇦🇪 UAE</option>
+                      <option value="USA">🇺🇸 USA</option>
+                      <option value="UK">🇬🇧 UK</option>
+                      <option value="India">🇮🇳 India</option>
+                      <option value="Bangladesh">🇧🇩 Bangladesh</option>
+                      <option value="Indonesia">🇮🇩 Indonesia</option>
+                      <option value="Malaysia">🇲🇾 Malaysia</option>
+                      <option value="Egypt">🇪🇬 Egypt</option>
+                      <option value="Morocco">🇲🇦 Morocco</option>
+                      <option value="Algeria">🇩🇿 Algeria</option>
+                      <option value="Tunisia">🇹🇳 Tunisia</option>
+                      <option value="Turkey">🇹🇷 Turkey</option>
+                      <option value="Iran">🇮🇷 Iran</option>
+                      <option value="Iraq">🇮🇶 Iraq</option>
+                      <option value="Jordan">🇯🇴 Jordan</option>
+                      <option value="Lebanon">🇱🇧 Lebanon</option>
+                      <option value="Kuwait">🇰🇼 Kuwait</option>
+                      <option value="Qatar">🇶🇦 Qatar</option>
+                      <option value="Bahrain">🇧🇭 Bahrain</option>
+                      <option value="Oman">🇴🇲 Oman</option>
+                      <option value="Sudan">🇸🇩 Sudan</option>
+                      <option value="Nigeria">🇳🇬 Nigeria</option>
+                      <option value="Kenya">🇰🇪 Kenya</option>
+                      <option value="South Africa">🇿🇦 South Africa</option>
+                      <option value="France">🇫🇷 France</option>
+                      <option value="Germany">🇩🇪 Germany</option>
+                      <option value="Canada">🇨🇦 Canada</option>
+                      <option value="Australia">🇦🇺 Australia</option>
+                      <option value="New Zealand">🇳🇿 New Zealand</option>
+                      <option value="Japan">🇯🇵 Japan</option>
+                      <option value="China">🇨🇳 China</option>
+                      <option value="Afghanistan">🇦🇫 Afghanistan</option>
+                      <option value="Other">🌍 Other</option>
+                    </select>
                   </div>
                 </div>
               )}

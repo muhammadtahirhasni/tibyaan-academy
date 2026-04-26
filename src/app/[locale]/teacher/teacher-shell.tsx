@@ -11,7 +11,6 @@ import {
   Calendar,
   BookOpen,
   ClipboardCheck,
-  Award,
   DollarSign,
   Video,
   MessageSquare,
@@ -23,7 +22,6 @@ import {
   LogOut,
   ChevronLeft,
   Bot,
-  Users2,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -34,11 +32,9 @@ const navItems = [
   { key: "sidebarLessons", href: "/teacher/lessons", icon: BookOpen },
   { key: "sidebarTests", href: "/teacher/tests", icon: ClipboardCheck },
   { key: "sidebarAIAssistant", href: "/teacher/ai-assistant", icon: Bot },
-  { key: "sidebarDarsCircles", href: "/teacher/dars-circles", icon: Users2 },
   { key: "sidebarVideos", href: "/teacher/videos", icon: Video },
   { key: "sidebarMessages", href: "/teacher/messages", icon: MessageSquare },
   { key: "sidebarRecordings", href: "/teacher/recordings", icon: Disc },
-  { key: "sidebarCertificates", href: "/teacher/certificates", icon: Award },
   { key: "sidebarRevenue", href: "/teacher/revenue", icon: DollarSign },
 ];
 

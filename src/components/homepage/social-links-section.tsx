@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Youtube, Linkedin, Facebook, Instagram, ExternalLink } from "lucide-react";
 
@@ -10,13 +9,17 @@ const socialLinks = [
     key: "youtube",
     href: "https://www.youtube.com/channel/UCBU7Fc9ZjYU42SHfSQM9_rg",
     icon: Youtube,
-    color: "bg-red-600 hover:bg-red-700",
+    color: "bg-red-600",
+    bgCard: "from-red-50 to-red-100/50 dark:from-red-950/20 dark:to-red-900/10 border-red-200 dark:border-red-800",
+    label: "YouTube",
   },
   {
     key: "linkedin",
     href: "https://www.linkedin.com/in/tibyaan-academy-0263b73bb/",
     icon: Linkedin,
-    color: "bg-blue-700 hover:bg-blue-800",
+    color: "bg-blue-700",
+    bgCard: "from-blue-50 to-blue-100/50 dark:from-blue-950/20 dark:to-blue-900/10 border-blue-200 dark:border-blue-800",
+    label: "LinkedIn",
   },
   {
     key: "x",
@@ -26,19 +29,25 @@ const socialLinks = [
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
     ),
-    color: "bg-black hover:bg-gray-800",
+    color: "bg-black dark:bg-gray-800",
+    bgCard: "from-gray-50 to-gray-100/50 dark:from-gray-900/20 dark:to-gray-800/10 border-gray-200 dark:border-gray-700",
+    label: "X (Twitter)",
   },
   {
     key: "facebook",
     href: "https://web.facebook.com/profile.php?id=61576509186955",
     icon: Facebook,
-    color: "bg-blue-600 hover:bg-blue-700",
+    color: "bg-blue-600",
+    bgCard: "from-blue-50 to-sky-100/50 dark:from-blue-950/20 dark:to-sky-900/10 border-blue-200 dark:border-blue-800",
+    label: "Facebook",
   },
   {
     key: "instagram",
     href: "https://www.instagram.com/tibyaanacademy/",
     icon: Instagram,
-    color: "bg-gradient-to-br from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600",
+    color: "bg-gradient-to-br from-purple-600 to-pink-500",
+    bgCard: "from-pink-50 to-purple-100/50 dark:from-pink-950/20 dark:to-purple-900/10 border-pink-200 dark:border-pink-800",
+    label: "Instagram",
   },
 ];
 
@@ -47,7 +56,7 @@ export function SocialLinksSection() {
 
   return (
     <section className="py-16 bg-muted/30">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,7 +72,8 @@ export function SocialLinksSection() {
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-4">
+        {/* Horizontal scroll row of portrait cards */}
+        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
           {socialLinks.map((social, index) => {
             const Icon = social.icon;
             return (
@@ -72,36 +82,38 @@ export function SocialLinksSection() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
+                className={`
+                  flex-none snap-start w-48 rounded-2xl border bg-gradient-to-b ${social.bgCard}
+                  p-6 flex flex-col items-center gap-4 text-center
+                  hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group
+                `}
               >
-                <Button
-                  variant="outline"
-                  className="w-full h-auto py-4 px-6 flex items-center gap-4 justify-between group hover:shadow-md transition-all"
-                >
-                  <div className="flex items-center gap-4">
-                    <div
-                      className={`w-10 h-10 rounded-lg ${social.color} flex items-center justify-center text-white shrink-0`}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div className="text-start">
-                      <div className="font-semibold text-foreground">
-                        {t(social.key)}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t(`${social.key}Desc`)}
-                      </div>
-                    </div>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-                </Button>
+                {/* Icon circle */}
+                <div className={`w-16 h-16 rounded-2xl ${social.color} flex items-center justify-center text-white shadow-lg`}>
+                  <Icon className="w-8 h-8" />
+                </div>
+                {/* Label */}
+                <div>
+                  <div className="font-bold text-foreground text-base">{social.label}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{t(`${social.key}Desc`)}</div>
+                </div>
+                {/* Follow button */}
+                <div className="mt-auto flex items-center gap-1 text-xs font-semibold text-primary group-hover:gap-2 transition-all">
+                  Follow <ExternalLink className="w-3 h-3" />
+                </div>
               </motion.a>
             );
           })}
         </div>
+
+        {/* Scroll hint */}
+        <p className="text-center text-xs text-muted-foreground mt-4">
+          ← Scroll to see all social channels →
+        </p>
       </div>
     </section>
   );

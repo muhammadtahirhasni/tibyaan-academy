@@ -36,6 +36,44 @@ const languages = [
   { value: "id", label: "Bahasa Indonesia" },
 ];
 
+// Country phone codes with flags
+const COUNTRY_CODES = [
+  { code: "+92", flag: "🇵🇰", name: "Pakistan" },
+  { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
+  { code: "+971", flag: "🇦🇪", name: "UAE" },
+  { code: "+1", flag: "🇺🇸", name: "USA" },
+  { code: "+44", flag: "🇬🇧", name: "UK" },
+  { code: "+91", flag: "🇮🇳", name: "India" },
+  { code: "+880", flag: "🇧🇩", name: "Bangladesh" },
+  { code: "+62", flag: "🇮🇩", name: "Indonesia" },
+  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
+  { code: "+20", flag: "🇪🇬", name: "Egypt" },
+  { code: "+212", flag: "🇲🇦", name: "Morocco" },
+  { code: "+213", flag: "🇩🇿", name: "Algeria" },
+  { code: "+216", flag: "🇹🇳", name: "Tunisia" },
+  { code: "+90", flag: "🇹🇷", name: "Turkey" },
+  { code: "+98", flag: "🇮🇷", name: "Iran" },
+  { code: "+964", flag: "🇮🇶", name: "Iraq" },
+  { code: "+962", flag: "🇯🇴", name: "Jordan" },
+  { code: "+961", flag: "🇱🇧", name: "Lebanon" },
+  { code: "+965", flag: "🇰🇼", name: "Kuwait" },
+  { code: "+974", flag: "🇶🇦", name: "Qatar" },
+  { code: "+973", flag: "🇧🇭", name: "Bahrain" },
+  { code: "+968", flag: "🇴🇲", name: "Oman" },
+  { code: "+249", flag: "🇸🇩", name: "Sudan" },
+  { code: "+251", flag: "🇪🇹", name: "Ethiopia" },
+  { code: "+234", flag: "🇳🇬", name: "Nigeria" },
+  { code: "+254", flag: "🇰🇪", name: "Kenya" },
+  { code: "+27", flag: "🇿🇦", name: "South Africa" },
+  { code: "+33", flag: "🇫🇷", name: "France" },
+  { code: "+49", flag: "🇩🇪", name: "Germany" },
+  { code: "+61", flag: "🇦🇺", name: "Australia" },
+  { code: "+64", flag: "🇳🇿", name: "New Zealand" },
+  { code: "+81", flag: "🇯🇵", name: "Japan" },
+  { code: "+82", flag: "🇰🇷", name: "South Korea" },
+  { code: "+86", flag: "🇨🇳", name: "China" },
+];
+
 export default function SignupPage() {
   const t = useTranslations("auth");
   const tc = useTranslations("common");
@@ -45,12 +83,18 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [selectedRole, setSelectedRole] = useState("student");
+  const [countryCode, setCountryCode] = useState("+92");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   async function handleSignup(formData: FormData) {
     if (!termsAccepted) return;
     setLoading(true);
     setError(null);
     formData.append("locale", locale);
+    // Combine country code + phone for student WhatsApp
+    if (selectedRole === "student" && phoneNumber) {
+      formData.set("parentWhatsapp", countryCode + phoneNumber);
+    }
     const result = await signupWithEmail(formData);
     if (result?.error) {
       setError(result.error);
@@ -202,15 +246,48 @@ export default function SignupPage() {
               </Select>
             </div>
 
-            {/* Parent WhatsApp — shown only for students */}
+            {/* Parent WhatsApp with country code — students only */}
             {selectedRole === "student" && (
               <div className="space-y-2">
                 <Label htmlFor="parentWhatsapp">{t("parentWhatsapp")}</Label>
+                <div className="flex gap-2">
+                  {/* Country code selector */}
+                  <select
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    className="h-12 rounded-lg border bg-background px-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 shrink-0 w-[140px]"
+                  >
+                    {COUNTRY_CODES.map((c) => (
+                      <option key={c.code + c.name} value={c.code}>
+                        {c.flag} {c.name} ({c.code})
+                      </option>
+                    ))}
+                  </select>
+                  {/* Phone number input */}
+                  <Input
+                    id="parentWhatsapp"
+                    type="tel"
+                    placeholder="300-1234567"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="h-12 flex-1"
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Combined: {countryCode}{phoneNumber || "XXXXXXXXXX"}
+                </p>
+              </div>
+            )}
+
+            {/* Teacher WhatsApp — teachers enter their own number directly */}
+            {selectedRole === "teacher" && (
+              <div className="space-y-2">
+                <Label htmlFor="teacherWhatsapp">Your WhatsApp Number</Label>
                 <Input
-                  id="parentWhatsapp"
+                  id="teacherWhatsapp"
                   name="parentWhatsapp"
                   type="tel"
-                  placeholder={t("parentWhatsappPlaceholder")}
+                  placeholder="+92-300-1234567"
                   className="h-12"
                 />
               </div>

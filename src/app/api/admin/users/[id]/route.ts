@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
-import { users, enrollments, subscriptions, courses, aiChatHistory } from "@/lib/db/schema";
+import { users, enrollments, subscriptions, courses, aiChatHistory, teacherProfiles, studentProfiles } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
@@ -63,11 +63,39 @@ export async function GET(
       LIMIT 10
     `);
 
+    // Teacher profile (if teacher)
+    let teacherProfile: { specializations: string[] | null; bio: string | null; yearsExperience: number | null } | null = null;
+    if (targetUser.role === "teacher") {
+      const [tp] = await db
+        .select({
+          specializations: teacherProfiles.specializations,
+          bio: teacherProfiles.bio,
+          yearsExperience: teacherProfiles.yearsExperience,
+        })
+        .from(teacherProfiles)
+        .where(eq(teacherProfiles.userId, id))
+        .limit(1);
+      teacherProfile = tp ?? null;
+    }
+
+    // Student profile (if student) - for parentWhatsapp
+    let parentWhatsapp: string | null = null;
+    if (targetUser.role === "student") {
+      const [sp] = await db
+        .select({ parentWhatsapp: studentProfiles.parentWhatsapp })
+        .from(studentProfiles)
+        .where(eq(studentProfiles.userId, id))
+        .limit(1);
+      parentWhatsapp = sp?.parentWhatsapp ?? null;
+    }
+
     return NextResponse.json({
       ...targetUser,
       enrollments: userEnrollments,
       subscriptions: userSubs,
       chatSessions: chatSessions.rows,
+      teacherProfile,
+      parentWhatsapp,
     });
   } catch (error) {
     console.error("Admin user detail error:", error);

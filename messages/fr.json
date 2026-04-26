@@ -160,11 +160,11 @@
     "huffaz": "Huffaz"
   },
   "pricingTeaser": {
-    "title": "Starting from just $23/month",
+    "title": "Starting from just $38/month",
     "plan1": "Plan 1 : Enseignant + IA",
     "plan2": "Plan 2 : IA uniquement",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $23/mo",
+    "plan1Price": "From $55/mo",
+    "plan2Price": "From $38/mo",
     "viewPricing": "Voir tous les tarifs"
   },
   "socialLinks": {
@@ -837,6 +837,8 @@
     "sidebarRecordings": "Enregistrements",
     "sidebarMatches": "Correspondances",
     "sidebarScheduleRequests": "Demandes de Planning",
+    "sidebarDarsCircles": "Cercles de Dars",
+    "sidebarCertificates": "Certificats",
     "sidebarAgents": "Journaux des agents",
     "sidebarAIMonitor": "Moniteur IA",
     "sidebarReviews": "Avis",

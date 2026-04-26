@@ -206,19 +206,54 @@ export default function ParentReportsPage() {
                   <p className="text-xs text-muted-foreground font-mono">{lookedUpStudent.studentCode}</p>
                 </div>
               </div>
-              {lookedUpStudent.parentWhatsapp ? (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Phone className="w-4 h-4" />
-                  <span>{lookedUpStudent.parentWhatsapp}</span>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <Phone className="w-4 h-4 text-green-600 shrink-0" />
+                  <span className="font-medium text-foreground">Parent WhatsApp:</span>
+                  {lookedUpStudent.parentWhatsapp ? (
+                    <a
+                      href={`https://wa.me/${lookedUpStudent.parentWhatsapp.replace(/\D/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-600 hover:underline"
+                    >
+                      {lookedUpStudent.parentWhatsapp}
+                    </a>
+                  ) : (
+                    <span className="text-amber-600 text-xs">Not on file — enter below</span>
+                  )}
                 </div>
-              ) : (
-                <p className="text-xs text-amber-600">No parent WhatsApp on file</p>
-              )}
+                {!lookedUpStudent.parentWhatsapp && (
+                  <div className="flex gap-2">
+                    <input
+                      type="tel"
+                      placeholder="+92-300-1234567"
+                      id="override-whatsapp"
+                      className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+                    />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        const el = document.getElementById("override-whatsapp") as HTMLInputElement;
+                        if (el?.value) {
+                          const num = el.value.replace(/\D/g, "");
+                          window.open(`https://wa.me/${num}`, "_blank");
+                        }
+                      }}
+                      className="gap-1"
+                    >
+                      <Phone className="w-3 h-3" />
+                      Open Chat
+                    </Button>
+                  </div>
+                )}
+              </div>
               <div className="flex gap-2">
                 <Button
                   size="sm"
                   onClick={() => handleSendSingle(lookedUpStudent.id)}
-                  disabled={!!sendingId || !lookedUpStudent.parentWhatsapp}
+                  disabled={!!sendingId}
                   className="gap-2"
                 >
                   <Send className="w-3 h-3" />

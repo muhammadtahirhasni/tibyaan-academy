@@ -160,11 +160,11 @@
     "huffaz": "حفاظ"
   },
   "pricingTeaser": {
-    "title": "Starting from just $23/month",
+    "title": "Starting from just $38/month",
     "plan1": "پلان 1: انسانی استاد + AI",
     "plan2": "پلان 2: صرف AI",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $23/mo",
+    "plan1Price": "From $55/mo",
+    "plan2Price": "From $38/mo",
     "viewPricing": "پوری قیمتیں دیکھیں"
   },
   "socialLinks": {
@@ -836,8 +836,7 @@
     "sidebarVideos": "ویڈیوز",
     "sidebarRecordings": "ریکارڈنگز",
     "sidebarMatches": "میچنگ",
-    "sidebarScheduleRequests": "شیڈول درخواستیں",
-    "sidebarAgents": "ایجنٹ لاگز",
+    "sidebarScheduleRequests": "شیڈول درخواستیں",\n    "sidebarDarsCircles": "درس حلقے",\n    "sidebarCertificates": "اسناد",\n    "sidebarAgents": "ایجنٹ لاگز",
     "sidebarAIMonitor": "AI مانیٹر",
     "sidebarReviews": "جائزے",
     "sidebarNotifications": "اطلاعات",

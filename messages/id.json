@@ -160,11 +160,11 @@
     "huffaz": "Huffaz"
   },
   "pricingTeaser": {
-    "title": "Starting from just $23/month",
+    "title": "Starting from just $38/month",
     "plan1": "Paket 1: Guru + AI",
     "plan2": "Paket 2: AI Saja",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $23/mo",
+    "plan1Price": "From $55/mo",
+    "plan2Price": "From $38/mo",
     "viewPricing": "Lihat Semua Harga"
   },
   "socialLinks": {
@@ -837,6 +837,8 @@
     "sidebarRecordings": "Rekaman",
     "sidebarMatches": "Pencocokan",
     "sidebarScheduleRequests": "Permintaan Jadwal",
+    "sidebarDarsCircles": "Lingkaran Dars",
+    "sidebarCertificates": "Sertifikat",
     "sidebarAgents": "Log Agen",
     "sidebarAIMonitor": "Monitor AI",
     "sidebarReviews": "Ulasan",

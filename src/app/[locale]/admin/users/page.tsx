@@ -13,6 +13,10 @@ interface User {
   role: string;
   isBanned: boolean;
   createdAt: string;
+  parentWhatsapp?: string | null;
+  teacherId?: string | null;
+  studentId?: string | null;
+  courseIds?: string[];
 }
 
 export default function AdminUsersPage() {
@@ -111,7 +115,9 @@ export default function AdminUsersPage() {
               <tr>
                 <th className="text-start px-4 py-3 font-medium">{t("userDetail")}</th>
                 <th className="text-start px-4 py-3 font-medium">{t("email")}</th>
-                <th className="text-start px-4 py-3 font-medium">Student ID</th>
+                <th className="text-start px-4 py-3 font-medium">User ID</th>
+                <th className="text-start px-4 py-3 font-medium">Parent WhatsApp</th>
+                <th className="text-start px-4 py-3 font-medium">Courses</th>
                 <th className="text-start px-4 py-3 font-medium">{t("role")}</th>
                 <th className="text-start px-4 py-3 font-medium">{t("status")}</th>
                 <th className="text-start px-4 py-3 font-medium">{t("joined")}</th>
@@ -121,13 +127,13 @@ export default function AdminUsersPage() {
             <tbody className="divide-y">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
+                  <td colSpan={9} className="px-4 py-8 text-center text-muted-foreground">
                     Loading...
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
+                  <td colSpan={9} className="px-4 py-8 text-center text-muted-foreground">
                     {t("noResults")}
                   </td>
                 </tr>
@@ -144,13 +150,34 @@ export default function AdminUsersPage() {
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">{user.email}</td>
                     <td className="px-4 py-3">
-                      {user.role === "student" ? (
+                      {user.role === "teacher" && user.teacherId ? (
+                        <span className="font-mono text-xs text-blue-700 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-0.5 rounded">
+                          {user.teacherId}
+                        </span>
+                      ) : user.role === "student" && user.studentId ? (
                         <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-0.5 rounded">
-                          TBA-{user.id.substring(0, 8).toUpperCase()}
+                          {user.studentId}
                         </span>
                       ) : (
                         <span className="text-xs text-muted-foreground">—</span>
                       )}
+                    </td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
+                      {user.parentWhatsapp ? (
+                        <a
+                          href={`https://wa.me/${user.parentWhatsapp.replace(/\D/g, "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600 hover:underline"
+                        >
+                          {user.parentWhatsapp}
+                        </a>
+                      ) : <span>—</span>}
+                    </td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
+                      {user.courseIds && user.courseIds.length > 0
+                        ? <span>{user.courseIds.length} course{user.courseIds.length !== 1 ? "s" : ""}</span>
+                        : <span>—</span>}
                     </td>
                     <td className="px-4 py-3">
                       <select

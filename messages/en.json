@@ -160,11 +160,11 @@
     "huffaz": "Huffaz"
   },
   "pricingTeaser": {
-    "title": "Starting from just $23/month",
+    "title": "Starting from just $38/month",
     "plan1": "Plan 1: Human Teacher + AI",
     "plan2": "Plan 2: AI Only",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $23/mo",
+    "plan1Price": "From $55/mo",
+    "plan2Price": "From $38/mo",
     "viewPricing": "View Full Pricing"
   },
   "socialLinks": {
@@ -837,6 +837,8 @@
     "sidebarRecordings": "Recordings",
     "sidebarMatches": "Matches",
     "sidebarScheduleRequests": "Schedule Requests",
+    "sidebarDarsCircles": "Dars Circles",
+    "sidebarCertificates": "Certificates",
     "sidebarAgents": "Agent Logs",
     "sidebarAIMonitor": "AI Monitor",
     "sidebarReviews": "Reviews",
