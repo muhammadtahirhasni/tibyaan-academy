@@ -1,5 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getDb } from "@/lib/db";
+import { users } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { getTeacherVideosList } from "@/lib/db/teacher-queries";
 import { VideosClient } from "./videos-client";
 
@@ -15,6 +18,15 @@ export default async function TeacherVideosPage({
   } = await supabase.auth.getUser();
 
   if (!user) redirect(`/${locale}/login`);
+
+  const db = getDb();
+  const [dbUser] = await db
+    .select({ fullName: users.fullName })
+    .from(users)
+    .where(eq(users.id, user.id))
+    .limit(1);
+
+  const teacherName = dbUser?.fullName || "Teacher";
 
   let videos: Array<{
     id: string;
@@ -49,5 +61,5 @@ export default async function TeacherVideosPage({
     console.error("Failed to load teacher videos:", err);
   }
 
-  return <VideosClient videos={videos} />;
+  return <VideosClient videos={videos} teacherName={teacherName} />;
 }

@@ -17,7 +17,7 @@ function getAdminClient() {
 }
 
 export function getVideoKey(teacherId: string, videoId: string, ext = "mp4") {
-  return `teachers/${teacherId}/videos/${videoId}.${ext}`;
+  return `teachers/${teacherId}/${videoId}.${ext}`;
 }
 
 export function getThumbnailKey(teacherId: string, videoId: string) {

@@ -11,8 +11,10 @@ import {
   Eye,
   Inbox,
   Loader2,
+  Play,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { VideoShareButtons } from "@/components/video/video-share-buttons";
 
 type VideoItem = {
   id: string;
@@ -34,7 +36,13 @@ const statusConfig: Record<string, { icon: typeof Clock; color: string; label: s
   rejected: { icon: XCircle, color: "text-red-500", label: "Rejected" },
 };
 
-export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] }) {
+export function VideosClient({
+  videos: initialVideos,
+  teacherName,
+}: {
+  videos: VideoItem[];
+  teacherName: string;
+}) {
   const t = useTranslations("teacher");
   const [videos, setVideos] = useState(initialVideos);
   const [uploading, setUploading] = useState(false);
@@ -42,6 +50,7 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
   const [description, setDescription] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [playing, setPlaying] = useState<Record<string, boolean>>({});
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function handleUpload() {
@@ -52,7 +61,6 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
     setUploadProgress(0);
 
     try {
-      // Step 1: Get presigned upload URL from our API
       setUploadProgress(5);
       const res = await fetch("/api/videos/upload", {
         method: "POST",
@@ -81,11 +89,10 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
       const { signedUrl, videoId } = await res.json();
       setUploadProgress(15);
 
-      // Step 2: Upload directly to Supabase Storage via the signed URL.
-      // Supabase Storage expects FormData with cacheControl + the file under an empty-string key "".
+      // Supabase Storage signed URL upload — FormData with empty-string key matches SDK
       const formData = new FormData();
       formData.append("cacheControl", "3600");
-      formData.append("", file);  // empty string key matches Supabase Storage SDK exactly
+      formData.append("", file);
 
       const uploadRes = await fetch(signedUrl, {
         method: "PUT",
@@ -98,7 +105,6 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
       }
       setUploadProgress(100);
 
-      // Add to local state
       setVideos((prev) => [
         {
           id: videoId,
@@ -182,11 +188,14 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
           </div>
 
           {uploading && uploadProgress > 0 && (
-            <div className="w-full bg-muted rounded-full h-2">
-              <div
-                className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${uploadProgress}%` }}
-              />
+            <div className="space-y-1">
+              <div className="w-full bg-muted rounded-full h-2">
+                <div
+                  className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground text-center">{uploadProgress}%</p>
             </div>
           )}
 
@@ -219,21 +228,50 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
           {videos.map((video) => {
             const cfg = statusConfig[video.status] ?? statusConfig.pending;
             const StatusIcon = cfg.icon;
+            const isPlaying = playing[video.id];
+
             return (
               <div key={video.id} className="rounded-xl border bg-card overflow-hidden">
-                {/* Video preview / thumbnail */}
-                <div className="aspect-video bg-muted relative flex items-center justify-center">
-                  {video.status === "approved" && video.videoUrl ? (
+                {/* Video area */}
+                <div className="aspect-video bg-muted relative flex items-center justify-center overflow-hidden">
+                  {isPlaying && video.videoUrl ? (
                     <video
                       src={video.videoUrl}
-                      className="w-full h-full object-cover"
-                      preload="metadata"
+                      className="w-full h-full object-contain bg-black"
+                      controls
+                      autoPlay
+                      playsInline
                     />
                   ) : (
-                    <Video className="w-10 h-10 text-muted-foreground/30" />
+                    <>
+                      {video.thumbnailUrl ? (
+                        <img
+                          src={video.thumbnailUrl}
+                          alt={video.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Video className="w-10 h-10 text-muted-foreground/30" />
+                      )}
+                      {/* Play button overlay — only for approved videos with a URL */}
+                      {video.status === "approved" && video.videoUrl && (
+                        <button
+                          onClick={() => setPlaying((p) => ({ ...p, [video.id]: true }))}
+                          className="absolute inset-0 flex items-center justify-center hover:bg-black/10 transition-colors group"
+                        >
+                          <div className="w-12 h-12 bg-white/90 dark:bg-black/70 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <Play className="w-5 h-5 text-emerald-600 ms-0.5" />
+                          </div>
+                        </button>
+                      )}
+                    </>
                   )}
+
+                  {/* Status badge */}
                   <div className="absolute top-2 end-2">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-background/90 backdrop-blur-sm ${cfg.color}`}>
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-background/90 backdrop-blur-sm ${cfg.color}`}
+                    >
                       <StatusIcon className="w-3 h-3" />
                       {cfg.label}
                     </span>
@@ -252,12 +290,22 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
 
                   <div className="flex items-center justify-between mt-3 text-xs text-muted-foreground">
                     <span>{new Date(video.createdAt).toLocaleDateString()}</span>
-                    {video.status === "approved" && (
-                      <span className="flex items-center gap-1">
-                        <Eye className="w-3 h-3" />
-                        {video.viewCount}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {video.status === "approved" && (
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3 h-3" />
+                          {video.viewCount}
+                        </span>
+                      )}
+                      {/* Share button — only for approved videos */}
+                      {video.status === "approved" && (
+                        <VideoShareButtons
+                          videoId={video.id}
+                          title={video.title}
+                          teacherName={teacherName}
+                        />
+                      )}
+                    </div>
                   </div>
 
                   {video.status === "rejected" && video.adminNotes && (
