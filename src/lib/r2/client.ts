@@ -35,7 +35,8 @@ export function getPublicUrl(key: string, bucket = VIDEOS_BUCKET) {
 }
 
 /**
- * Generate a presigned URL for direct browser upload to Supabase Storage
+ * Generate a presigned URL for direct browser upload to Supabase Storage.
+ * Auto-creates the bucket if it doesn't exist.
  */
 export async function getPresignedUploadUrl(
   key: string,
@@ -44,9 +45,13 @@ export async function getPresignedUploadUrl(
   bucket = VIDEOS_BUCKET
 ): Promise<string> {
   const supabase = getAdminClient();
+
+  // Ensure bucket exists before generating a signed URL
+  await ensureBucket(bucket);
+
   const { data, error } = await supabase.storage
     .from(bucket)
-    .createSignedUploadUrl(key);
+    .createSignedUploadUrl(key, { upsert: true });
 
   if (error) throw new Error(`Failed to create upload URL: ${error.message}`);
   return data.signedUrl;
@@ -78,7 +83,7 @@ async function ensureBucket(bucket: string) {
   if (!data) {
     await supabase.storage.createBucket(bucket, {
       public: true,
-      fileSizeLimit: 104857600, // 100MB
+      fileSizeLimit: 524288000, // 500MB
     });
   }
 }

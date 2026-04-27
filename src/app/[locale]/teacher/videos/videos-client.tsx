@@ -81,15 +81,20 @@ export function VideosClient({ videos: initialVideos }: { videos: VideoItem[] })
       const { signedUrl, videoId } = await res.json();
       setUploadProgress(15);
 
-      // Step 2: Upload the file directly to Supabase Storage via the presigned URL
+      // Step 2: Upload directly to Supabase Storage via the signed URL.
+      // Supabase Storage expects FormData with cacheControl + the file under an empty-string key "".
+      const formData = new FormData();
+      formData.append("cacheControl", "3600");
+      formData.append("", file);  // empty string key matches Supabase Storage SDK exactly
+
       const uploadRes = await fetch(signedUrl, {
         method: "PUT",
-        body: file,
-        headers: { "Content-Type": file.type || "video/mp4" },
+        body: formData,
       });
 
       if (!uploadRes.ok) {
-        throw new Error("Direct upload to storage failed");
+        const errText = await uploadRes.text().catch(() => "");
+        throw new Error(`Storage upload failed (${uploadRes.status}): ${errText}`);
       }
       setUploadProgress(100);
 
