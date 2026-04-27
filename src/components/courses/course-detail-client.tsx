@@ -228,64 +228,84 @@ export default function CourseDetailClient() {
               {t("syllabus")}
             </motion.h2>
             <div className="mt-8 space-y-4">
-              {visibleSyllabus.map((section, i) => (
+              {visibleSyllabus.map((section, i) => {
+                const hasMultiBooks = section.books && section.books.length > 0;
+                const hasSingleBook = !hasMultiBooks && !!section.bookImage;
+
+                return (
                 <motion.div
                   key={section.id}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="flex items-start gap-4 p-5 rounded-xl bg-card border shadow-sm"
+                  className="p-5 rounded-xl bg-card border shadow-sm"
                 >
-                  {/* Book Image */}
-                  {section.bookImage ? (
-                    <div className="shrink-0 w-14 text-center">
-                      <img
-                        src={section.bookImage}
-                        alt={section.bookName ?? "Book"}
-                        width={56}
-                        height={72}
-                        className="w-14 h-[72px] object-cover rounded shadow-sm border border-muted mx-auto"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = "none";
-                          const fallback = (e.target as HTMLImageElement).nextElementSibling;
-                          if (fallback) (fallback as HTMLElement).style.display = "flex";
-                        }}
-                      />
-                      <div
-                        className="w-14 h-[72px] rounded bg-primary/10 hidden items-center justify-center mx-auto"
-                        style={{ display: "none" }}
-                      >
-                        <BookOpen className="w-6 h-6 text-primary" />
+                  <div className="flex items-start gap-4">
+                    {/* Left: number badge or single book image */}
+                    {hasSingleBook ? (
+                      <div className="shrink-0 w-14 text-center">
+                        <img
+                          src={section.bookImage!}
+                          alt={section.bookName ?? "Book"}
+                          className="w-14 h-[72px] object-cover rounded shadow-sm border border-muted mx-auto"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = "none";
+                          }}
+                        />
+                        {section.bookName && (
+                          <p className="text-[9px] text-muted-foreground mt-1 leading-tight line-clamp-2">
+                            {section.bookName}
+                          </p>
+                        )}
                       </div>
-                      {section.bookName && (
-                        <p className="text-[9px] text-muted-foreground mt-1 leading-tight line-clamp-2">
-                          {section.bookName}
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-xs font-bold text-primary">{section.id}</span>
+                      </div>
+                    )}
+
+                    {/* Right: title + description */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        {hasSingleBook && (
+                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                            <span className="text-[10px] font-bold text-primary">{section.id}</span>
+                          </div>
+                        )}
+                        <p className="text-sm font-semibold text-foreground">
+                          {t(section.titleKey)}
                         </p>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <span className="text-sm font-bold text-primary">{section.id}</span>
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      {section.bookImage && (
-                        <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                          <span className="text-[10px] font-bold text-primary">{section.id}</span>
-                        </div>
-                      )}
-                      <p className="text-sm font-semibold text-foreground">
-                        {t(section.titleKey)}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {t(section.descKey)}
                       </p>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {t(section.descKey)}
-                    </p>
                   </div>
+
+                  {/* Multiple book thumbnails row (Aalim / Arabic multi-book sections) */}
+                  {hasMultiBooks && (
+                    <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
+                      {section.books!.map((book) => (
+                        <div key={book.name} className="flex-none text-center">
+                          <img
+                            src={book.image}
+                            alt={book.name}
+                            className="w-12 h-16 object-cover rounded-lg shadow border border-muted mx-auto"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = "none";
+                            }}
+                          />
+                          <p className="text-[9px] text-muted-foreground mt-1 w-12 leading-tight line-clamp-2 mx-auto">
+                            {book.name}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
-              ))}
+                );
+              })}
               {isHifz && (
                 <button
                   onClick={() => setShowAllSyllabus(!showAllSyllabus)}

@@ -155,24 +155,58 @@ export function CourseDetailClient({
             {t("syllabusOverview")}
           </h3>
           <div className="space-y-3">
-            {visibleSyllabus.map((section) => (
+            {visibleSyllabus.map((section) => {
+              const hasMultiBooks = section.books && section.books.length > 0;
+              const hasSingleBook = !hasMultiBooks && !!section.bookImage;
+
+              return (
               <div
                 key={section.id}
-                className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
+                className="p-3 rounded-lg bg-muted/50"
               >
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                  <span className="text-xs font-bold text-primary">{section.id}</span>
+                <div className="flex items-start gap-3">
+                  {hasSingleBook ? (
+                    <img
+                      src={section.bookImage!}
+                      alt={section.bookName ?? "Book"}
+                      className="w-8 h-11 object-cover rounded shadow-sm border border-muted shrink-0"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <span className="text-xs font-bold text-primary">{section.id}</span>
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground">
+                      {ts(section.titleKey)}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {ts(section.descKey)}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    {ts(section.titleKey)}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {ts(section.descKey)}
-                  </p>
-                </div>
+                {/* Multi-book thumbnails */}
+                {hasMultiBooks && (
+                  <div className="mt-2 flex gap-2 overflow-x-auto pb-1 ps-11">
+                    {section.books!.map((book) => (
+                      <div key={book.name} className="flex-none text-center">
+                        <img
+                          src={book.image}
+                          alt={book.name}
+                          className="w-9 h-12 object-cover rounded shadow border border-muted mx-auto"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                        />
+                        <p className="text-[8px] text-muted-foreground mt-0.5 w-9 leading-tight line-clamp-2 mx-auto">
+                          {book.name}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            ))}
+              );
+            })}
           </div>
           {isHifz && (
             <button
