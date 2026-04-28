@@ -166,12 +166,24 @@ export function CourseDetailClient({
               >
                 <div className="flex items-start gap-3">
                   {hasSingleBook ? (
-                    <img
-                      src={section.bookImage!}
-                      alt={section.bookName ?? "Book"}
-                      className="w-8 h-11 object-cover rounded shadow-sm border border-muted shrink-0"
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                    />
+                    <div className="shrink-0 text-center">
+                      <img
+                        src={section.bookImage!}
+                        alt={section.bookName ?? ts(section.titleKey)}
+                        className="w-14 h-20 object-cover rounded-lg shadow border border-muted"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                      />
+                      {section.pdfUrl && (
+                        <a
+                          href={section.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block mt-1 text-[10px] font-medium text-primary hover:text-primary/80 underline"
+                        >
+                          📄 PDF
+                        </a>
+                      )}
+                    </div>
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                       <span className="text-xs font-bold text-primary">{section.id}</span>
@@ -181,25 +193,51 @@ export function CourseDetailClient({
                     <p className="text-sm font-medium text-foreground">
                       {ts(section.titleKey)}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {ts(section.descKey)}
-                    </p>
+                    {/* Hide description for multi-book sections — names shown in thumbnails */}
+                    {!hasMultiBooks && (
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {ts(section.descKey)}
+                      </p>
+                    )}
                   </div>
                 </div>
                 {/* Multi-book thumbnails */}
                 {hasMultiBooks && (
-                  <div className="mt-2 flex gap-2 overflow-x-auto pb-1 ps-11">
+                  <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
                     {section.books!.map((book) => (
-                      <div key={book.name} className="flex-none text-center">
-                        <img
-                          src={book.image}
-                          alt={book.name}
-                          className="w-9 h-12 object-cover rounded shadow border border-muted mx-auto"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                        />
-                        <p className="text-[8px] text-muted-foreground mt-0.5 w-9 leading-tight line-clamp-2 mx-auto">
-                          {book.name}
-                        </p>
+                      <div key={book.name} className="flex-none text-center w-16">
+                        {book.pdfUrl ? (
+                          <a
+                            href={book.pdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block group"
+                            title={`Open ${book.name} PDF`}
+                          >
+                            <img
+                              src={book.image}
+                              alt={book.name}
+                              className="w-16 h-[86px] object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
+                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                            />
+                            <p className="text-[10px] font-medium text-foreground mt-1 leading-tight line-clamp-2">
+                              {book.name}
+                            </p>
+                            <p className="text-[9px] text-primary mt-0.5">📄 PDF</p>
+                          </a>
+                        ) : (
+                          <>
+                            <img
+                              src={book.image}
+                              alt={book.name}
+                              className="w-16 h-[86px] object-cover rounded-lg shadow border border-muted mx-auto"
+                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                            />
+                            <p className="text-[10px] font-medium text-foreground mt-1 leading-tight line-clamp-2">
+                              {book.name}
+                            </p>
+                          </>
+                        )}
                       </div>
                     ))}
                   </div>

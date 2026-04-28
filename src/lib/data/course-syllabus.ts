@@ -1,28 +1,47 @@
 export interface BookEntry {
   name: string;
   image: string;
+  pdfUrl?: string;
 }
 
 export interface SyllabusSection {
   id: number;
   titleKey: string;
   descKey: string;
-  /** Single book (used for Nazra, Hifz, and individual book sections) */
+  /** Single book / lesson image */
   bookName?: string;
   bookImage?: string;
-  /** Multiple books shown as a row of thumbnails (used for Aalim year sections) */
+  /** PDF link for single-book sections */
+  pdfUrl?: string;
+  /** Multiple books shown as thumbnail row */
   books?: BookEntry[];
 }
 
-export interface CourseSyllabus {
-  courseType: string;
-  sections: SyllabusSection[];
+// ─── Supabase Storage PDF base URL ───────────────────────────────────────────
+const PDF_BASE =
+  "https://ukfvjadlonmjeugatyub.supabase.co/storage/v1/object/public/course-pdfs";
+
+function sbPdf(path: string): string {
+  return `${PDF_BASE}/${path.split("/").map(encodeURIComponent).join("/")}`;
 }
 
-// ─── Para image extensions (verified against public/Quran Parah Images/) ────
+// ─── Para metadata ────────────────────────────────────────────────────────────
+const PARA_NAMES: Record<number, string> = {
+  1: "Alif Lam Meem",       2: "Sayaqool",          3: "Tilkal Rusul",
+  4: "Lan Tanaloo",         5: "Wal Muhsanaat",      6: "La Yuhibbullah",
+  7: "Wa Iza Samiu",        8: "Wa Lau Annana",      9: "Qalal Malao",
+  10: "Wa A'lamu",          11: "Ya'tazeroon",       12: "Wa Ma Min Daabbah",
+  13: "Wa Ma Ubarri'u",     14: "Rubama",            15: "Subhanallazi",
+  16: "Qal Alam",           17: "Iqtaraba",          18: "Qad Aflaha",
+  19: "Wa Qalallazina",     20: "A'man Khalaq",      21: "Utlu Ma Uhiya",
+  22: "Wa Man Yaqnut",      23: "Wa Mali",           24: "Faman Azlam",
+  25: "Ilayhi Yuraddu",     26: "Ha Meem",           27: "Qala Fama Khatbukum",
+  28: "Qad Sami Allah",     29: "Tabarakallazi",     30: "Amma",
+};
+
 const PARA_EXTS: Record<number, string> = {
-  1: "webp", 2: "webp", 3: "png", 4: "png", 5: "png",
-  6: "png",  7: "png",  8: "png", 9: "png", 10: "webp",
+  1: "webp", 2: "webp", 3: "png",  4: "png",  5: "png",
+  6: "png",  7: "png",  8: "png",  9: "png",  10: "webp",
   11: "webp",12: "png", 13: "webp",14: "webp",15: "webp",
   16: "webp",17: "webp",18: "webp",19: "webp",20: "png",
   21: "png", 22: "png", 23: "png", 24: "png", 25: "png",
@@ -30,49 +49,76 @@ const PARA_EXTS: Record<number, string> = {
 };
 
 function paraImage(n: number): string {
-  return `/Quran Parah Images/${n}.${PARA_EXTS[n]}`;
+  return `/Quran Parah Images/Para ${n} — ${PARA_NAMES[n]}.${PARA_EXTS[n]}`;
 }
 
-// ─── All book images (paths verified against public/ folders) ────────────────
+// Para PDFs hosted on Supabase Storage (uploaded with clean filenames)
+function paraPdf(n: number): string {
+  return sbPdf(`Quran Parah Images/Para-${n}.pdf`);
+}
+
+// ─── All image paths ─────────────────────────────────────────────────────────
 const B = {
-  // Nazra
-  nooraniQaida: "/Nazra/Norani Quaida.png",
-  namaz:        "/Nazra/Namaz.png",
+  // Nazra per-lesson images
+  nazra1: "/Nazra/Huroof-e-Mufradat (Alif to Yaa).jpg",
+  nazra2: "/Nazra/Huroof-e-Murakkabat.jpg",
+  nazra3: "/Nazra/Harakaat (Fatha, Kasra, Damma).jpg",
+  nazra4: "/Nazra/Tanween.jpg",
+  nazra5: "/Nazra/Madd (Long Vowels).jpg",
+  nazra6: "/Nazra/Jazm o Sukoon.jpg",
+  nazra7: "/Nazra/Tashdeed.jpg",
+  nazra8: "/Nazra/Practice Exercises.jpg",
+  nazra9: "/Nazra/Beginning Quran Reading.png",
 
-  // Aalim Course — Arabic grammar
+  // Aalim Course — Arabic grammar + Fiqh
   nahvMeer:      "/Aalim Course/Nahv Meer.webp",
-  ilmusSegha:    "/Aalim Course/ILMUS Segha.jpg",
+  ilmusSeeghah:  "/Aalim Course/Ilm-us-Seeghah.jpg",
   hidayatulNahv: "/Aalim Course/Hidayat-ul-Nahv.webp",
-  sharahMiatu:   "/Aalim Course/Sharah Miatu Aamil.webp",
+  sharhMiatAmil: "/Aalim Course/Sharh Miat Amil.webp",
+  qudoori:       "/Aalim Course/Qudoori.webp",
+  kanzulDaqaiq:  "/Aalim Course/Kanzul Daqaiq.webp",
+  sharhJami:     "/Aalim Course/Sharh Jami.webp",
+  mishkat:       "/Aalim Course/Mishkat-ul-Masabih.jpg",
+  jalalain:      "/Aalim Course/Tafseer Jalalain.webp",
 
-  // Aalim Course — Fiqh
-  qudoori:      "/Aalim Course/Qudoori.jpg",
-  kanzulDaqaiq: "/Aalim Course/Kanzul Daqaiq.webp",
-  hidaya:       "/Aalim Course/Hidaya.webp",
+  // Aalim Course — Siha Sitta
+  bukhari:  "/Aalim Course/Sahih Bukhari.webp",
+  muslim:   "/Aalim Course/Sahih Muslim.webp",
+  tirmidhi: "/Aalim Course/Tirmidhi.webp",
+  abuDawud: "/Aalim Course/Abu Dawud.webp",
+  nasai:    "/Aalim Course/Nasai.jpg",
+  ibnMajah: "/Aalim Course/Ibn Majah.jpg",
 
-  // Aalim Course — Hadith & Tafseer
-  mishkat:   "/Aalim Course/Miashkaat.webp",
-  jalalain:  "/Aalim Course/Jalalain.webp",
-  bukhari:   "/Aalim Course/Bukhari.webp",
-  muslim:    "/Aalim Course/Muslim.webp",
-  tirmidhi:  "/Aalim Course/Tirmidhi.webp",
-  jami:      "/Aalim Course/Jami.webp",
-  muwatta:   "/Aalim Course/Muwatta Imam Malik.jpg",
-  nisai:     "/Aalim Course/Nisai p Ibne Maja.webp",
-  tahawi:    "/Aalim Course/Tahawi.png",
+  // Aalim Course — Year 7-8
+  muwatta: "/Aalim Course/Muwatta Imam Malik.jpg",
+  tahawi:  "/Aalim Course/Tahawi.png",
+  hidaya:  "/Aalim Course/Hidaya.webp",
+
+  // Arabic Language
+  arabNahwMeer:      "/Arabic Language/Nahw Meer.webp",
+  arabIlmusSeeghah:  "/Arabic Language/Ilm-us-Seeghah.jpg",
+  arabVocabulary:    "/Arabic Language/Basic Vocabulary building.png",
+  arabHidayatulNahw: "/Arabic Language/Hidayat-un-Nahw.webp",
+  arabSharhMiatAmil: "/Arabic Language/Sharh Miat Amil.webp",
+  arabSarf:          "/Arabic Language/Sarf exercises.png",
+  arabKafiya:        "/Arabic Language/Kafiya.jpeg",
+  arabIbnAqeel:      "/Arabic Language/Sharah Ibn Aqeel.webp",
+  arabLiterature:    "/Arabic Language/Arabic Literature.jpg",
+  arabConversation:  "/Arabic Language/Conversational Practice.jpg",
+  arabComposition:   "/Arabic Language/Composition.webp",
 };
 
-// ─── Nazra (9 sections) ──────────────────────────────────────────────────────
+// ─── Nazra (9 sections — per-lesson images) ──────────────────────────────────
 const nazraSyllabus: SyllabusSection[] = [
-  { id: 1, titleKey: "nazraSyllabusTitle1", descKey: "nazraSyllabusDesc1", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 2, titleKey: "nazraSyllabusTitle2", descKey: "nazraSyllabusDesc2", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 3, titleKey: "nazraSyllabusTitle3", descKey: "nazraSyllabusDesc3", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 4, titleKey: "nazraSyllabusTitle4", descKey: "nazraSyllabusDesc4", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 5, titleKey: "nazraSyllabusTitle5", descKey: "nazraSyllabusDesc5", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 6, titleKey: "nazraSyllabusTitle6", descKey: "nazraSyllabusDesc6", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 7, titleKey: "nazraSyllabusTitle7", descKey: "nazraSyllabusDesc7", bookName: "Noorani Qaida", bookImage: B.nooraniQaida },
-  { id: 8, titleKey: "nazraSyllabusTitle8", descKey: "nazraSyllabusDesc8", bookName: "Namaz Book",    bookImage: B.namaz },
-  { id: 9, titleKey: "nazraSyllabusTitle9", descKey: "nazraSyllabusDesc9", bookName: "Al-Quran — Para 1", bookImage: paraImage(1) },
+  { id: 1, titleKey: "nazraSyllabusTitle1", descKey: "nazraSyllabusDesc1", bookImage: B.nazra1, pdfUrl: sbPdf("Nazra/Individual Arabic letters recognition and pronunciation.pdf") },
+  { id: 2, titleKey: "nazraSyllabusTitle2", descKey: "nazraSyllabusDesc2", bookImage: B.nazra2 },
+  { id: 3, titleKey: "nazraSyllabusTitle3", descKey: "nazraSyllabusDesc3", bookImage: B.nazra3 },
+  { id: 4, titleKey: "nazraSyllabusTitle4", descKey: "nazraSyllabusDesc4", bookImage: B.nazra4 },
+  { id: 5, titleKey: "nazraSyllabusTitle5", descKey: "nazraSyllabusDesc5", bookImage: B.nazra5 },
+  { id: 6, titleKey: "nazraSyllabusTitle6", descKey: "nazraSyllabusDesc6", bookImage: B.nazra6 },
+  { id: 7, titleKey: "nazraSyllabusTitle7", descKey: "nazraSyllabusDesc7", bookImage: B.nazra7 },
+  { id: 8, titleKey: "nazraSyllabusTitle8", descKey: "nazraSyllabusDesc8", bookImage: B.nazra8 },
+  { id: 9, titleKey: "nazraSyllabusTitle9", descKey: "nazraSyllabusDesc9", bookImage: B.nazra9 },
 ];
 
 // ─── Hifz (30 Para sections) ─────────────────────────────────────────────────
@@ -80,29 +126,23 @@ const hifzSyllabus: SyllabusSection[] = Array.from({ length: 30 }, (_, i) => ({
   id: i + 1,
   titleKey: `hifzSyllabusTitle${i + 1}`,
   descKey:  `hifzSyllabusDesc${i + 1}`,
-  bookName:  `Para ${i + 1}`,
   bookImage: paraImage(i + 1),
+  pdfUrl:    paraPdf(i + 1),
 }));
 
-// ─── Aalim (4 year-based sections — each shows all books of that stage) ──────
-//
-// Year 1-2  → Arabic grammar + Qudoori
-// Year 3-4  → Advanced Fiqh + Mishkat + Jalalain
-// Year 5-6  → Siha Sitta (six major Hadith books)
-// Year 7-8  → Muwatta, Tahawi, Hidaya + Ijazah
-//
-// Using existing translation keys (aalimSyllabusTitle1..4 / aalimSyllabusDesc1..4)
+// ─── Aalim (4 year-based sections) ───────────────────────────────────────────
+// Note: Hidaya, Muwatta, Sahih Muslim PDFs exceed Supabase free-tier 50MB limit — no PDF link
 const aalimSyllabus: SyllabusSection[] = [
   {
     id: 1,
     titleKey: "aalimSyllabusTitle1",
     descKey:  "aalimSyllabusDesc1",
     books: [
-      { name: "Nahv Meer",         image: B.nahvMeer },
-      { name: "Ilm us Seeghah",    image: B.ilmusSegha },
-      { name: "Hidayat ul Nahv",   image: B.hidayatulNahv },
-      { name: "Sharah Miatu Aamil",image: B.sharahMiatu },
-      { name: "Qudoori",           image: B.qudoori },
+      { name: "Nahv Meer",         image: B.nahvMeer,      pdfUrl: sbPdf("Aalim Course/Nahw Meer.pdf") },
+      { name: "Ilm us Seeghah",    image: B.ilmusSeeghah,  pdfUrl: sbPdf("Aalim Course/Ilm-us-Seeghah.pdf") },
+      { name: "Hidayat ul Nahv",   image: B.hidayatulNahv, pdfUrl: sbPdf("Aalim Course/Hidayat-un-Nahw.pdf") },
+      { name: "Sharh Miat Amil",   image: B.sharhMiatAmil, pdfUrl: sbPdf("Aalim Course/Sharh Miat Amil.pdf") },
+      { name: "Qudoori",           image: B.qudoori,       pdfUrl: sbPdf("Aalim Course/Qudoori.pdf") },
     ],
   },
   {
@@ -110,9 +150,10 @@ const aalimSyllabus: SyllabusSection[] = [
     titleKey: "aalimSyllabusTitle2",
     descKey:  "aalimSyllabusDesc2",
     books: [
-      { name: "Kanzul Daqaiq",       image: B.kanzulDaqaiq },
-      { name: "Mishkat al-Masabih",  image: B.mishkat },
-      { name: "Tafseer Jalalain",    image: B.jalalain },
+      { name: "Kanzul Daqaiq",      image: B.kanzulDaqaiq, pdfUrl: sbPdf("Aalim Course/Kanz-ud-Daqaiq.pdf") },
+      { name: "Sharh Jami",         image: B.sharhJami,    pdfUrl: sbPdf("Aalim Course/Sharh Jami.pdf") },
+      { name: "Mishkat al-Masabih", image: B.mishkat,      pdfUrl: sbPdf("Aalim Course/Mishkat-ul-Masabih.pdf") },
+      { name: "Tafseer Jalalain",   image: B.jalalain,     pdfUrl: sbPdf("Aalim Course/Tafseer Jalalain.pdf") },
     ],
   },
   {
@@ -120,11 +161,12 @@ const aalimSyllabus: SyllabusSection[] = [
     titleKey: "aalimSyllabusTitle3",
     descKey:  "aalimSyllabusDesc3",
     books: [
-      { name: "Sahih Al-Bukhari", image: B.bukhari },
+      { name: "Sahih Al-Bukhari", image: B.bukhari,  pdfUrl: sbPdf("Aalim Course/Sahih Bukhari.pdf") },
       { name: "Sahih Muslim",     image: B.muslim },
-      { name: "Jami Tirmidhi",    image: B.tirmidhi },
-      { name: "Jami",             image: B.jami },
-      { name: "Nasai & Ibn Maja", image: B.nisai },
+      { name: "Jami Tirmidhi",    image: B.tirmidhi, pdfUrl: sbPdf("Aalim Course/Tirmidhi.pdf") },
+      { name: "Abu Dawud",        image: B.abuDawud, pdfUrl: sbPdf("Aalim Course/Abu Dawud.pdf") },
+      { name: "Nasai",            image: B.nasai,    pdfUrl: sbPdf("Aalim Course/Nasai.pdf") },
+      { name: "Ibn Majah",        image: B.ibnMajah, pdfUrl: sbPdf("Aalim Course/Ibn Majah.pdf") },
     ],
   },
   {
@@ -133,26 +175,22 @@ const aalimSyllabus: SyllabusSection[] = [
     descKey:  "aalimSyllabusDesc4",
     books: [
       { name: "Muwatta Imam Malik", image: B.muwatta },
-      { name: "Tahawi",             image: B.tahawi },
+      { name: "Tahawi",             image: B.tahawi,  pdfUrl: sbPdf("Aalim Course/Tahawi.pdf") },
       { name: "Hidayah",            image: B.hidaya },
     ],
   },
 ];
 
 // ─── Arabic (4 level sections) ───────────────────────────────────────────────
-//
-// Level 1 Foundation   → Nahv Meer + Ilm us Seeghah
-// Level 2 Intermediate → Hidayat ul Nahv + Sharah Miatu Aamil
-// Level 3 Advanced     → Advanced texts (no local images — show grammar icon)
-// Level 4 Mastery      → Literature & composition (no local images)
 const arabicSyllabus: SyllabusSection[] = [
   {
     id: 1,
     titleKey: "arabicSyllabusTitle1",
     descKey:  "arabicSyllabusDesc1",
     books: [
-      { name: "Nahv Meer",      image: B.nahvMeer },
-      { name: "Ilm us Seeghah", image: B.ilmusSegha },
+      { name: "Nahw Meer",        image: B.arabNahwMeer,     pdfUrl: sbPdf("Arabic Language/Nahw Meer.pdf") },
+      { name: "Ilm us Seeghah",   image: B.arabIlmusSeeghah, pdfUrl: sbPdf("Arabic Language/Ilm-us-Seeghah.pdf") },
+      { name: "Basic Vocabulary", image: B.arabVocabulary,   pdfUrl: sbPdf("Arabic Language/Basic Vocabulary building.pdf") },
     ],
   },
   {
@@ -160,21 +198,29 @@ const arabicSyllabus: SyllabusSection[] = [
     titleKey: "arabicSyllabusTitle2",
     descKey:  "arabicSyllabusDesc2",
     books: [
-      { name: "Hidayat ul Nahv",    image: B.hidayatulNahv },
-      { name: "Sharah Miatu Aamil", image: B.sharahMiatu },
+      { name: "Hidayat ul Nahw", image: B.arabHidayatulNahw, pdfUrl: sbPdf("Arabic Language/Hidayat-un-Nahw.pdf") },
+      { name: "Sharh Miat Amil", image: B.arabSharhMiatAmil, pdfUrl: sbPdf("Arabic Language/Sharh Miat Amil.pdf") },
+      { name: "Sarf Exercises",  image: B.arabSarf,          pdfUrl: sbPdf("Arabic Language/Sarf exercises.pdf") },
     ],
   },
   {
     id: 3,
     titleKey: "arabicSyllabusTitle3",
     descKey:  "arabicSyllabusDesc3",
-    // Kafiya / Sharah Ibn Aqeel — images not available locally
+    books: [
+      { name: "Kafiya",           image: B.arabKafiya,   pdfUrl: sbPdf("Arabic Language/Kafiya.pdf") },
+      { name: "Sharah Ibn Aqeel", image: B.arabIbnAqeel, pdfUrl: sbPdf("Arabic Language/Sharah Ibn Aqeel.pdf") },
+    ],
   },
   {
     id: 4,
     titleKey: "arabicSyllabusTitle4",
     descKey:  "arabicSyllabusDesc4",
-    // Literature & conversation — no specific book image
+    books: [
+      { name: "Arabic Literature",       image: B.arabLiterature,   pdfUrl: sbPdf("Arabic Language/Arabic Literature.pdf") },
+      { name: "Conversational Practice", image: B.arabConversation, pdfUrl: sbPdf("Arabic Language/Conversational Practice.pdf") },
+      { name: "Composition",             image: B.arabComposition,  pdfUrl: sbPdf("Arabic Language/Composition.pdf") },
+    ],
   },
 ];
 

@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Course PDFs — hosted on Supabase Storage (too large for git)
+/public/**/*.pdf
