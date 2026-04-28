@@ -162,7 +162,7 @@ const aalimSyllabus: SyllabusSection[] = [
     descKey:  "aalimSyllabusDesc3",
     books: [
       { name: "Sahih Al-Bukhari", image: B.bukhari,  pdfUrl: sbPdf("Aalim Course/Sahih Bukhari.pdf") },
-      { name: "Sahih Muslim",     image: B.muslim },
+      { name: "Sahih Muslim",     image: B.muslim,   pdfUrl: sbPdf("Aalim Course/Sahih Muslim.pdf") },
       { name: "Jami Tirmidhi",    image: B.tirmidhi, pdfUrl: sbPdf("Aalim Course/Tirmidhi.pdf") },
       { name: "Abu Dawud",        image: B.abuDawud, pdfUrl: sbPdf("Aalim Course/Abu Dawud.pdf") },
       { name: "Nasai",            image: B.nasai,    pdfUrl: sbPdf("Aalim Course/Nasai.pdf") },
@@ -174,9 +174,9 @@ const aalimSyllabus: SyllabusSection[] = [
     titleKey: "aalimSyllabusTitle4",
     descKey:  "aalimSyllabusDesc4",
     books: [
-      { name: "Muwatta Imam Malik", image: B.muwatta },
+      { name: "Muwatta Imam Malik", image: B.muwatta, pdfUrl: sbPdf("Aalim Course/Muwatta Imam Malik.pdf") },
       { name: "Tahawi",             image: B.tahawi,  pdfUrl: sbPdf("Aalim Course/Tahawi.pdf") },
-      { name: "Hidayah",            image: B.hidaya },
+      { name: "Hidayah",            image: B.hidaya,  pdfUrl: sbPdf("Aalim Course/Hidaya.pdf") },
     ],
   },
 ];
