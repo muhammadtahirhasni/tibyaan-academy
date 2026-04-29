@@ -244,24 +244,26 @@ export default function CourseDetailClient() {
                   <div className="flex items-start gap-4">
                     {/* Left: number badge or single book image */}
                     {hasSingleBook ? (
-                      <div className="shrink-0 w-20 text-center">
-                        <img
-                          src={section.bookImage!}
-                          alt={section.bookName ?? t(section.titleKey)}
-                          className="w-20 h-28 object-cover rounded-lg shadow border border-muted mx-auto"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = "none";
-                          }}
-                        />
-                        {section.pdfUrl && (
-                          <a
-                            href={section.pdfUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block mt-1.5 text-[10px] font-medium text-primary hover:text-primary/80 underline"
-                          >
-                            📄 PDF
+                      <div className="shrink-0 w-24 text-center">
+                        {section.pdfUrl ? (
+                          <a href={section.pdfUrl} target="_blank" rel="noopener noreferrer" className="block group">
+                            <img
+                              src={section.bookImage!}
+                              alt={section.bookName ?? t(section.titleKey)}
+                              className="w-24 h-32 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
+                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                            />
+                            <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
+                              📄 PDF کھولیں
+                            </span>
                           </a>
+                        ) : (
+                          <img
+                            src={section.bookImage!}
+                            alt={section.bookName ?? t(section.titleKey)}
+                            className="w-24 h-32 object-cover rounded-lg shadow border border-muted mx-auto"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                          />
                         )}
                       </div>
                     ) : (
@@ -312,10 +314,12 @@ export default function CourseDetailClient() {
                                   (e.target as HTMLImageElement).style.display = "none";
                                 }}
                               />
-                              <p className="text-[11px] font-medium text-foreground mt-1.5 leading-tight line-clamp-2">
+                              <p className="text-xs font-medium text-foreground mt-1.5 leading-tight line-clamp-2">
                                 {book.name}
                               </p>
-                              <p className="text-[10px] text-primary mt-0.5">📄 PDF</p>
+                              <span className="inline-flex items-center gap-0.5 mt-1 px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-medium">
+                                📄 PDF
+                              </span>
                             </a>
                           ) : (
                             <>
