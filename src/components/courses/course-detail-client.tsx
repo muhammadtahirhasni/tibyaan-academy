@@ -241,16 +241,24 @@ export default function CourseDetailClient() {
                   transition={{ duration: 0.4, delay: i * 0.05 }}
                   className="p-5 rounded-xl bg-card border shadow-sm"
                 >
-                  <div className="flex items-start gap-4">
-                    {/* Left: number badge or single book image */}
-                    {hasSingleBook ? (
-                      <div className="shrink-0 w-24 text-center">
+                  {/* Section header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <span className="text-xs font-bold text-primary">{section.id}</span>
+                    </div>
+                    <p className="text-sm font-semibold text-foreground">{t(section.titleKey)}</p>
+                  </div>
+
+                  {/* Single-book layout */}
+                  {hasSingleBook && (
+                    <div className="flex items-start gap-4">
+                      <div className="shrink-0 w-28 text-center">
                         {section.pdfUrl ? (
                           <a href={section.pdfUrl} target="_blank" rel="noopener noreferrer" className="block group">
                             <img
                               src={section.bookImage!}
                               alt={section.bookName ?? t(section.titleKey)}
-                              className="w-24 h-32 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
+                              className="w-28 h-36 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                             <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
@@ -261,63 +269,32 @@ export default function CourseDetailClient() {
                           <img
                             src={section.bookImage!}
                             alt={section.bookName ?? t(section.titleKey)}
-                            className="w-24 h-32 object-cover rounded-lg shadow border border-muted mx-auto"
+                            className="w-28 h-36 object-cover rounded-lg shadow border border-muted mx-auto"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                         )}
                       </div>
-                    ) : (
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-xs font-bold text-primary">{section.id}</span>
-                      </div>
-                    )}
-
-                    {/* Right: title + description */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        {hasSingleBook && (
-                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                            <span className="text-[10px] font-bold text-primary">{section.id}</span>
-                          </div>
-                        )}
-                        <p className="text-sm font-semibold text-foreground">
-                          {t(section.titleKey)}
-                        </p>
-                      </div>
-                      {/* Hide description for multi-book sections — book names shown in thumbnails below */}
-                      {!hasMultiBooks && (
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {t(section.descKey)}
-                        </p>
-                      )}
+                      <p className="text-sm text-muted-foreground mt-1">{t(section.descKey)}</p>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Multiple book thumbnails row (Aalim / Arabic multi-book sections) */}
+                  {/* Multi-book responsive grid — fills full width, all cards equal size */}
                   {hasMultiBooks && (
-                    <div className="mt-4 flex gap-4 overflow-x-auto pb-2">
+                    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(120px,1fr))]">
                       {section.books!.map((book) => (
-                        <div key={book.name} className="flex-none text-center w-20">
+                        <div key={book.name} className="text-center">
                           {book.pdfUrl ? (
-                            <a
-                              href={book.pdfUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block group"
-                              title={`Open ${book.name} PDF`}
-                            >
+                            <a href={book.pdfUrl} target="_blank" rel="noopener noreferrer" className="block group">
                               <img
                                 src={book.image}
                                 alt={book.name}
-                                className="w-20 h-28 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).style.display = "none";
-                                }}
+                                className="w-full aspect-[2/3] object-cover rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                               />
-                              <p className="text-xs font-medium text-foreground mt-1.5 leading-tight line-clamp-2">
+                              <p className="text-xs font-medium text-foreground mt-2 leading-tight line-clamp-2 px-1">
                                 {book.name}
                               </p>
-                              <span className="inline-flex items-center gap-0.5 mt-1 px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-medium">
+                              <span className="inline-flex items-center gap-0.5 mt-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold">
                                 📄 PDF
                               </span>
                             </a>
@@ -326,12 +303,10 @@ export default function CourseDetailClient() {
                               <img
                                 src={book.image}
                                 alt={book.name}
-                                className="w-20 h-28 object-cover rounded-lg shadow border border-muted mx-auto"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).style.display = "none";
-                                }}
+                                className="w-full aspect-[2/3] object-cover rounded-lg shadow border border-muted"
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                               />
-                              <p className="text-[11px] font-medium text-foreground mt-1.5 leading-tight line-clamp-2">
+                              <p className="text-xs font-medium text-foreground mt-2 leading-tight line-clamp-2 px-1">
                                 {book.name}
                               </p>
                             </>
