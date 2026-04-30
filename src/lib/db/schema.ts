@@ -200,6 +200,7 @@ export const circleStatusEnum = pgEnum("circle_status", [
 
 export const scheduleRequestStatusEnum = pgEnum("schedule_request_status", [
   "pending",
+  "approved",
   "suggested",
   "confirmed",
   "rejected",
