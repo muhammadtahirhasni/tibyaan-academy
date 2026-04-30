@@ -5,7 +5,16 @@ import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Calendar, Video, Clock, CheckCircle2, XCircle, AlertTriangle, Inbox, UserPlus } from "lucide-react";
+import {
+  Calendar,
+  Video,
+  Clock,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  Inbox,
+  Globe,
+} from "lucide-react";
 
 type ClassStatus = "scheduled" | "completed" | "cancelled" | "missed";
 
@@ -27,70 +36,126 @@ const statusConfig: Record<ClassStatus, { color: string; bgColor: string; border
   missed: { color: "text-amber-600", bgColor: "bg-amber-50 dark:bg-amber-950/30", borderColor: "border-amber-200 dark:border-amber-800", icon: AlertTriangle },
 };
 
-interface ScheduleRequest {
+interface ApprovedRequest {
   id: string;
-  studentName: string;
-  courseName: string;
+  status: string;
   timezone: string;
   preferredDays: string[];
-  preferredTime: { start: string; end: string };
+  preferredTime: { start: string; end: string } | null;
   selectedSlot: { day: string; time: string } | null;
-  status: string;
+  studentName: string;
+  courseName: string;
+  createdAt: string;
 }
 
 export function ScheduleClient({ scheduleItems }: { scheduleItems: ScheduleItem[] }) {
   const t = useTranslations("teacher");
-  const [pendingRequests, setPendingRequests] = useState<ScheduleRequest[]>([]);
-  const [respondingId, setRespondingId] = useState<string | null>(null);
+  const [approvedRequests, setApprovedRequests] = useState<ApprovedRequest[]>([]);
 
   useEffect(() => {
     fetch("/api/scheduling/request")
-      .then((r) => (r.ok ? r.json() : []))
+      .then((r) => r.ok ? r.json() : [])
       .then((data) => {
-        if (Array.isArray(data)) setPendingRequests(data.filter((r: ScheduleRequest) => r.status === "confirmed"));
+        if (Array.isArray(data)) setApprovedRequests(data);
       })
       .catch(() => {});
   }, []);
 
-  const handleRespond = async (id: string, action: "confirmed" | "rejected") => {
-    setRespondingId(id);
-    try {
-      await fetch(`/api/scheduling/${id}/respond`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action }),
-      });
-      setPendingRequests((prev) => prev.filter((r) => r.id !== id));
-    } catch {
-      // ignore
-    } finally {
-      setRespondingId(null);
-    }
-  };
-
-  // Group by day
+  // Group classes by day
   const grouped = scheduleItems.reduce<Record<string, ScheduleItem[]>>((acc, item) => {
-    const day = new Date(item.scheduledAt).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+    const day = new Date(item.scheduledAt).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
     if (!acc[day]) acc[day] = [];
     acc[day].push(item);
     return acc;
   }, {});
 
-  const formatTime = (iso: string) => new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+  const formatTime = (iso: string) =>
+    new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
   return (
     <div className="space-y-6">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center gap-3">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center gap-3"
+      >
         <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
           <Calendar className="w-5 h-5 text-blue-600" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground">{t("classSchedule")}</h1>
-          <p className="text-sm text-muted-foreground">{scheduleItems.length} {t("upcomingClasses")}</p>
+          <p className="text-sm text-muted-foreground">
+            {scheduleItems.length} {t("upcomingClasses")}
+            {approvedRequests.length > 0 && ` · ${approvedRequests.length} confirmed schedule request${approvedRequests.length > 1 ? "s" : ""}`}
+          </p>
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="flex flex-wrap gap-3">
+      {/* ── Admin-Approved Schedule Requests ── */}
+      {approvedRequests.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
+          className="rounded-xl border bg-card overflow-hidden"
+        >
+          <div className="px-4 py-3 bg-emerald-50 dark:bg-emerald-950/30 border-b border-emerald-200 dark:border-emerald-800">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">
+                Confirmed Schedule Requests ({approvedRequests.length})
+              </h3>
+            </div>
+          </div>
+          <div className="divide-y">
+            {approvedRequests.map((req) => (
+              <div key={req.id} className="p-4 bg-emerald-50/40 dark:bg-emerald-950/10">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div className="space-y-1">
+                    <p className="font-medium text-foreground text-sm">
+                      {req.studentName} — {req.courseName}
+                    </p>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+                      {req.preferredDays.length > 0 && (
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {req.preferredDays.join(", ")}
+                        </span>
+                      )}
+                      {req.preferredTime && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {req.preferredTime.start} – {req.preferredTime.end}
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Globe className="w-3 h-3" />
+                        {req.timezone}
+                      </span>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="text-emerald-600 border-emerald-300 shrink-0 text-xs">
+                    Confirmed by Admin
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* ── Status legend ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="flex flex-wrap gap-3"
+      >
         {(["scheduled", "completed", "cancelled", "missed"] as const).map((status) => {
           const config = statusConfig[status];
           return (
@@ -102,15 +167,24 @@ export function ScheduleClient({ scheduleItems }: { scheduleItems: ScheduleItem[
         })}
       </motion.div>
 
+      {/* ── Formal class records from DB ── */}
       {Object.keys(grouped).length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16">
-          <Inbox className="w-12 h-12 text-muted-foreground/50 mb-3" />
-          <p className="text-muted-foreground">{t("noUpcomingClasses")}</p>
-        </div>
+        approvedRequests.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <Inbox className="w-12 h-12 text-muted-foreground/50 mb-3" />
+            <p className="text-muted-foreground">{t("noUpcomingClasses")}</p>
+          </div>
+        ) : null
       ) : (
         <div className="space-y-4">
           {Object.entries(grouped).map(([day, classes], dayIndex) => (
-            <motion.div key={day} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 + dayIndex * 0.05 }} className="rounded-xl border bg-card overflow-hidden">
+            <motion.div
+              key={day}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 + dayIndex * 0.05 }}
+              className="rounded-xl border bg-card overflow-hidden"
+            >
               <div className="px-4 py-3 bg-muted/50 border-b">
                 <h3 className="font-semibold text-foreground text-sm">{day}</h3>
               </div>
@@ -119,27 +193,40 @@ export function ScheduleClient({ scheduleItems }: { scheduleItems: ScheduleItem[
                   const config = statusConfig[cls.status as ClassStatus] ?? statusConfig.scheduled;
                   const StatusIcon = config.icon;
                   return (
-                    <div key={cls.id} className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${config.bgColor}`}>
+                    <div
+                      key={cls.id}
+                      className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${config.bgColor}`}
+                    >
                       <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-lg bg-white dark:bg-card flex items-center justify-center border ${config.borderColor}`}>
                           <Video className={`w-5 h-5 ${config.color}`} />
                         </div>
                         <div>
-                          <p className="font-medium text-foreground text-sm">{cls.studentName} — {cls.courseName}</p>
+                          <p className="font-medium text-foreground text-sm">
+                            {cls.studentName} — {cls.courseName}
+                          </p>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
                             <Clock className="w-3 h-3" />
                             <span>{formatTime(cls.scheduledAt)} ({cls.durationMinutes}min)</span>
-                            {cls.notes && (<><span className="text-muted-foreground/40">|</span><span>{cls.notes}</span></>)}
+                            {cls.notes && (
+                              <>
+                                <span className="text-muted-foreground/40">|</span>
+                                <span>{cls.notes}</span>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 sm:ms-auto">
                         <Badge variant="outline" className={`${config.color} border-current/30`}>
-                          <StatusIcon className="w-3 h-3 me-1" />{t(cls.status)}
+                          <StatusIcon className="w-3 h-3 me-1" />
+                          {t(cls.status)}
                         </Badge>
                         {cls.status === "scheduled" && cls.meetingLink && (
                           <a href={cls.meetingLink} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs h-7">{t("joinClass")}</Button>
+                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs h-7">
+                              {t("joinClass")}
+                            </Button>
                           </a>
                         )}
                       </div>
@@ -150,64 +237,6 @@ export function ScheduleClient({ scheduleItems }: { scheduleItems: ScheduleItem[
             </motion.div>
           ))}
         </div>
-      )}
-
-      {/* Pending Schedule Requests */}
-      {pendingRequests.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-          className="rounded-xl border bg-card p-6"
-        >
-          <div className="flex items-center gap-2 mb-4">
-            <UserPlus className="w-5 h-5 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">
-              {t("pendingScheduleRequests") ?? "Pending Schedule Requests"}
-            </h3>
-            <Badge variant="outline">{pendingRequests.length}</Badge>
-          </div>
-          <div className="space-y-3">
-            {pendingRequests.map((req) => (
-              <div
-                key={req.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border bg-muted/30"
-              >
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    {req.studentName} — {req.courseName}
-                  </p>
-                  {req.selectedSlot && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {t("requestedSlot") ?? "Requested"}: {req.selectedSlot.day} {req.selectedSlot.time} ({req.timezone})
-                    </p>
-                  )}
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    onClick={() => handleRespond(req.id, "confirmed")}
-                    disabled={respondingId === req.id}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-7 gap-1"
-                  >
-                    <CheckCircle2 className="w-3 h-3" />
-                    {t("accept") ?? "Accept"}
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleRespond(req.id, "rejected")}
-                    disabled={respondingId === req.id}
-                    className="text-xs h-7 gap-1"
-                  >
-                    <XCircle className="w-3 h-3" />
-                    {t("reject") ?? "Reject"}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
       )}
     </div>
   );
