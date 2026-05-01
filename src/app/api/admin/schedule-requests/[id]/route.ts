@@ -156,13 +156,19 @@ export async function PATCH(
         // Create one class per preferred day (next occurrence of each)
         for (const day of preferredDays) {
           const scheduledAt = nextOccurrenceUTC(day, startTime, timezone);
-          await db.insert(classes).values({
+          const inserted = await db.insert(classes).values({
             enrollmentId:    enrollment.id,
             teacherId,
             scheduledAt,
             durationMinutes: 60,
             status:          "scheduled",
-          });
+          }).returning({ id: classes.id });
+          if (inserted[0]) {
+            const room = `Tibyaan-${inserted[0].id.replace(/-/g, "").slice(0, 16)}`;
+            await db.update(classes)
+              .set({ meetingLink: `https://meet.jit.si/${room}` })
+              .where(eq(classes.id, inserted[0].id));
+          }
         }
       }
     }

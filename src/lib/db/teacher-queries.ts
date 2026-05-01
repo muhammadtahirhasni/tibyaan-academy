@@ -44,10 +44,9 @@ export async function getTeacherProfile(userId: string) {
 export async function getTeacherDashboardStats(teacherId: string) {
   const db = getDb();
   const now = new Date();
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const todayEnd = new Date(todayStart.getTime() + 86400000);
+  const sevenDaysEnd = new Date(now.getTime() + 7 * 86400000);
 
-  // Today's classes
+  // Upcoming classes (next 7 days)
   const todayClasses = await db
     .select({
       class_: classes,
@@ -62,8 +61,8 @@ export async function getTeacherDashboardStats(teacherId: string) {
     .where(
       and(
         eq(classes.teacherId, teacherId),
-        gte(classes.scheduledAt, todayStart),
-        lte(classes.scheduledAt, todayEnd)
+        gte(classes.scheduledAt, now),
+        lte(classes.scheduledAt, sevenDaysEnd)
       )
     )
     .orderBy(classes.scheduledAt);

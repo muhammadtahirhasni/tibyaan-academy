@@ -38,18 +38,24 @@ export default async function TeacherDashboardPage({
         const endTime = new Date(
           scheduledAt.getTime() + c.class_.durationMinutes * 60000
         );
-        const fmt = (d: Date) =>
+        const fmtTime = (d: Date) =>
           d.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "2-digit",
             hour12: true,
+          });
+        const fmtDate = (d: Date) =>
+          d.toLocaleDateString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
           });
 
         const courseNameKey = `name${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof typeof c.course;
         return {
           studentName: c.student.fullName,
           courseName: (c.course[courseNameKey] as string) || c.course.nameEn,
-          time: `${fmt(scheduledAt)} - ${fmt(endTime)}`,
+          time: `${fmtDate(scheduledAt)} · ${fmtTime(scheduledAt)} - ${fmtTime(endTime)}`,
           status: c.class_.status,
           meetingLink: c.class_.meetingLink,
         };
