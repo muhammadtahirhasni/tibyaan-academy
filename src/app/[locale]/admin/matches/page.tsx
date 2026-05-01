@@ -33,39 +33,54 @@ export default async function AdminMatchesPage({
     teacherName: string;
     courseName: string;
     status: string;
+    days: string;
+    time: string;
+    timezone: string;
     createdAt: string;
-    respondedAt: string | null;
+    classCount: number;
   }> = [];
 
   try {
+    // Use schedule_requests as the source of truth for student-teacher connections
     const rows = await db.execute(sql`
       SELECT
-        m.id,
-        m.status,
-        m.created_at,
-        m.responded_at,
+        sr.id,
+        sr.status,
+        sr.preferred_days,
+        sr.preferred_time,
+        sr.timezone,
+        sr.created_at,
         s.full_name AS student_name,
         t.full_name AS teacher_name,
-        c.name_en AS course_name
-      FROM teacher_student_matches m
-      JOIN users s ON m.student_id = s.id
-      JOIN users t ON m.teacher_id = t.id
-      JOIN courses c ON m.course_id = c.id
-      ORDER BY m.created_at DESC
+        c.name_en   AS course_name,
+        COUNT(cl.id)::int AS class_count
+      FROM schedule_requests sr
+      JOIN users s ON sr.student_id = s.id
+      JOIN users t ON sr.teacher_id = t.id
+      JOIN courses c ON sr.course_id = c.id
+      LEFT JOIN enrollments e ON (e.student_id = sr.student_id AND e.course_id = sr.course_id)
+      LEFT JOIN classes cl ON (cl.enrollment_id = e.id AND cl.teacher_id = sr.teacher_id)
+      GROUP BY sr.id, s.full_name, t.full_name, c.name_en
+      ORDER BY sr.created_at DESC
       LIMIT 100
     `);
 
-    matches = (rows.rows as Array<Record<string, unknown>>).map((r) => ({
-      id: r.id as string,
-      studentName: r.student_name as string,
-      teacherName: r.teacher_name as string,
-      courseName: r.course_name as string,
-      status: r.status as string,
-      createdAt: new Date(r.created_at as string).toISOString(),
-      respondedAt: r.responded_at
-        ? new Date(r.responded_at as string).toISOString()
-        : null,
-    }));
+    matches = (rows.rows as Array<Record<string, unknown>>).map((r) => {
+      const preferredDays = (r.preferred_days as string[] | null) ?? [];
+      const preferredTime = r.preferred_time as { start?: string; end?: string } | null;
+      return {
+        id: r.id as string,
+        studentName: r.student_name as string,
+        teacherName: r.teacher_name as string,
+        courseName: r.course_name as string,
+        status: r.status as string,
+        days: preferredDays.join(", "),
+        time: preferredTime ? `${preferredTime.start ?? ""} – ${preferredTime.end ?? ""}` : "",
+        timezone: (r.timezone as string) || "UTC",
+        createdAt: new Date(r.created_at as string).toISOString(),
+        classCount: (r.class_count as number) ?? 0,
+      };
+    });
   } catch (err) {
     console.error("Failed to load matches:", err);
   }

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 interface TodayClass {
+  classId: string;
   studentName: string;
   courseName: string;
   time: string;
@@ -196,14 +197,14 @@ export function TeacherDashboardClient({
                         {t("completed")}
                       </Badge>
                     ) : cls.meetingLink ? (
-                      <a href={cls.meetingLink} target="_blank" rel="noopener noreferrer">
+                      <Link href={`/classroom/${cls.classId}`}>
                         <Button
                           size="sm"
                           className="bg-blue-600 hover:bg-blue-700 text-white"
                         >
                           {t("joinClass")}
                         </Button>
-                      </a>
+                      </Link>
                     ) : (
                       <Badge variant="outline">{t("scheduled")}</Badge>
                     )}

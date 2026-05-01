@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -223,11 +224,11 @@ export function ScheduleClient({ scheduleItems }: { scheduleItems: ScheduleItem[
                           {t(cls.status)}
                         </Badge>
                         {cls.status === "scheduled" && cls.meetingLink && (
-                          <a href={cls.meetingLink} target="_blank" rel="noopener noreferrer">
+                          <Link href={`/classroom/${cls.id}`}>
                             <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs h-7">
                               {t("joinClass")}
                             </Button>
-                          </a>
+                          </Link>
                         )}
                       </div>
                     </div>

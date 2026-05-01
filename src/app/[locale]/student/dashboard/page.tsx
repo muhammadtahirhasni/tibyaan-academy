@@ -53,6 +53,7 @@ export default async function DashboardPage({
   }));
 
   const nextClass = upcomingClasses[0] ? {
+    classId: upcomingClasses[0].class_.id,
     courseName: locale === "en" ? upcomingClasses[0].course.nameEn : upcomingClasses[0].course.nameUr,
     scheduledAt: upcomingClasses[0].class_.scheduledAt.toISOString(),
     meetingLink: upcomingClasses[0].class_.meetingLink,

@@ -40,6 +40,7 @@ interface DashboardProps {
     completedHifzEntries: number;
   };
   nextClass: {
+    classId: string;
     courseName: string;
     scheduledAt: string;
     meetingLink: string | null;
@@ -282,11 +283,11 @@ export function DashboardClient({
                   </div>
                 </div>
                 {nextClass.meetingLink && (
-                  <a href={nextClass.meetingLink} target="_blank" rel="noopener noreferrer">
+                  <Link href={`/classroom/${nextClass.classId}`}>
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
                       {t("joinClass")}
                     </Button>
-                  </a>
+                  </Link>
                 )}
               </div>
             ) : (

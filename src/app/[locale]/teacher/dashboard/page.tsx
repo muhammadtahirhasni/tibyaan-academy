@@ -18,6 +18,7 @@ export default async function TeacherDashboardPage({
 
   let stats = {
     todayClasses: [] as Array<{
+      classId: string;
       studentName: string;
       courseName: string;
       time: string;
@@ -53,6 +54,7 @@ export default async function TeacherDashboardPage({
 
         const courseNameKey = `name${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof typeof c.course;
         return {
+          classId: c.class_.id,
           studentName: c.student.fullName,
           courseName: (c.course[courseNameKey] as string) || c.course.nameEn,
           time: `${fmtDate(scheduledAt)} · ${fmtTime(scheduledAt)} - ${fmtTime(endTime)}`,
