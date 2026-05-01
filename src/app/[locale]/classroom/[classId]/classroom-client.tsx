@@ -5,9 +5,20 @@ import { useRouter } from "@/i18n/navigation";
 import {
   Video, Clock, BookOpen, Users, PhoneOff,
   Wifi, WifiOff, Loader2, AlertCircle, ArrowLeft,
+  CheckCircle2, Circle, StickyNote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
+interface LessonItem {
+  id: string;
+  lessonNumber: number;
+  titleEn: string | null;
+  titleUr: string | null;
+  isCompleted: boolean;
+  lessonType: string;
+  teacherNotes: string | null;
+}
 
 interface ClassData {
   id: string;
@@ -22,6 +33,7 @@ interface ClassData {
   courseNameEn: string;
   courseNameUr: string | null;
   courseNameAr: string | null;
+  lessons: LessonItem[];
 }
 
 declare global {
@@ -312,18 +324,62 @@ export function ClassroomClient({
             </ul>
           </div>
 
-          {/* Resources placeholder */}
+          {/* Course Lessons */}
           <div className="p-4 flex-1">
             <div className="flex items-center gap-2 mb-3">
               <BookOpen className="w-4 h-4 text-amber-400" />
-              <span className="text-white text-sm font-semibold">Resources</span>
+              <span className="text-white text-sm font-semibold">
+                Course Lessons
+              </span>
+              {classData.lessons.length > 0 && (
+                <span className="text-xs text-gray-500 ms-auto">
+                  {classData.lessons.filter((l) => l.isCompleted).length}/{classData.lessons.length}
+                </span>
+              )}
             </div>
-            <div className="rounded-lg bg-gray-800 border border-gray-700 p-3 text-center">
-              <BookOpen className="w-8 h-8 text-gray-600 mx-auto mb-2" />
-              <p className="text-xs text-gray-500">
-                Course books and materials will appear here.
-              </p>
-            </div>
+
+            {classData.lessons.length > 0 ? (
+              <div className="space-y-1.5">
+                {classData.lessons.map((lesson) => (
+                  <div
+                    key={lesson.id}
+                    className={`rounded-lg p-2.5 border text-xs flex items-start gap-2 transition-colors ${
+                      lesson.isCompleted
+                        ? "bg-emerald-950/40 border-emerald-800/50"
+                        : "bg-gray-800 border-gray-700 hover:bg-gray-750"
+                    }`}
+                  >
+                    <div className="shrink-0 mt-0.5">
+                      {lesson.isCompleted
+                        ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        : <Circle className="w-3.5 h-3.5 text-gray-600" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className={`font-medium leading-tight ${lesson.isCompleted ? "text-emerald-300" : "text-white"}`}>
+                        {lesson.lessonNumber}. {lesson.titleEn ?? lesson.titleUr ?? `Lesson ${lesson.lessonNumber}`}
+                      </p>
+                      {lesson.lessonType && (
+                        <span className="text-gray-500 capitalize">{lesson.lessonType}</span>
+                      )}
+                      {lesson.teacherNotes && isTeacher && (
+                        <div className="mt-1 flex items-start gap-1 text-amber-400">
+                          <StickyNote className="w-3 h-3 shrink-0 mt-0.5" />
+                          <span className="text-[10px] leading-tight">{lesson.teacherNotes}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-lg bg-gray-800 border border-gray-700 p-3 text-center">
+                <BookOpen className="w-6 h-6 text-gray-600 mx-auto mb-1" />
+                <p className="text-xs text-gray-500">No lessons added yet for this course.</p>
+                {isTeacher && (
+                  <p className="text-xs text-gray-600 mt-1">Add lessons from your Lessons page.</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

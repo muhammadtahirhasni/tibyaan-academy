@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
-import { users, classes, enrollments, courses } from "@/lib/db/schema";
+import { users, classes, enrollments, courses, lessons } from "@/lib/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 
 export async function GET(
@@ -16,7 +16,7 @@ export async function GET(
   const db = getDb();
   const rows = await db.execute(sql`
     SELECT
-      c.id, c.scheduled_at, c.duration_minutes, c.status, c.meeting_link,
+      c.id, c.enrollment_id, c.scheduled_at, c.duration_minutes, c.status, c.meeting_link,
       s.id AS student_id, s.full_name AS student_name,
       t.id AS teacher_id, t.full_name AS teacher_name,
       co.name_en AS course_name_en, co.name_ur AS course_name_ur,
@@ -41,6 +41,22 @@ export async function GET(
     }
   }
 
+  // Fetch lessons for this enrollment (course materials for class)
+  const enrollmentLessons = await db
+    .select({
+      id: lessons.id,
+      lessonNumber: lessons.lessonNumber,
+      titleEn: lessons.titleEn,
+      titleUr: lessons.titleUr,
+      isCompleted: lessons.isCompleted,
+      lessonType: lessons.lessonType,
+      teacherNotes: lessons.teacherNotes,
+    })
+    .from(lessons)
+    .where(eq(lessons.enrollmentId, row.enrollment_id as string))
+    .orderBy(lessons.lessonNumber)
+    .limit(30);
+
   return NextResponse.json({
     id: row.id,
     scheduledAt: row.scheduled_at,
@@ -53,6 +69,7 @@ export async function GET(
     teacherName: row.teacher_name,
     courseNameEn: row.course_name_en,
     courseNameUr: row.course_name_ur,
+    lessons: enrollmentLessons,
     courseNameAr: row.course_name_ar,
   });
 }
