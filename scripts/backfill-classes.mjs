@@ -87,7 +87,7 @@ for (const req of approved) {
 
     await sql`
       INSERT INTO classes (enrollment_id, teacher_id, scheduled_at, duration_minutes, status)
-      VALUES (${req.enrollment_id}, ${req.teacher_id}, ${scheduledAt.toISOString()}, 60, 'scheduled')
+      VALUES (${req.enrollment_id}, ${req.teacher_id}, ${scheduledAt.toISOString()}, 45, 'scheduled')
     `;
     console.log(`  ✓ ${req.student_name} | ${day} at ${scheduledAt.toISOString()}`);
     created++;

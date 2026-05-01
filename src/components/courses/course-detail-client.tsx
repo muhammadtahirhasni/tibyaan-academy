@@ -53,8 +53,8 @@ const courseData: Record<
     color: "emerald",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     heroGradient: "from-emerald-600/10 via-background to-emerald-600/5",
-    plan1Price: "$55",
-    plan2Price: "$38",
+    plan1Price: "$25",
+    plan2Price: "$18",
     duration: "3-6 months",
   },
   "hifz-quran": {
@@ -63,8 +63,8 @@ const courseData: Record<
     color: "amber",
     iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     heroGradient: "from-amber-600/10 via-background to-amber-600/5",
-    plan1Price: "$60",
-    plan2Price: "$42",
+    plan1Price: "$30",
+    plan2Price: "$22",
     duration: "2-4 years",
   },
   "arabic-language": {
@@ -73,8 +73,8 @@ const courseData: Record<
     color: "blue",
     iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     heroGradient: "from-blue-600/10 via-background to-blue-600/5",
-    plan1Price: "$58",
-    plan2Price: "$40",
+    plan1Price: "$28",
+    plan2Price: "$20",
     duration: "6-12 months",
   },
   "aalim-course": {
@@ -83,8 +83,8 @@ const courseData: Record<
     color: "purple",
     iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     heroGradient: "from-purple-600/10 via-background to-purple-600/5",
-    plan1Price: "$65",
-    plan2Price: "$45",
+    plan1Price: "$35",
+    plan2Price: "$25",
     duration: "2-8 years",
   },
 };

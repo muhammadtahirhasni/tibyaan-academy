@@ -54,7 +54,12 @@ export default function StudentSchedulePage() {
   const [timezone, setTimezone]               = useState("");
   const [preferredDays, setPreferredDays]     = useState<string[]>([]);
   const [startTime, setStartTime]             = useState("09:00");
-  const [endTime, setEndTime]                 = useState("17:00");
+  // End time is always startTime + 45 minutes (auto-calculated)
+  const endTime = (() => {
+    const [h, m] = startTime.split(":").map(Number);
+    const total = h * 60 + m + 45;
+    return `${String(Math.floor(total / 60) % 24).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+  })();
   const [teacherId, setTeacherId]             = useState("");
   const [selectedCourseId, setSelectedCourseId] = useState<string>(COURSES[0].id);
 
@@ -357,11 +362,11 @@ export default function StudentSchedulePage() {
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
             <Clock className="w-4 h-4" />
-            {t("preferredTime")} (24-hour format)
+            {t("preferredTime")} (any time, 24-hour)
           </label>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">From</span>
+              <span className="text-xs text-muted-foreground">Start time</span>
               <input
                 type="time"
                 value={startTime}
@@ -369,19 +374,21 @@ export default function StudentSchedulePage() {
                 className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
               />
             </div>
-            <span className="text-muted-foreground mt-5">{t("to")}</span>
+            <span className="text-muted-foreground mt-5">→</span>
             <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">To</span>
-              <input
-                type="time"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                className="rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20"
-              />
+              <span className="text-xs text-muted-foreground">End time (auto)</span>
+              <div className="rounded-lg border bg-muted px-3 py-2.5 text-sm text-muted-foreground">
+                {endTime}
+              </div>
+            </div>
+            <div className="flex flex-col gap-1 mt-5">
+              <span className="inline-flex items-center gap-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-lg">
+                45 min session
+              </span>
             </div>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">
-            All times in your selected timezone: <span className="font-medium text-foreground">{timezone}</span>
+            Session is always 45 minutes · Any time of day · All times in <span className="font-medium text-foreground">{timezone}</span>
           </p>
         </div>
 

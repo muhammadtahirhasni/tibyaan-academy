@@ -160,7 +160,7 @@ export async function PATCH(
             enrollmentId:    enrollment.id,
             teacherId,
             scheduledAt,
-            durationMinutes: 60,
+            durationMinutes: 45,
             status:          "scheduled",
           }).returning({ id: classes.id });
           if (inserted[0]) {

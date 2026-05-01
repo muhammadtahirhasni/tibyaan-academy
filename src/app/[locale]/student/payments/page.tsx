@@ -31,10 +31,10 @@ const statusConfig: Record<string, { color: string; bg: string; label: string }>
 };
 
 const coursePricing = [
-  { course: "Nazra Quran",    plan1: 15, plan2: 8 },
-  { course: "Hifz Quran",     plan1: 20, plan2: 12 },
-  { course: "Arabic Language",plan1: 18, plan2: 10 },
-  { course: "Aalim Course",   plan1: 25, plan2: 15 },
+  { course: "Nazra Quran",    plan1: 25, plan2: 18 },
+  { course: "Hifz Quran",     plan1: 30, plan2: 22 },
+  { course: "Arabic Language",plan1: 28, plan2: 20 },
+  { course: "Aalim Course",   plan1: 35, plan2: 25 },
 ];
 
 export default function PaymentsPage() {
