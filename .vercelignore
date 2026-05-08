@@ -1,0 +1,9 @@
+# Exclude large binary files from Vercel upload (serve from Cloudflare R2 in prod)
+public/Aalim Course/
+public/Arabic Language/
+public/Quran Parah Images/
+public/Nazra/
+
+# Dev-only files
+.claude/
+docs/
