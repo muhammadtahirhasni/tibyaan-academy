@@ -51,7 +51,7 @@ export default async function TeacherDashboardPage({
           courseName: (c.course[courseNameKey] as string) || c.course.nameEn,
           time: `${fmt(scheduledAt)} - ${fmt(endTime)}`,
           status: c.class_.status,
-          meetingLink: c.class_.meetingLink,
+          meetingLink: c.class_.meetingLink ?? c.matchZoomLink ?? null,
         };
       }),
       activeStudents: raw.activeStudents,

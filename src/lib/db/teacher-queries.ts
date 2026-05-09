@@ -15,7 +15,7 @@ import {
   messages,
   classRecordings,
 } from "./schema";
-import { eq, and, desc, gte, lte, sql, count, avg, inArray } from "drizzle-orm";
+import { eq, and, desc, gte, lte, sql } from "drizzle-orm";
 
 /**
  * Get or create teacher profile
@@ -47,18 +47,26 @@ export async function getTeacherDashboardStats(teacherId: string) {
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const todayEnd = new Date(todayStart.getTime() + 86400000);
 
-  // Today's classes
+  // Today's classes with zoom link from match
   const todayClasses = await db
     .select({
       class_: classes,
       enrollment: enrollments,
       course: courses,
       student: users,
+      matchZoomLink: teacherStudentMatches.zoomLink,
     })
     .from(classes)
     .innerJoin(enrollments, eq(classes.enrollmentId, enrollments.id))
     .innerJoin(courses, eq(enrollments.courseId, courses.id))
     .innerJoin(users, eq(enrollments.studentId, users.id))
+    .leftJoin(
+      teacherStudentMatches,
+      and(
+        eq(teacherStudentMatches.studentId, enrollments.studentId),
+        eq(teacherStudentMatches.teacherId, teacherId)
+      )
+    )
     .where(
       and(
         eq(classes.teacherId, teacherId),

@@ -27,6 +27,8 @@ import {
   MessageSquare,
   Users2,
   Award,
+  AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -36,8 +38,11 @@ const navItems = [
   { key: "sidebarCourses", href: "/admin/courses", icon: BookOpen },
   { key: "sidebarVideos", href: "/admin/videos", icon: Video },
   { key: "sidebarRecordings", href: "/admin/recordings", icon: Disc },
+  { key: "sidebarClassRecordings", href: "/admin/class-recordings", icon: Video },
   { key: "sidebarMatches", href: "/admin/matches", icon: UserCheck },
   { key: "sidebarScheduleRequests", href: "/admin/schedule-requests", icon: CalendarClock },
+  { key: "sidebarScheduleChanges", href: "/admin/schedule-change-requests", icon: RefreshCw },
+  { key: "sidebarComplaints", href: "/admin/complaints", icon: AlertCircle },
   { key: "sidebarDarsCircles", href: "/admin/dars-circles", icon: Users2 },
   { key: "sidebarCertificates", href: "/admin/certificates", icon: Award },
   { key: "sidebarAgents", href: "/admin/agents", icon: Activity },

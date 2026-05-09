@@ -8,6 +8,13 @@
       "when": 1774116048104,
       "tag": "0000_lush_nuke",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778265530671,
+      "tag": "0001_melted_zombie",
+      "breakpoints": true
     }
   ]
 }

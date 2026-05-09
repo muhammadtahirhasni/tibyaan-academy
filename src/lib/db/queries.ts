@@ -7,6 +7,7 @@ import {
   classes,
   lessons,
   hifzTracker,
+  teacherStudentMatches,
 } from "./schema";
 import { eq, and, desc, gte, sql } from "drizzle-orm";
 
@@ -84,10 +85,18 @@ export async function getUpcomingClasses(studentId: string) {
       class_: classes,
       enrollment: enrollments,
       course: courses,
+      matchZoomLink: teacherStudentMatches.zoomLink,
     })
     .from(classes)
     .innerJoin(enrollments, eq(classes.enrollmentId, enrollments.id))
     .innerJoin(courses, eq(enrollments.courseId, courses.id))
+    .leftJoin(
+      teacherStudentMatches,
+      and(
+        eq(teacherStudentMatches.studentId, studentId),
+        eq(teacherStudentMatches.teacherId, classes.teacherId)
+      )
+    )
     .where(
       and(
         eq(enrollments.studentId, studentId),

@@ -200,6 +200,7 @@ export const circleStatusEnum = pgEnum("circle_status", [
 
 export const scheduleRequestStatusEnum = pgEnum("schedule_request_status", [
   "pending",
+  "approved",
   "suggested",
   "confirmed",
   "rejected",
@@ -702,6 +703,7 @@ export const teacherStudentMatches = pgTable("teacher_student_matches", {
     time: string;
     timezone: string;
   }>(),
+  zoomLink: text("zoom_link"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
@@ -1036,6 +1038,165 @@ export const scheduleRequests = pgTable("schedule_requests", {
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
+});
+
+// ========================
+// 37. ZOOM_LINK on matches (added via zoomLink column)
+// Note: zoomLink is added to teacherStudentMatches table above via alter —
+// we use a separate table for admin recordings here
+// ========================
+
+// Enum additions for new features
+export const progressRatingEnum = pgEnum("progress_rating", [
+  "excellent",
+  "good",
+  "average",
+  "needs_improvement",
+]);
+
+export const assignmentTypeEnum = pgEnum("assignment_type", [
+  "test",
+  "assignment",
+]);
+
+export const assignmentFrequencyEnum = pgEnum("assignment_frequency", [
+  "daily",
+  "weekly",
+  "once",
+]);
+
+export const assignmentStatusEnum = pgEnum("assignment_status", [
+  "pending",
+  "submitted",
+  "graded",
+]);
+
+export const complaintCategoryEnum = pgEnum("complaint_category", [
+  "teacher",
+  "schedule",
+  "technical",
+  "fees",
+  "other",
+]);
+
+export const complaintStatusEnum = pgEnum("complaint_status", [
+  "new",
+  "in_review",
+  "resolved",
+]);
+
+export const changeRequestStatusEnum = pgEnum("change_request_status", [
+  "pending",
+  "approved",
+  "rejected",
+]);
+
+// ========================
+// 37. PROGRESS_ENTRIES TABLE (Teacher records student daily progress)
+// ========================
+
+export const progressEntries = pgTable("progress_entries", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  teacherId: uuid("teacher_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  matchId: uuid("match_id")
+    .references(() => teacherStudentMatches.id, { onDelete: "set null" }),
+  lessonCovered: varchar("lesson_covered", { length: 500 }).notNull(),
+  rating: progressRatingEnum("rating").notNull(),
+  notes: text("notes"),
+  entryDate: timestamp("entry_date", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ========================
+// 38. TESTS_ASSIGNMENTS TABLE (Teacher assigns tests/assignments per student)
+// ========================
+
+export const testsAssignments = pgTable("tests_assignments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  teacherId: uuid("teacher_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  type: assignmentTypeEnum("type").notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description"),
+  frequency: assignmentFrequencyEnum("frequency").notNull().default("once"),
+  dueDate: timestamp("due_date", { withTimezone: true }),
+  status: assignmentStatusEnum("status").notNull().default("pending"),
+  teacherGrade: varchar("teacher_grade", { length: 100 }),
+  teacherFeedback: text("teacher_feedback"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ========================
+// 39. STUDENT_COMPLAINTS TABLE
+// ========================
+
+export const studentComplaints = pgTable("student_complaints", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  subject: varchar("subject", { length: 500 }).notNull(),
+  category: complaintCategoryEnum("category").notNull(),
+  description: text("description").notNull(),
+  status: complaintStatusEnum("status").notNull().default("new"),
+  adminNotes: text("admin_notes"),
+  resolvedAt: timestamp("resolved_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ========================
+// 40. SCHEDULE_CHANGE_REQUESTS TABLE (Student requests schedule change)
+// ========================
+
+export const scheduleChangeRequests = pgTable("schedule_change_requests", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  matchId: uuid("match_id")
+    .notNull()
+    .references(() => teacherStudentMatches.id, { onDelete: "cascade" }),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  teacherId: uuid("teacher_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  newSchedule: jsonb("new_schedule").$type<{
+    days: string[];
+    time: string;
+    timezone: string;
+  }>().notNull(),
+  reason: text("reason"),
+  status: changeRequestStatusEnum("status").notNull().default("pending"),
+  adminNotes: text("admin_notes"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ========================
+// 41. ADMIN_CLASS_RECORDINGS TABLE (Admin uploads recordings per student)
+// ========================
+
+export const adminClassRecordings = pgTable("admin_class_recordings", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  uploadedBy: uuid("uploaded_by")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  title: varchar("title", { length: 500 }).notNull(),
+  recordingUrl: text("recording_url").notNull(),
+  classDate: timestamp("class_date", { withTimezone: true }).notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 // ========================

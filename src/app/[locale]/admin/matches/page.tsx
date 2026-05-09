@@ -33,6 +33,7 @@ export default async function AdminMatchesPage({
     teacherName: string;
     courseName: string;
     status: string;
+    zoomLink: string | null;
     createdAt: string;
     respondedAt: string | null;
   }> = [];
@@ -42,6 +43,7 @@ export default async function AdminMatchesPage({
       SELECT
         m.id,
         m.status,
+        m.zoom_link,
         m.created_at,
         m.responded_at,
         s.full_name AS student_name,
@@ -61,6 +63,7 @@ export default async function AdminMatchesPage({
       teacherName: r.teacher_name as string,
       courseName: r.course_name as string,
       status: r.status as string,
+      zoomLink: (r.zoom_link as string | null) ?? null,
       createdAt: new Date(r.created_at as string).toISOString(),
       respondedAt: r.responded_at
         ? new Date(r.responded_at as string).toISOString()

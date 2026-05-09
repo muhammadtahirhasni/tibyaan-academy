@@ -13,7 +13,6 @@ import {
   ClipboardCheck,
   DollarSign,
   Video,
-  MessageSquare,
   Disc,
   Sun,
   Moon,
@@ -22,6 +21,8 @@ import {
   LogOut,
   ChevronLeft,
   Bot,
+  TrendingUp,
+  FileText,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -30,10 +31,11 @@ const navItems = [
   { key: "sidebarStudents", href: "/teacher/students", icon: Users },
   { key: "sidebarSchedule", href: "/teacher/schedule", icon: Calendar },
   { key: "sidebarLessons", href: "/teacher/lessons", icon: BookOpen },
+  { key: "sidebarTrackProgress", href: "/teacher/track-progress", icon: TrendingUp },
   { key: "sidebarTests", href: "/teacher/tests", icon: ClipboardCheck },
+  { key: "sidebarTestsAssignments", href: "/teacher/tests-assignments", icon: FileText },
   { key: "sidebarAIAssistant", href: "/teacher/ai-assistant", icon: Bot },
   { key: "sidebarVideos", href: "/teacher/videos", icon: Video },
-  { key: "sidebarMessages", href: "/teacher/messages", icon: MessageSquare },
   { key: "sidebarRecordings", href: "/teacher/recordings", icon: Disc },
   { key: "sidebarRevenue", href: "/teacher/revenue", icon: DollarSign },
 ];
