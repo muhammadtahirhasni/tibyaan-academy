@@ -30,7 +30,7 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Logo + Tagline */}
           <div className="md:col-span-1">
             <div className="text-2xl font-bold">Tibyaan</div>
@@ -95,6 +95,26 @@ export function Footer() {
                   {t("terms")}
                 </Link>
               </li>
+              <li>
+                <Link href="/dars" className="opacity-70 hover:opacity-100 transition-opacity">
+                  Daily Dars
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Countries */}
+          <div>
+            <h4 className="font-semibold mb-3">Countries</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/uk" className="opacity-70 hover:opacity-100 transition-opacity">🇬🇧 UK</Link></li>
+              <li><Link href="/usa" className="opacity-70 hover:opacity-100 transition-opacity">🇺🇸 USA</Link></li>
+              <li><Link href="/uae" className="opacity-70 hover:opacity-100 transition-opacity">🇦🇪 UAE</Link></li>
+              <li><Link href="/canada" className="opacity-70 hover:opacity-100 transition-opacity">🇨🇦 Canada</Link></li>
+              <li><Link href="/australia" className="opacity-70 hover:opacity-100 transition-opacity">🇦🇺 Australia</Link></li>
+              <li><Link href="/indonesia" className="opacity-70 hover:opacity-100 transition-opacity">🇮🇩 Indonesia</Link></li>
+              <li><Link href="/germany" className="opacity-70 hover:opacity-100 transition-opacity">🇩🇪 Germany</Link></li>
+              <li><Link href="/saudi" className="opacity-70 hover:opacity-100 transition-opacity">🇸🇦 Saudi Arabia</Link></li>
             </ul>
           </div>
 

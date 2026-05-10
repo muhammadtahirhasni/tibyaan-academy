@@ -8,6 +8,12 @@ const DARS_CATEGORIES = ["quran", "hadith", "fiqh", "seerah", "dua"] as const;
 interface DarsContent {
   slug: string;
   titleEn: string;
+  metaTitle: string;
+  metaDescription: string;
+  primaryKeyword: string;
+  secondaryKeywords: string[];
+  targetCountries: string[];
+  targetAudience: string;
   contentEn: string;
   sourceReference: string;
 }
@@ -70,18 +76,32 @@ Rules:
           role: "user",
           content: `${categoryPrompts[category]}
 
+SEO Requirements:
+- Article must be minimum 600 words
+- Include primary keyword naturally in first 100 words
+- Mention Muslim communities globally (e.g., 'Muslims in UK, USA, and Canada...')
+- Use proper HTML heading hierarchy: one <h2>, 2-3 <h3>s as needed
+- End with a call to action linking to Tibyaan Academy courses
+- Write content in proper HTML (not Markdown)
+
 Respond in JSON format:
 \`\`\`json
 {
-  "slug": "kebab-case-unique-slug-with-date",
-  "titleEn": "Title in English",
-  "contentEn": "Full content in Markdown format",
+  "slug": "kebab-case-unique-slug",
+  "titleEn": "Title in English — max 60 characters, include primary keyword",
+  "metaTitle": "SEO title — max 60 characters",
+  "metaDescription": "SEO description — max 160 characters, include primary keyword and call to action",
+  "primaryKeyword": "main keyword this article targets",
+  "secondaryKeywords": ["keyword2", "keyword3"],
+  "targetCountries": ["UK", "USA", "UAE", "Canada", "Australia"],
+  "targetAudience": "e.g. Muslim parents, adult learners, children",
+  "contentEn": "Full article content in proper HTML with H2, H3 tags, minimum 600 words. End with CTA linking to /en/courses/nazra-quran or relevant course.",
   "sourceReference": "Source reference (e.g., Sahih Bukhari #123)"
 }
 \`\`\``,
         },
       ],
-      { maxTokens: 2048 }
+      { maxTokens: 3000 }
     );
 
     const parsed = this.parseJSON<DarsContent>(englishJson);
