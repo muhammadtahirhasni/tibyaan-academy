@@ -35,9 +35,9 @@ export default async function TeacherStudentsPage({
       avatarUrl: r.student.avatarUrl,
       courseName: (r.course[localeKey] as string) || r.course.nameEn,
       courseType: r.course.courseType,
-      planType: r.enrollment.planType,
-      status: r.enrollment.status,
-      enrolledAt: r.enrollment.createdAt?.toISOString() ?? "",
+      planType: r.enrollment?.planType ?? null,
+      status: r.enrollment?.status ?? "active",
+      enrolledAt: r.enrollment?.createdAt?.toISOString() ?? "",
     }));
   } catch (err) {
     console.error("Failed to load students:", err);

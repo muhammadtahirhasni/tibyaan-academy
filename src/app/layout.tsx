@@ -21,8 +21,12 @@ const organizationJsonLd = {
   "@type": "EducationalOrganization",
   name: "Tibyaan Academy",
   url: BASE_URL,
+  logo: `${BASE_URL}/icons/icon-512x512.svg`,
   description:
     "Modern Digital Madrasah for Quran & Islamic Sciences — live teachers + AI Ustaz",
+  foundingDate: "2024",
+  areaServed: ["GB", "US", "AE", "CA", "AU", "ID", "SA", "DE", "PK", "FR"],
+  availableLanguage: ["English", "Urdu", "Arabic", "French", "Indonesian"],
   sameAs: [
     "https://www.youtube.com/channel/UCBU7Fc9ZjYU42SHfSQM9_rg",
     "https://www.linkedin.com/in/tibyaan-academy-0263b73bb/",
@@ -47,22 +51,31 @@ const organizationJsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Tibyaan Academy — Modern Digital Madrasah",
+    default: "Tibyaan Academy — Online Quran & Islamic Education",
     template: "%s | Tibyaan Academy",
   },
   description:
-    "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. Affordable plans starting at $8/month. Free trial available.",
+    "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. 5-day free trial. Available in UK, USA, UAE, Canada, Australia.",
   keywords: [
     "online Quran classes",
     "learn Quran online",
-    "Hifz program",
+    "Hifz program online",
     "Tajweed course",
     "Arabic language course",
-    "Islamic education",
-    "digital madrasah",
+    "Islamic education online",
+    "online madrasah",
     "AI Quran tutor",
     "Dars-e-Nizami online",
-    "Aalim course",
+    "Aalim course online",
+    "Quran classes UK",
+    "Quran classes USA",
+    "Quran classes UAE",
+    "Quran classes Canada",
+    "Quran classes Australia",
+    "online Quran classes Indonesia",
+    "islamische Kurse online",
+    "تعلم القرآن أونلاين",
+    "کوئٹین آنلاین قرآن",
     "Tibyaan Academy",
   ],
   authors: [{ name: "Tibyaan Academy" }],
@@ -73,16 +86,29 @@ export const metadata: Metadata = {
     siteName: "Tibyaan Academy",
     title: "Tibyaan Academy — Modern Digital Madrasah",
     description:
-      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz.",
+      "Learn Quran, Hifz, Arabic & Islamic Sciences online. Live teachers + AI Ustaz. 5-day free trial.",
     url: BASE_URL,
     locale: "en_US",
     alternateLocale: ["ur_PK", "ar_SA", "fr_FR", "id_ID"],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Tibyaan Academy — Online Quran Education",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tibyaan Academy — Modern Digital Madrasah",
+    title: "Tibyaan Academy — Online Quran & Islamic Education",
     description:
       "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz.",
+    images: ["/og-image.png"],
+    creator: "@TibyaanAcademy",
+  },
+  verification: {
+    google: "tamP0xBeTO981V7OWrKzNvCzRPvvsT7xQ9szNZKHpjU",
   },
   robots: {
     index: true,

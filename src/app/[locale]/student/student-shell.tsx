@@ -14,7 +14,6 @@ import {
   ClipboardCheck,
   Calendar,
   CreditCard,
-  MessageSquare,
   Settings,
   Sun,
   Moon,
@@ -25,6 +24,9 @@ import {
   Gamepad2,
   Mic,
   Users2,
+  TrendingUp,
+  FileText,
+  AlertCircle,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 import { signOut } from "@/app/[locale]/(auth)/actions";
@@ -36,13 +38,13 @@ const navItems = [
   { key: "sidebarHifzTracker", href: "/student/hifz-tracker", icon: Brain },
   { key: "sidebarTajweedChecker", href: "/student/tajweed-checker", icon: Mic },
   { key: "sidebarKidsActivities", href: "/student/activities", icon: Gamepad2 },
-  { key: "sidebarClasses", href: "/student/dashboard", icon: Video },
-  { key: "sidebarTests", href: "/student/dashboard", icon: ClipboardCheck },
   { key: "sidebarSchedule", href: "/student/schedule", icon: Calendar },
+  { key: "sidebarTrackProgress", href: "/student/progress", icon: TrendingUp },
+  { key: "sidebarAssignments", href: "/student/assignments", icon: ClipboardCheck },
+  { key: "sidebarRecordings", href: "/student/recordings", icon: Video },
   { key: "sidebarDarsCircles", href: "/student/dars-circles", icon: Users2 },
-  { key: "sidebarMessages", href: "/student/messages", icon: MessageSquare },
+  { key: "sidebarComplaints", href: "/student/complaints", icon: AlertCircle },
   { key: "sidebarPayments", href: "/student/payments", icon: CreditCard },
-  { key: "sidebarSettings", href: "/student/dashboard", icon: Settings },
 ];
 
 interface StudentShellProps {

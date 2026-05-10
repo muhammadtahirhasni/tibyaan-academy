@@ -283,11 +283,11 @@ export function DashboardClient({
                   </div>
                 </div>
                 {nextClass.meetingLink && (
-                  <Link href={`/classroom/${nextClass.classId}`}>
+                  <a href={nextClass.meetingLink} target="_blank" rel="noopener noreferrer">
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
                       {t("joinClass")}
                     </Button>
-                  </Link>
+                  </a>
                 )}
               </div>
             ) : (

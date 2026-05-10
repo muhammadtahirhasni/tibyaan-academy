@@ -197,14 +197,14 @@ export function TeacherDashboardClient({
                         {t("completed")}
                       </Badge>
                     ) : cls.meetingLink ? (
-                      <Link href={`/classroom/${cls.classId}`}>
+                      <a href={cls.meetingLink} target="_blank" rel="noopener noreferrer">
                         <Button
                           size="sm"
                           className="bg-blue-600 hover:bg-blue-700 text-white"
                         >
                           {t("joinClass")}
                         </Button>
-                      </Link>
+                      </a>
                     ) : (
                       <Badge variant="outline">{t("scheduled")}</Badge>
                     )}

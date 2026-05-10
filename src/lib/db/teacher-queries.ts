@@ -15,7 +15,7 @@ import {
   messages,
   classRecordings,
 } from "./schema";
-import { eq, and, desc, gte, lte, sql, count, avg, inArray } from "drizzle-orm";
+import { eq, and, desc, gte, lte, sql, or } from "drizzle-orm";
 
 /**
  * Get or create teacher profile
@@ -121,13 +121,33 @@ export async function getTeacherDashboardStats(teacherId: string) {
 }
 
 /**
- * Get teacher's students list
+ * Get teacher's students list — includes students from active matches even if no classes yet
  */
 export async function getTeacherStudents(teacherId: string) {
   const db = getDb();
 
-  // Get distinct students that have classes with this teacher
-  const studentRows = await db
+  // Primary: students from active matches (created when admin approves schedule)
+  const matchRows = await db
+    .select({
+      student: users,
+      enrollment: enrollments,
+      course: courses,
+    })
+    .from(teacherStudentMatches)
+    .innerJoin(users, eq(teacherStudentMatches.studentId, users.id))
+    .innerJoin(courses, eq(teacherStudentMatches.courseId, courses.id))
+    .leftJoin(
+      enrollments,
+      and(
+        eq(enrollments.studentId, teacherStudentMatches.studentId),
+        eq(enrollments.courseId, teacherStudentMatches.courseId),
+      )
+    )
+    .where(eq(teacherStudentMatches.teacherId, teacherId))
+    .orderBy(desc(teacherStudentMatches.createdAt));
+
+  // Fallback: also include students with classes that may not have a match record
+  const classRows = await db
     .select({
       student: users,
       enrollment: enrollments,
@@ -140,9 +160,11 @@ export async function getTeacherStudents(teacherId: string) {
     .where(eq(classes.teacherId, teacherId))
     .orderBy(desc(enrollments.createdAt));
 
+  const combined = [...matchRows, ...classRows];
+
   // Deduplicate by student ID
   const seen = new Set<string>();
-  return studentRows.filter((row) => {
+  return combined.filter((row) => {
     if (seen.has(row.student.id)) return false;
     seen.add(row.student.id);
     return true;

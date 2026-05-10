@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Inbox, ArrowRight, Calendar, Clock, BookOpen } from "lucide-react";
+import { Users, Inbox, ArrowRight, Calendar, Clock, BookOpen, Link2, CheckCircle, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type MatchItem = {
   id: string;
@@ -15,6 +16,8 @@ type MatchItem = {
   timezone: string;
   createdAt: string;
   classCount: number;
+  zoomLink: string | null;
+  matchId: string | null;
 };
 
 type Tab = "all" | "approved" | "rejected" | "pending";
@@ -26,6 +29,68 @@ const statusConfig: Record<string, { color: string; bg: string; label: string }>
   suggested: { color: "text-blue-700 dark:text-blue-400",     bg: "bg-blue-100 dark:bg-blue-900",     label: "Suggested" },
   rejected:  { color: "text-red-700 dark:text-red-400",       bg: "bg-red-100 dark:bg-red-900",       label: "Rejected" },
 };
+
+function ZoomLinkEditor({ matchId, initialLink }: { matchId: string; initialLink: string | null }) {
+  const [editing, setEditing] = useState(false);
+  const [link, setLink] = useState(initialLink ?? "");
+  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await fetch("/api/admin/matches/zoom", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matchId, zoomLink: link }),
+      });
+      setSaved(true);
+      setEditing(false);
+      setTimeout(() => setSaved(false), 3000);
+    } catch {}
+    setSaving(false);
+  };
+
+  return (
+    <div className="mt-2">
+      {editing ? (
+        <div className="flex items-center gap-2">
+          <input
+            type="url"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="https://zoom.us/j/..."
+            className="flex-1 px-3 py-1.5 text-xs rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <Button size="sm" onClick={save} disabled={saving} className="h-7 text-xs px-3">
+            {saving ? "Saving..." : "Save"}
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => setEditing(false)} className="h-7 text-xs px-2">
+            Cancel
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer"
+              className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1 hover:underline truncate max-w-[200px]">
+              <Link2 className="w-3 h-3 shrink-0" />
+              Zoom Link Set
+            </a>
+          ) : (
+            <span className="text-xs text-muted-foreground italic">No Zoom link</span>
+          )}
+          {saved && <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />}
+          <button onClick={() => setEditing(true)}
+            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+            <Pencil className="w-3 h-3" />
+            {link ? "Edit" : "Set Zoom Link"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
   const [tab, setTab] = useState<Tab>("all");
@@ -51,10 +116,10 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Users className="w-6 h-6 text-red-600" />
-          Student-Teacher Matches
+          Student-Teacher Matches & Zoom Links
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          All approved schedule requests and their class records
+          Manage active matches and set Zoom links for each Teacher–Student pair
         </p>
       </div>
 
@@ -64,7 +129,7 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
           { label: "Total Requests",    value: matches.length,                                          color: "text-blue-600",    bg: "bg-blue-50 dark:bg-blue-950" },
           { label: "Active Matches",    value: matches.filter((m) => isActive(m.status)).length,         color: "text-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-950" },
           { label: "Pending",           value: matches.filter((m) => isPending(m.status)).length,        color: "text-amber-600",   bg: "bg-amber-50 dark:bg-amber-950" },
-          { label: "Rejected",          value: matches.filter((m) => m.status === "rejected").length,    color: "text-red-600",     bg: "bg-red-50 dark:bg-red-950" },
+          { label: "With Zoom Link",    value: matches.filter((m) => m.zoomLink).length,                 color: "text-blue-600",    bg: "bg-blue-50 dark:bg-blue-950" },
         ].map((s) => (
           <div key={s.label} className={`rounded-xl border ${s.bg} p-4`}>
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
@@ -103,20 +168,15 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
               <div key={match.id} className="rounded-xl border bg-card p-4">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3">
                   <div className="flex-1 min-w-0 space-y-2">
-                    {/* Student → Teacher */}
                     <div className="flex items-center gap-2 text-sm">
                       <span className="font-semibold text-foreground">{match.studentName}</span>
                       <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" />
                       <span className="font-semibold text-foreground">{match.teacherName}</span>
                     </div>
-
-                    {/* Course */}
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>{match.courseName}</span>
                     </div>
-
-                    {/* Schedule */}
                     {match.days && (
                       <div className="flex items-center gap-3 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
@@ -130,6 +190,11 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
                           </span>
                         )}
                       </div>
+                    )}
+
+                    {/* Zoom Link Editor — only for active matches */}
+                    {isActive(match.status) && match.matchId && (
+                      <ZoomLinkEditor matchId={match.matchId} initialLink={match.zoomLink} />
                     )}
                   </div>
 

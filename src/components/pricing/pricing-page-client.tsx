@@ -26,6 +26,7 @@ import {
   Users,
   Sparkles,
 } from "lucide-react";
+import { COURSE_FEES, formatFee } from "@/lib/data/fees-config";
 
 const plan1Features = [
   { key: "liveClasses", icon: Video, included: true },
@@ -48,31 +49,31 @@ const plan2Features = [
 const coursePricing = [
   {
     key: "nazra",
-    monthly1: "$25",
-    monthly2: "$18",
-    yearly1: "$250",
-    yearly2: "$180",
+    monthly1: formatFee(COURSE_FEES.nazra.plan1Monthly),
+    monthly2: formatFee(COURSE_FEES.nazra.plan2Monthly),
+    yearly1:  formatFee(COURSE_FEES.nazra.plan1Yearly),
+    yearly2:  formatFee(COURSE_FEES.nazra.plan2Yearly),
   },
   {
     key: "hifz",
-    monthly1: "$30",
-    monthly2: "$22",
-    yearly1: "$300",
-    yearly2: "$220",
+    monthly1: formatFee(COURSE_FEES.hifz.plan1Monthly),
+    monthly2: formatFee(COURSE_FEES.hifz.plan2Monthly),
+    yearly1:  formatFee(COURSE_FEES.hifz.plan1Yearly),
+    yearly2:  formatFee(COURSE_FEES.hifz.plan2Yearly),
   },
   {
     key: "arabic",
-    monthly1: "$28",
-    monthly2: "$20",
-    yearly1: "$280",
-    yearly2: "$200",
+    monthly1: formatFee(COURSE_FEES.arabic.plan1Monthly),
+    monthly2: formatFee(COURSE_FEES.arabic.plan2Monthly),
+    yearly1:  formatFee(COURSE_FEES.arabic.plan1Yearly),
+    yearly2:  formatFee(COURSE_FEES.arabic.plan2Yearly),
   },
   {
     key: "aalim",
-    monthly1: "$35",
-    monthly2: "$25",
-    yearly1: "$350",
-    yearly2: "$250",
+    monthly1: formatFee(COURSE_FEES.aalim.plan1Monthly),
+    monthly2: formatFee(COURSE_FEES.aalim.plan2Monthly),
+    yearly1:  formatFee(COURSE_FEES.aalim.plan1Yearly),
+    yearly2:  formatFee(COURSE_FEES.aalim.plan2Yearly),
   },
 ];
 

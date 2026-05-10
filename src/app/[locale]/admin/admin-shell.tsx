@@ -27,6 +27,9 @@ import {
   MessageSquare,
   Users2,
   Award,
+  TrendingUp,
+  ClipboardList,
+  AlertTriangle,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -38,17 +41,16 @@ const navItems = [
   { key: "sidebarRecordings", href: "/admin/recordings", icon: Disc },
   { key: "sidebarMatches", href: "/admin/matches", icon: UserCheck },
   { key: "sidebarScheduleRequests", href: "/admin/schedule-requests", icon: CalendarClock },
+  { key: "sidebarProgress", href: "/admin/progress", icon: TrendingUp },
+  { key: "sidebarAssignments", href: "/admin/assignments", icon: ClipboardList },
+  { key: "sidebarComplaints", href: "/admin/complaints", icon: AlertTriangle },
   { key: "sidebarDarsCircles", href: "/admin/dars-circles", icon: Users2 },
   { key: "sidebarCertificates", href: "/admin/certificates", icon: Award },
   { key: "sidebarAgents", href: "/admin/agents", icon: Activity },
   { key: "sidebarAIMonitor", href: "/admin/ai-monitor", icon: Bot },
   { key: "sidebarReviews", href: "/admin/reviews", icon: Star },
   { key: "sidebarNotifications", href: "/admin/notifications", icon: Bell },
-  {
-    key: "sidebarParentReports",
-    href: "/admin/parent-reports",
-    icon: MessageSquare,
-  },
+  { key: "sidebarParentReports", href: "/admin/parent-reports", icon: MessageSquare },
 ];
 
 export function AdminShell({

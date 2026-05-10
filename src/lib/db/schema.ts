@@ -206,6 +206,43 @@ export const scheduleRequestStatusEnum = pgEnum("schedule_request_status", [
   "rejected",
 ]);
 
+export const progressRatingEnum = pgEnum("progress_rating", [
+  "excellent",
+  "good",
+  "needs_improvement",
+]);
+
+export const assignmentTypeEnum = pgEnum("assignment_type", [
+  "test",
+  "assignment",
+]);
+
+export const assignmentFrequencyEnum = pgEnum("assignment_frequency", [
+  "daily",
+  "weekly",
+  "once",
+]);
+
+export const assignmentStatusEnum = pgEnum("assignment_status", [
+  "pending",
+  "submitted",
+  "graded",
+]);
+
+export const complaintCategoryEnum = pgEnum("complaint_category", [
+  "teacher",
+  "schedule",
+  "technical",
+  "fees",
+  "other",
+]);
+
+export const complaintStatusEnum = pgEnum("complaint_status", [
+  "new",
+  "in_review",
+  "resolved",
+]);
+
 // ========================
 // 1. USERS TABLE
 // ========================
@@ -703,6 +740,7 @@ export const teacherStudentMatches = pgTable("teacher_student_matches", {
     time: string;
     timezone: string;
   }>(),
+  zoomLink: text("zoom_link"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
@@ -1031,6 +1069,77 @@ export const scheduleRequests = pgTable("schedule_requests", {
     time: string;
   }>(),
   status: scheduleRequestStatusEnum("status").notNull().default("pending"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+// ========================
+// 37. PROGRESS_ENTRIES TABLE
+// ========================
+
+export const progressEntries = pgTable("progress_entries", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  teacherId: uuid("teacher_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  lessonCovered: text("lesson_covered").notNull(),
+  rating: progressRatingEnum("rating").notNull(),
+  notes: text("notes"),
+  sessionDate: timestamp("session_date", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+// ========================
+// 38. STUDENT_ASSIGNMENTS TABLE
+// ========================
+
+export const studentAssignments = pgTable("student_assignments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  teacherId: uuid("teacher_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  type: assignmentTypeEnum("type").notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description"),
+  frequency: assignmentFrequencyEnum("frequency").notNull().default("once"),
+  dueDate: timestamp("due_date", { withTimezone: true }),
+  status: assignmentStatusEnum("status").notNull().default("pending"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+// ========================
+// 39. STUDENT_COMPLAINTS TABLE
+// ========================
+
+export const studentComplaints = pgTable("student_complaints", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  studentId: uuid("student_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  subject: varchar("subject", { length: 500 }).notNull(),
+  category: complaintCategoryEnum("category").notNull(),
+  description: text("description").notNull(),
+  status: complaintStatusEnum("status").notNull().default("new"),
+  adminNote: text("admin_note"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
@@ -1443,3 +1552,36 @@ export const scheduleRequestsRelations = relations(
     }),
   })
 );
+
+export const progressEntriesRelations = relations(progressEntries, ({ one }) => ({
+  teacher: one(users, {
+    fields: [progressEntries.teacherId],
+    references: [users.id],
+    relationName: "progressTeacher",
+  }),
+  student: one(users, {
+    fields: [progressEntries.studentId],
+    references: [users.id],
+    relationName: "progressStudent",
+  }),
+}));
+
+export const studentAssignmentsRelations = relations(studentAssignments, ({ one }) => ({
+  teacher: one(users, {
+    fields: [studentAssignments.teacherId],
+    references: [users.id],
+    relationName: "assignmentTeacher",
+  }),
+  student: one(users, {
+    fields: [studentAssignments.studentId],
+    references: [users.id],
+    relationName: "assignmentStudent",
+  }),
+}));
+
+export const studentComplaintsRelations = relations(studentComplaints, ({ one }) => ({
+  student: one(users, {
+    fields: [studentComplaints.studentId],
+    references: [users.id],
+  }),
+}));

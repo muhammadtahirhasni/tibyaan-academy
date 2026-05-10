@@ -9,6 +9,7 @@ import {
   CreditCard, Calendar, DollarSign, Users, Copy, Check,
   AlertTriangle, CheckCircle2, Clock, ArrowUpRight, Receipt, Loader2,
 } from "lucide-react";
+import { COURSE_FEES } from "@/lib/data/fees-config";
 
 type Subscription = {
   id: string;
@@ -31,10 +32,10 @@ const statusConfig: Record<string, { color: string; bg: string; label: string }>
 };
 
 const coursePricing = [
-  { course: "Nazra Quran",    plan1: 25, plan2: 18 },
-  { course: "Hifz Quran",     plan1: 30, plan2: 22 },
-  { course: "Arabic Language",plan1: 28, plan2: 20 },
-  { course: "Aalim Course",   plan1: 35, plan2: 25 },
+  { course: "Nazra Quran",     plan1: COURSE_FEES.nazra.plan1Monthly,  plan2: COURSE_FEES.nazra.plan2Monthly  },
+  { course: "Hifz Quran",      plan1: COURSE_FEES.hifz.plan1Monthly,   plan2: COURSE_FEES.hifz.plan2Monthly   },
+  { course: "Arabic Language",  plan1: COURSE_FEES.arabic.plan1Monthly, plan2: COURSE_FEES.arabic.plan2Monthly },
+  { course: "Aalim Course",    plan1: COURSE_FEES.aalim.plan1Monthly,  plan2: COURSE_FEES.aalim.plan2Monthly  },
 ];
 
 export default function PaymentsPage() {
