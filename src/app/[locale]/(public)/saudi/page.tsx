@@ -42,7 +42,7 @@ export default function SaudiLandingPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-10">دوراتنا</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {[{slug:"nazra-quran",title:"الناظرة — قراءة القرآن",desc:"تعلم قراءة القرآن بالتجويد الصحيح.",price:"من $8 شهرياً"},{slug:"hifz-quran",title:"حفظ القرآن الكريم",desc:"برنامج حفظ منظم مع تتبع يومي.",price:"من $12 شهرياً"},{slug:"arabic-language",title:"اللغة العربية",desc:"العربية القرآنية وقواعد اللغة.",price:"من $10 شهرياً"},{slug:"aalim-course",title:"دورة العالم",desc:"برنامج العلوم الإسلامية الكامل — الفقه، الحديث، التفسير.",price:"من $15 شهرياً"}].map((c) => (
+            {[{slug:"nazra-quran",title:"الناظرة — قراءة القرآن",desc:"تعلم قراءة القرآن بالتجويد الصحيح.",price:"من $33 شهرياً"},{slug:"hifz-quran",title:"حفظ القرآن الكريم",desc:"برنامج حفظ منظم مع تتبع يومي.",price:"من $37 شهرياً"},{slug:"arabic-language",title:"اللغة العربية",desc:"العربية القرآنية وقواعد اللغة.",price:"من $35 شهرياً"},{slug:"aalim-course",title:"دورة العالم",desc:"برنامج العلوم الإسلامية الكامل — الفقه، الحديث، التفسير.",price:"من $40 شهرياً"}].map((c) => (
               <Link key={c.slug} href={`/courses/${c.slug}`} className="block p-6 rounded-xl border bg-white dark:bg-card hover:border-emerald-400 transition-colors"><h3 className="text-lg font-semibold text-foreground mb-2">{c.title}</h3><p className="text-sm text-muted-foreground mb-3">{c.desc}</p><span className="text-emerald-600 font-medium text-sm">{c.price}</span></Link>
             ))}
           </div>

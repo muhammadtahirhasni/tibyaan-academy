@@ -2,14 +2,16 @@
 
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Users, Globe, BookOpen, Award } from "lucide-react";
 
 function AnimatedCounter({ target }: { target: number }) {
+  const [mounted, setMounted] = useState(false);
   const count = useMotionValue(0);
   const rounded = useTransform(count, (v) => Math.round(v));
 
   useEffect(() => {
+    setMounted(true);
     const controls = animate(count, target, {
       duration: 2,
       ease: "easeOut",
@@ -17,6 +19,7 @@ function AnimatedCounter({ target }: { target: number }) {
     return controls.stop;
   }, [count, target]);
 
+  if (!mounted) return <span>{target}</span>;
   return <motion.span>{rounded}</motion.span>;
 }
 

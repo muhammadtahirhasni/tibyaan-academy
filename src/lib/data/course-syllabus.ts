@@ -65,10 +65,10 @@ const B = {
   nazra3: "/Nazra/Harakaat (Fatha, Kasra, Damma).jpg",
   nazra4: "/Nazra/Tanween.jpg",
   nazra5: "/Nazra/Madd (Long Vowels).jpg",
-  nazra6: "/Nazra/Jazm o Sukoon.jpg",
+  nazra6: "/Nazra/Jazm-o-Sukoon.jpg",
   nazra7: "/Nazra/Tashdeed.jpg",
-  nazra8: "/Nazra/Practice Exercises.jpg",
-  nazra9: "/Nazra/Beginning Quran Reading.png",
+  nazra8: "/Nazra/Practice-Exercises.jpg",
+  nazra9: "/Nazra/Beginning-Quran-Reading.png",
 
   // Aalim Course — Arabic grammar + Fiqh
   nahvMeer:      "/Aalim Course/Nahv Meer.webp",

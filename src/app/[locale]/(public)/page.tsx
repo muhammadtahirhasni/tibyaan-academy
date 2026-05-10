@@ -20,27 +20,27 @@ const homeMeta: Record<string, { title: string; description: string }> = {
   ur: {
     title: "تبیان اکیڈمی — آن لائن قرآن و اسلامی تعلیم",
     description:
-      "قرآن، حفظ، عربی اور اسلامی علوم آن لائن سیکھیں۔ لائیو اساتذہ + AI استاذ۔ 7 دن فری ٹرائل۔",
+      "قرآن، حفظ، عربی اور اسلامی علوم آن لائن سیکھیں۔ لائیو اساتذہ + AI استاذ۔ 5 دن فری ٹرائل۔",
   },
   ar: {
     title: "أكاديمية تبيان — المدرسة الرقمية الحديثة",
     description:
-      "تعلم القرآن والحفظ والعربية عبر الإنترنت مع معلمين مباشرين + أستاذ ذكاء اصطناعي. تجربة مجانية 7 أيام.",
+      "تعلم القرآن والحفظ والعربية عبر الإنترنت مع معلمين مباشرين + أستاذ ذكاء اصطناعي. تجربة مجانية 5 أيام.",
   },
   en: {
     title: "Tibyaan Academy — Modern Digital Madrasah",
     description:
-      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. 7-day free trial.",
+      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. 5-day free trial.",
   },
   fr: {
     title: "Tibyaan Academy — Madrasah Numérique Moderne",
     description:
-      "Apprenez le Coran, le Hifz et l'arabe en ligne avec des enseignants en direct + AI Ustaz. Essai gratuit 7 jours.",
+      "Apprenez le Coran, le Hifz et l'arabe en ligne avec des enseignants en direct + AI Ustaz. Essai gratuit 5 jours.",
   },
   id: {
     title: "Tibyaan Academy — Madrasah Digital Modern",
     description:
-      "Belajar Quran, Hifz, Bahasa Arab & Ilmu Islam online. Guru langsung + AI Ustaz. Uji coba gratis 7 hari.",
+      "Belajar Quran, Hifz, Bahasa Arab & Ilmu Islam online. Guru langsung + AI Ustaz. Uji coba gratis 5 hari.",
   },
 };
 

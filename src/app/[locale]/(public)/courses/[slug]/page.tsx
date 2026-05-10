@@ -23,10 +23,10 @@ const courseInfo: Record<
     nameFr: "Nazra Coran — Apprendre à lire le Coran",
     nameId: "Nazra Quran — Belajar Membaca Quran",
     descEn:
-      "Learn to read Quran with proper Tajweed from certified teachers + AI Ustaz. 3-6 months program. From $8/month.",
+      "Learn to read Quran with proper Tajweed from certified teachers + AI Ustaz. 3-6 months program. From $33/month.",
     descUr:
-      "تجوید کے ساتھ قرآن پاک پڑھنا سیکھیں۔ مستند اساتذہ + AI استاذ۔ 3-6 ماہ۔ $8 ماہانہ سے۔",
-    price: "8",
+      "تجوید کے ساتھ قرآن پاک پڑھنا سیکھیں۔ مستند اساتذہ + AI استاذ۔ 3-6 ماہ۔ $33 ماہانہ سے۔",
+    price: "33",
   },
   "hifz-quran": {
     nameEn: "Hifz Quran — Memorize the Holy Quran",
@@ -35,10 +35,10 @@ const courseInfo: Record<
     nameFr: "Hifz Coran — Mémoriser le Saint Coran",
     nameId: "Hifz Quran — Hafal Al-Quran",
     descEn:
-      "Complete Hifz program with daily Sabaq, Sabqi & Manzil tracking. AI-powered revision. From $12/month.",
+      "Complete Hifz program with daily Sabaq, Sabqi & Manzil tracking. AI-powered revision. From $37/month.",
     descUr:
-      "مکمل حفظ پروگرام — روزانہ سبق، سبقی اور منزل ٹریکنگ۔ AI سے ریویژن۔ $12 ماہانہ سے۔",
-    price: "12",
+      "مکمل حفظ پروگرام — روزانہ سبق، سبقی اور منزل ٹریکنگ۔ AI سے ریویژن۔ $37 ماہانہ سے۔",
+    price: "37",
   },
   "arabic-language": {
     nameEn: "Arabic Language — Learn Arabic for Quran",
@@ -47,10 +47,10 @@ const courseInfo: Record<
     nameFr: "Langue Arabe — Apprendre l'arabe pour le Coran",
     nameId: "Bahasa Arab — Belajar Bahasa Arab untuk Quran",
     descEn:
-      "Learn Arabic grammar, vocabulary & conversation with Quran focus. 6-12 months. From $10/month.",
+      "Learn Arabic grammar, vocabulary & conversation with Quran focus. 6-12 months. From $35/month.",
     descUr:
-      "عربی گرامر، الفاظ اور مکالمہ سیکھیں — قرآنی عربی پر فوکس۔ 6-12 ماہ۔ $10 ماہانہ سے۔",
-    price: "10",
+      "عربی گرامر، الفاظ اور مکالمہ سیکھیں — قرآنی عربی پر فوکس۔ 6-12 ماہ۔ $35 ماہانہ سے۔",
+    price: "35",
   },
   "aalim-course": {
     nameEn: "Aalim Course — Dars-e-Nizami Online",
@@ -59,10 +59,10 @@ const courseInfo: Record<
     nameFr: "Cours Aalim — Dars-e-Nizami en ligne",
     nameId: "Kursus Aalim — Dars-e-Nizami Online",
     descEn:
-      "Complete Dars-e-Nizami / Aalim program online — Fiqh, Hadith, Tafseer & more. 2-8 years. From $15/month.",
+      "Complete Dars-e-Nizami / Aalim program online — Fiqh, Hadith, Tafseer & more. 2-8 years. From $40/month.",
     descUr:
-      "مکمل درس نظامی / عالم کورس — فقہ، حدیث، تفسیر اور مزید۔ 2-8 سال۔ $15 ماہانہ سے۔",
-    price: "15",
+      "مکمل درس نظامی / عالم کورس — فقہ، حدیث، تفسیر اور مزید۔ 2-8 سال۔ $40 ماہانہ سے۔",
+    price: "40",
   },
 };
 

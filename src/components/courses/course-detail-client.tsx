@@ -53,8 +53,8 @@ const courseData: Record<
     color: "emerald",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     heroGradient: "from-emerald-600/10 via-background to-emerald-600/5",
-    plan1Price: "$55",
-    plan2Price: "$38",
+    plan1Price: "$40",
+    plan2Price: "$33",
     duration: "3-6 months",
   },
   "hifz-quran": {
@@ -63,8 +63,8 @@ const courseData: Record<
     color: "amber",
     iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     heroGradient: "from-amber-600/10 via-background to-amber-600/5",
-    plan1Price: "$60",
-    plan2Price: "$42",
+    plan1Price: "$45",
+    plan2Price: "$37",
     duration: "2-4 years",
   },
   "arabic-language": {
@@ -73,8 +73,8 @@ const courseData: Record<
     color: "blue",
     iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     heroGradient: "from-blue-600/10 via-background to-blue-600/5",
-    plan1Price: "$58",
-    plan2Price: "$40",
+    plan1Price: "$43",
+    plan2Price: "$35",
     duration: "6-12 months",
   },
   "aalim-course": {
@@ -83,17 +83,34 @@ const courseData: Record<
     color: "purple",
     iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     heroGradient: "from-purple-600/10 via-background to-purple-600/5",
-    plan1Price: "$65",
-    plan2Price: "$45",
+    plan1Price: "$50",
+    plan2Price: "$40",
     duration: "2-8 years",
   },
 };
 
-const reviews = [
-  { name: "Ahmed", stars: 5 },
-  { name: "Fatima", stars: 5 },
-  { name: "Ibrahim", stars: 4 },
-];
+const courseReviews: Record<string, { name: string; country: string; text: string; stars: number; avatarSeed: string }[]> = {
+  nazra: [
+    { name: "Umm Khalid", country: "UK", text: "Meri beti ne 3 mahine mein poora qaida mukammal kar liya. AI ustaz ne ghar par har waqt madad ki.", stars: 5, avatarSeed: "UmmKhalid" },
+    { name: "Hassan Mahmood", country: "Canada", text: "Adult learner hoon, 4 mahine mein Quran parhna shuru ho gaya alhamdulillah.", stars: 5, avatarSeed: "HassanMahmood" },
+    { name: "Ruqayyah Ali", country: "Australia", text: "Curriculum bohot structured hai. Mere teen bachon ne saath saath shuru kiya, family discount bhi mila.", stars: 5, avatarSeed: "RuqayyahAli" },
+  ],
+  hifz: [
+    { name: "Abdul Raheem", country: "Saudi Arabia", text: "Hifz tracker ne sab kuch automatic schedule kiya. 6 mahine mein 5 paare yaad ho gaye.", stars: 5, avatarSeed: "AbdulRaheem" },
+    { name: "Maryam Yusuf", country: "USA", text: "Mera beta 11 saal ka hai — 2 saal mein poora Quran yaad kar liya MashAllah.", stars: 5, avatarSeed: "MaryamYusuf" },
+    { name: "Ibrahim Siddiqui", country: "Pakistan", text: "Teacher bohot dedicated hain aur progress report parents ko bhi milti hai.", stars: 5, avatarSeed: "IbrahimSiddiqui" },
+  ],
+  arabic: [
+    { name: "Dr. Fatima Zahra", country: "France", text: "6 mahine mein Quran ki Arabic samajhna shuru ho gayi. Bohot effective course hai.", stars: 5, avatarSeed: "FatimaZahra" },
+    { name: "Yusuf Rahman", country: "Indonesia", text: "AI ke saath grammar practice 24/7 available rehta hai, ghaltiyan turant batata hai.", stars: 5, avatarSeed: "YusufRahman" },
+    { name: "Aisha Karimi", country: "Germany", text: "Conversation practice feature ne bohot madad ki. Highly recommend.", stars: 5, avatarSeed: "AishaKarimi" },
+  ],
+  aalim: [
+    { name: "Maulana Tariq", country: "UK", text: "Asaatiza bohot qualified hain aur syllabus mukammal hai.", stars: 5, avatarSeed: "MaulanaTariq" },
+    { name: "Hafiza Noor", country: "Canada", text: "2 saal complete hue — quality se bohot mutmain hoon. Ijaaza tak ka full roadmap clear hai.", stars: 5, avatarSeed: "HafizaNoor" },
+    { name: "Sheikh Bilal", country: "South Africa", text: "Traditional ulama ke saath milke yeh course design hua hai — authenticity par koi compromise nahi.", stars: 5, avatarSeed: "SheikhBilal" },
+  ],
+};
 
 export default function CourseDetailClient() {
   const params = useParams();
@@ -252,13 +269,13 @@ export default function CourseDetailClient() {
                   {/* Single-book layout */}
                   {hasSingleBook && (
                     <div className="flex items-start gap-4">
-                      <div className="shrink-0 w-28 text-center">
+                      <div className="shrink-0 w-36 text-center">
                         {section.pdfUrl ? (
                           <a href={section.pdfUrl} target="_blank" rel="noopener noreferrer" className="block group">
                             <img
                               src={section.bookImage!}
                               alt={section.bookName ?? t(section.titleKey)}
-                              className="w-28 h-36 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
+                              className="w-36 h-48 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                             <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
@@ -269,7 +286,7 @@ export default function CourseDetailClient() {
                           <img
                             src={section.bookImage!}
                             alt={section.bookName ?? t(section.titleKey)}
-                            className="w-28 h-36 object-cover rounded-lg shadow border border-muted mx-auto"
+                            className="w-36 h-48 object-cover rounded-lg shadow border border-muted mx-auto"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                         )}
@@ -280,7 +297,7 @@ export default function CourseDetailClient() {
 
                   {/* Multi-book responsive grid — fills full width, all cards equal size */}
                   {hasMultiBooks && (
-                    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(120px,1fr))]">
+                    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(140px,1fr))]">
                       {section.books!.map((book) => (
                         <div key={book.name} className="text-center">
                           {book.pdfUrl ? (
@@ -553,7 +570,7 @@ export default function CourseDetailClient() {
               {t("reviews")}
             </motion.h2>
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {reviews.map((review, i) => (
+              {(courseReviews[k] ?? []).map((review, i) => (
                 <motion.div
                   key={review.name}
                   initial={{ opacity: 0, y: 15 }}
@@ -575,11 +592,19 @@ export default function CourseDetailClient() {
                     ))}
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                    &ldquo;Great course, learned so much!&rdquo;
+                    &ldquo;{review.text}&rdquo;
                   </p>
-                  <p className="mt-3 text-xs font-semibold text-foreground">
-                    {review.name}
-                  </p>
+                  <div className="mt-3 flex items-center gap-2 pt-3 border-t">
+                    <img
+                      src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${review.avatarSeed}`}
+                      alt={review.name}
+                      className="w-8 h-8 rounded-full bg-muted"
+                    />
+                    <div>
+                      <p className="text-xs font-semibold text-foreground">{review.name}</p>
+                      <p className="text-xs text-muted-foreground">{review.country}</p>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
