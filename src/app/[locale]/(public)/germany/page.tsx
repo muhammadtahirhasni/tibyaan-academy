@@ -42,7 +42,7 @@ export default function GermanyLandingPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-10">Unsere Kurse</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {[{slug:"nazra-quran",title:"Nazra Quran",desc:"Quran korrekt mit Tajweed lesen lernen.",price:"Ab $8/Monat"},{slug:"hifz-quran",title:"Hifz Quran",desc:"Strukturiertes Auswendiglernen des Quran.",price:"Ab $12/Monat"},{slug:"arabic-language",title:"Arabische Sprache",desc:"Koranisches Arabisch und Grammatik.",price:"Ab $10/Monat"},{slug:"aalim-course",title:"Aalim Kurs",desc:"Vollständiges islamisches Wissenschaftsprogramm.",price:"Ab $15/Monat"}].map((c) => (
+            {[{slug:"nazra-quran",title:"Nazra Quran",desc:"Quran korrekt mit Tajweed lesen lernen.",price:"Ab $33/Monat"},{slug:"hifz-quran",title:"Hifz Quran",desc:"Strukturiertes Auswendiglernen des Quran.",price:"Ab $37/Monat"},{slug:"arabic-language",title:"Arabische Sprache",desc:"Koranisches Arabisch und Grammatik.",price:"Ab $35/Monat"},{slug:"aalim-course",title:"Aalim Kurs",desc:"Vollständiges islamisches Wissenschaftsprogramm.",price:"Ab $40/Monat"}].map((c) => (
               <Link key={c.slug} href={`/courses/${c.slug}`} className="block p-6 rounded-xl border bg-white dark:bg-card hover:border-emerald-400 transition-colors"><h3 className="text-lg font-semibold text-foreground mb-2">{c.title}</h3><p className="text-sm text-muted-foreground mb-3">{c.desc}</p><span className="text-emerald-600 font-medium text-sm">{c.price}</span></Link>
             ))}
           </div>

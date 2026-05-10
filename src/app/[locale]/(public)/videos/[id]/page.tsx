@@ -159,7 +159,7 @@ export default async function VideoPage({ params }: Props) {
             Learn Quran online with qualified teachers
           </p>
           <p className="text-sm text-muted-foreground mt-1 mb-4">
-            Join Tibyaan Academy — 7-day free trial, no credit card required
+            Join Tibyaan Academy — 5-day free trial, no credit card required
           </p>
           <Link
             href="/signup"

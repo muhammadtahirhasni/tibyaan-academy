@@ -142,15 +142,15 @@
     "t1Name": "Ahmed Ali",
     "t1Country": "Pakistan",
     "t1Course": "Hifz Coran",
-    "t1Text": "Tibyaan Academy a facilité le Hifz pour mon enfant. L'Ustaz IA est toujours prêt à aider.",
+    "t1Text": "Mon fils a mémorisé 5 parties en 6 mois. Le suivi Hifz et les révisions quotidiennes avec l'IA ont tout facilité.",
     "t2Name": "Fatima Zahra",
     "t2Country": "Royaume-Uni",
     "t2Course": "Nazra Coran",
-    "t2Text": "Les jeux pour enfants sont incroyables ! Ma fille aime maintenant apprendre les lettres arabes.",
+    "t2Text": "En tant que mère active au Royaume-Uni, j'avais besoin d'horaires flexibles. Tibyaan m'a offert des enseignants certifiés et l'assistance IA disponible à toute heure.",
     "t3Name": "Abdur Rahman",
     "t3Country": "Arabie Saoudite",
     "t3Course": "Cours Aalim",
-    "t3Text": "La qualité du cours Aalim en ligne est incroyable. Les meilleurs enseignants et programme.",
+    "t3Text": "Je me suis inscrit au cours Aalim depuis l'Arabie Saoudite. Le niveau des enseignants et le programme Dars-e-Nizami complet m'ont vraiment impressionné.",
     "viewAll": "Voir tous les avis"
   },
   "stats": {
@@ -163,8 +163,8 @@
     "title": "Starting from just $38/month",
     "plan1": "Plan 1 : Enseignant + IA",
     "plan2": "Plan 2 : IA uniquement",
-    "plan1Price": "From $55/mo",
-    "plan2Price": "From $38/mo",
+    "plan1Price": "From $40/mo",
+    "plan2Price": "From $33/mo",
     "viewPricing": "Voir tous les tarifs"
   },
   "socialLinks": {

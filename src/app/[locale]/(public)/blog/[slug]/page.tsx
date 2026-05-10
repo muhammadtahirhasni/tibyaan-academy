@@ -14,6 +14,7 @@ import {
   ChevronRight,
   ArrowLeft,
 } from "lucide-react";
+import { STATIC_BLOG_POSTS } from "@/lib/data/blog-seed";
 
 const BASE_URL = "https://tibyaan.com";
 
@@ -83,10 +84,35 @@ async function getPost(slug: string): Promise<BlogPostData | null> {
       .where(and(eq(blogPosts.slug, slug), eq(blogPosts.isPublished, true)))
       .limit(1);
 
-    return results[0] || null;
+    if (results[0]) return results[0];
   } catch {
-    return null;
+    // fall through to static posts
   }
+
+  // Fall back to static seed articles
+  const staticPost = STATIC_BLOG_POSTS.find((sp) => sp.slug === slug);
+  if (staticPost) {
+    return {
+      slug: staticPost.slug,
+      titleEn: staticPost.titles.en,
+      titleUr: staticPost.titles.ur,
+      titleAr: staticPost.titles.ar,
+      titleFr: staticPost.titles.fr,
+      titleId: staticPost.titles.id,
+      contentEn: staticPost.contents.en,
+      contentUr: staticPost.contents.ur,
+      contentAr: staticPost.contents.ar,
+      contentFr: staticPost.contents.fr,
+      contentId: staticPost.contents.id,
+      metaDescriptionEn: staticPost.titles.en,
+      metaDescriptionUr: staticPost.titles.ur,
+      keywords: [staticPost.category],
+      publishedAt: staticPost.publishedAt,
+      aiGenerated: false,
+    };
+  }
+
+  return null;
 }
 
 export async function generateMetadata({

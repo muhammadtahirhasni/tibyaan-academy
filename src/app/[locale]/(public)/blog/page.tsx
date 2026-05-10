@@ -6,6 +6,7 @@ import { BlogCard } from "@/components/blog/blog-card";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { BookOpen } from "lucide-react";
+import { STATIC_BLOG_POSTS } from "@/lib/data/blog-seed";
 
 const BASE_URL = "https://tibyaan.com";
 
@@ -76,6 +77,7 @@ interface BlogPost {
   keywords: string[] | null;
   publishedAt: Date | null;
   aiGenerated: boolean;
+  heroImage?: string;
 }
 
 function getTitle(post: BlogPost, locale: string): string {
@@ -145,8 +147,31 @@ export default async function BlogPage({
       .where(eq(blogPosts.isPublished, true))
       .orderBy(desc(blogPosts.publishedAt));
   } catch {
-    // DB unavailable — show empty state
+    // DB unavailable — use static seed posts
   }
+
+  // Merge static seed posts when DB is empty or has no posts
+  if (posts.length === 0) {
+    posts = STATIC_BLOG_POSTS.map((sp) => ({
+      slug: sp.slug,
+      titleEn: sp.titles.en,
+      titleUr: sp.titles.ur,
+      titleAr: sp.titles.ar,
+      titleFr: sp.titles.fr,
+      titleId: sp.titles.id,
+      contentEn: sp.contents.en,
+      contentUr: sp.contents.ur,
+      contentAr: sp.contents.ar,
+      contentFr: sp.contents.fr,
+      contentId: sp.contents.id,
+      keywords: [sp.category],
+      publishedAt: sp.publishedAt,
+      aiGenerated: false,
+      heroImage: sp.heroImage,
+    }));
+  }
+
+  const heroImageMap = Object.fromEntries(STATIC_BLOG_POSTS.map((sp) => [sp.slug, sp.heroImage]));
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -182,6 +207,7 @@ export default async function BlogPage({
                     publishedAt={post.publishedAt}
                     keywords={post.keywords}
                     aiGenerated={post.aiGenerated}
+                    heroImage={post.heroImage ?? heroImageMap[post.slug]}
                     readMoreLabel={t("readMore")}
                     minuteReadLabel={t("minuteRead")}
                     aiGeneratedLabel={t("aiGenerated")}

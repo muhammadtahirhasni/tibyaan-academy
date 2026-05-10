@@ -48,31 +48,31 @@ const plan2Features = [
 const coursePricing = [
   {
     key: "nazra",
-    monthly1: "$25",
-    monthly2: "$18",
-    yearly1: "$250",
-    yearly2: "$180",
+    monthly1: "$40",
+    monthly2: "$33",
+    yearly1: "$400",
+    yearly2: "$330",
   },
   {
     key: "hifz",
-    monthly1: "$30",
-    monthly2: "$22",
-    yearly1: "$300",
-    yearly2: "$220",
+    monthly1: "$45",
+    monthly2: "$37",
+    yearly1: "$450",
+    yearly2: "$370",
   },
   {
     key: "arabic",
-    monthly1: "$28",
-    monthly2: "$20",
-    yearly1: "$280",
-    yearly2: "$200",
+    monthly1: "$43",
+    monthly2: "$35",
+    yearly1: "$430",
+    yearly2: "$350",
   },
   {
     key: "aalim",
-    monthly1: "$35",
-    monthly2: "$25",
-    yearly1: "$350",
-    yearly2: "$250",
+    monthly1: "$50",
+    monthly2: "$40",
+    yearly1: "$500",
+    yearly2: "$400",
   },
 ];
 
@@ -172,7 +172,7 @@ export default function PricingPageClient() {
                 </p>
                 <div className="mt-6 flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-primary">
-                    {isYearly ? "$250" : "$25"}
+                    {isYearly ? "$400" : "$40"}
                   </span>
                   <span className="text-sm text-muted-foreground">
                     {isYearly ? t("perYear") : t("perMonth")}
@@ -228,7 +228,7 @@ export default function PricingPageClient() {
                 </p>
                 <div className="mt-6 flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-accent">
-                    {isYearly ? "$180" : "$18"}
+                    {isYearly ? "$330" : "$33"}
                   </span>
                   <span className="text-sm text-muted-foreground">
                     {isYearly ? t("perYear") : t("perMonth")}

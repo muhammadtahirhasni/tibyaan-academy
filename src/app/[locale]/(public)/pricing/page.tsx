@@ -7,27 +7,27 @@ const pricingMeta: Record<string, { title: string; description: string }> = {
   ur: {
     title: "قیمتیں — سستے آن لائن قرآن کورسز",
     description:
-      "تبیان اکیڈمی کی قیمتیں دیکھیں — $8 ماہانہ سے شروع۔ لائیو ٹیچر + AI پلان۔ فیملی ڈسکاؤنٹ۔ 7 دن فری ٹرائل۔",
+      "تبیان اکیڈمی کی قیمتیں دیکھیں — $33 ماہانہ سے شروع۔ لائیو ٹیچر + AI پلان۔ فیملی ڈسکاؤنٹ۔ 5 دن فری ٹرائل۔",
   },
   ar: {
     title: "الأسعار — دورات قرآنية بأسعار معقولة",
     description:
-      "تصفح أسعار أكاديمية تبيان — تبدأ من 8 دولار شهرياً. معلم مباشر + خطة ذكاء اصطناعي. خصم عائلي. تجربة مجانية 7 أيام.",
+      "تصفح أسعار أكاديمية تبيان — تبدأ من 33 دولار شهرياً. معلم مباشر + خطة ذكاء اصطناعي. خصم عائلي. تجربة مجانية 5 أيام.",
   },
   en: {
     title: "Pricing — Affordable Online Quran Courses",
     description:
-      "View Tibyaan Academy pricing — plans from $8/month. Live Teacher + AI plans. Family discount. 7-day free trial.",
+      "View Tibyaan Academy pricing — plans from $33/month. Live Teacher + AI plans. Family discount. 5-day free trial.",
   },
   fr: {
     title: "Tarifs — Cours de Coran en Ligne Abordables",
     description:
-      "Découvrez les tarifs de Tibyaan Academy — à partir de 8$/mois. Enseignant en direct + plans IA. Réduction familiale. Essai gratuit 7 jours.",
+      "Découvrez les tarifs de Tibyaan Academy — à partir de 33$/mois. Enseignant en direct + plans IA. Réduction familiale. Essai gratuit 5 jours.",
   },
   id: {
     title: "Harga — Kursus Quran Online Terjangkau",
     description:
-      "Lihat harga Tibyaan Academy — mulai dari $8/bulan. Guru langsung + paket AI. Diskon keluarga. Uji coba gratis 7 hari.",
+      "Lihat harga Tibyaan Academy — mulai dari $33/bulan. Guru langsung + paket AI. Diskon keluarga. Uji coba gratis 5 hari.",
   },
 };
 

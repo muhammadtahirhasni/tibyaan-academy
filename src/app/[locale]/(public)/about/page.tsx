@@ -102,10 +102,46 @@ const features = [
 ];
 
 const team = [
-  { name: "Sheikh Abdullah", role: "Head of Quran Studies", emoji: "🎓" },
-  { name: "Ustaz Ibrahim", role: "Hifz Program Director", emoji: "📖" },
-  { name: "Dr. Fatima", role: "Arabic Language Lead", emoji: "🌟" },
-  { name: "Maulana Yusuf", role: "Aalim Course Supervisor", emoji: "🕌" },
+  {
+    name: "Muhammad Yusuf",
+    title: "Founder & Head of Quran Studies",
+    qualification: "Hafiz-e-Quran | MA Islamic Studies, Al-Azhar University",
+    experience: "15+ years",
+    bio: "Al-Azhar University se farigh. 15 saal se online aur offline Quran ta'leem de rahe hain. Tibyaan Academy unka khwab tha ke duniya ke har kone mein musalmanon tak ilm pahunche.",
+    certificate: "Sanad-e-Qiraat (Hafs an Asim)",
+    avatarSeed: "MuhammadYusuf",
+    avatarBg: "b6e3f4",
+  },
+  {
+    name: "Ustaza Fatima Al-Zahra",
+    title: "Head of Women's & Children's Programs",
+    qualification: "Hafiza-e-Quran | Certified Tajweed Teacher",
+    experience: "10+ years",
+    bio: "Bachon aur khawatin ki taleem mein mahir. Unke innovative methods ki wajah se saikaron bachon ne tajweed ke saath Quran padhna seekha. Kids Activities section unhi ka design kiya hua hai.",
+    certificate: "Ijaza fi Tajweed al-Quran",
+    avatarSeed: "FatimaAlZahra",
+    avatarBg: "ffdfbf",
+  },
+  {
+    name: "Maulana Abdullah Siddiqui",
+    title: "Head of Aalim Course",
+    qualification: "Farig: Darul Uloom Karachi | Mufti",
+    experience: "20+ years",
+    bio: "Darul Uloom Karachi se farig aur Ifta ki sanad rakhne wale. Dars-e-Nizami curriculum ko online format mein dhaalney mein aham kirdar ada kiya. Poora Aalim Course syllabus unki nighrani mein tayyar hua.",
+    certificate: "Sanad-e-Ifta, Darul Uloom Karachi",
+    avatarSeed: "AbdullahSiddiqui",
+    avatarBg: "c0aede",
+  },
+  {
+    name: "Ustaz Omar Hassan",
+    title: "Head of Arabic Language Department",
+    qualification: "MA Arabic Linguistics, University of Jordan | Native Speaker",
+    experience: "12+ years",
+    bio: "Jordanian native speaker — sarf, nahw aur conversation Arabic mein mahir. Unka manna hai ke har Muslim ko Quran ki zaban seekhni chahiye. Classes mein simplicity aur patience unki pehchaan hai.",
+    certificate: "Ijaza fi Uloom al-Lugha al-Arabiyya",
+    avatarSeed: "OmarHassan",
+    avatarBg: "d1d4f9",
+  },
 ];
 
 const testimonials = [
@@ -284,12 +320,22 @@ export default async function AboutPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-primary">Our Expert Team</h2>
               <p className="mt-3 text-muted-foreground">Qualified scholars and educators from renowned Islamic institutions</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member) => (
-                <div key={member.name} className="bg-background rounded-2xl border p-6 text-center hover:shadow-md transition-shadow">
-                  <div className="text-5xl mb-3">{member.emoji}</div>
+                <div key={member.name} className="bg-background rounded-2xl border p-6 text-center hover:shadow-md transition-shadow flex flex-col items-center">
+                  <img
+                    src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${member.avatarSeed}&backgroundColor=${member.avatarBg}`}
+                    alt={member.name}
+                    className="w-20 h-20 rounded-full mb-4"
+                  />
                   <h3 className="font-bold text-foreground text-sm">{member.name}</h3>
-                  <p className="mt-1 text-xs text-muted-foreground">{member.role}</p>
+                  <p className="mt-1 text-xs text-primary font-medium">{member.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{member.qualification}</p>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{member.bio}</p>
+                  <div className="mt-3 pt-3 border-t w-full">
+                    <p className="text-xs text-accent font-medium">{member.certificate}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{member.experience} Experience</p>
+                  </div>
                 </div>
               ))}
             </div>

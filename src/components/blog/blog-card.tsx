@@ -9,6 +9,7 @@ interface BlogCardProps {
   publishedAt: Date | null;
   keywords: string[] | null;
   aiGenerated: boolean;
+  heroImage?: string;
   readMoreLabel: string;
   minuteReadLabel: string;
   aiGeneratedLabel: string;
@@ -26,6 +27,7 @@ export function BlogCard({
   publishedAt,
   keywords,
   aiGenerated,
+  heroImage,
   readMoreLabel,
   minuteReadLabel,
   aiGeneratedLabel,
@@ -35,14 +37,23 @@ export function BlogCard({
   return (
     <Link href={`/blog/${slug}`} className="group block">
       <article className="h-full rounded-2xl border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/30 group-hover:-translate-y-1">
-        {/* Icon placeholder */}
-        <div className="w-full h-40 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mb-4">
-          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-2xl text-primary font-arabic">
-              ﷽
-            </span>
+        {/* Hero Image */}
+        {heroImage ? (
+          <img
+            src={heroImage}
+            alt={title}
+            className="w-full h-40 rounded-xl object-cover mb-4"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-40 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mb-4">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-2xl text-primary font-arabic">
+                ﷽
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Keywords */}
         {keywords && keywords.length > 0 && (

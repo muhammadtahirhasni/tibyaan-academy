@@ -42,7 +42,7 @@ export default function IndonesiaLandingPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-10">Kursus Kami</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {[{slug:"nazra-quran",title:"Nazra Quran",desc:"Belajar membaca Al-Quran dengan tajwid yang benar.",price:"Mulai $8/bulan"},{slug:"hifz-quran",title:"Hifz Quran",desc:"Program hafalan Al-Quran terstruktur dengan pelacakan harian.",price:"Mulai $12/bulan"},{slug:"arabic-language",title:"Bahasa Arab",desc:"Bahasa Arab Al-Quran dan tata bahasa untuk pemula.",price:"Mulai $10/bulan"},{slug:"aalim-course",title:"Kursus Aalim",desc:"Program ilmu Islam lengkap — Fiqih, Hadits, Tafsir.",price:"Mulai $15/bulan"}].map((c) => (
+            {[{slug:"nazra-quran",title:"Nazra Quran",desc:"Belajar membaca Al-Quran dengan tajwid yang benar.",price:"Mulai $33/bulan"},{slug:"hifz-quran",title:"Hifz Quran",desc:"Program hafalan Al-Quran terstruktur dengan pelacakan harian.",price:"Mulai $37/bulan"},{slug:"arabic-language",title:"Bahasa Arab",desc:"Bahasa Arab Al-Quran dan tata bahasa untuk pemula.",price:"Mulai $35/bulan"},{slug:"aalim-course",title:"Kursus Aalim",desc:"Program ilmu Islam lengkap — Fiqih, Hadits, Tafsir.",price:"Mulai $40/bulan"}].map((c) => (
               <Link key={c.slug} href={`/courses/${c.slug}`} className="block p-6 rounded-xl border bg-white dark:bg-card hover:border-emerald-400 transition-colors"><h3 className="text-lg font-semibold text-foreground mb-2">{c.title}</h3><p className="text-sm text-muted-foreground mb-3">{c.desc}</p><span className="text-emerald-600 font-medium text-sm">{c.price}</span></Link>
             ))}
           </div>
