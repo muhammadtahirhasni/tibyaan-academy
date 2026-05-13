@@ -14,7 +14,7 @@ const localeMetadata: Record<string, { title: string; description: string }> = {
   ur: {
     title: "تبیان اکیڈمی — آن لائن قرآن و اسلامی تعلیم",
     description:
-      "قرآن، حفظ، عربی اور اسلامی علوم آن لائن سیکھیں — لائیو اساتذہ + AI استاذ کے ساتھ۔ ماہانہ صرف $8 سے۔",
+      "قرآن، حفظ، عربی اور اسلامی علوم آن لائن سیکھیں — لائیو اساتذہ + AI استاذ کے ساتھ۔ ماہانہ صرف $33 سے۔",
   },
   ar: {
     title: "أكاديمية تبيان — تعليم القرآن والعلوم الإسلامية",
@@ -24,7 +24,7 @@ const localeMetadata: Record<string, { title: string; description: string }> = {
   en: {
     title: "Tibyaan Academy — Online Quran & Islamic Education",
     description:
-      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. Plans from $8/month.",
+      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. Plans from $33/month.",
   },
   fr: {
     title: "Tibyaan Academy — Éducation Coranique et Islamique en Ligne",
@@ -34,7 +34,7 @@ const localeMetadata: Record<string, { title: string; description: string }> = {
   id: {
     title: "Tibyaan Academy — Pendidikan Quran & Islam Online",
     description:
-      "Belajar Quran, Hifz, Bahasa Arab & Ilmu Islam online dengan guru langsung + AI Ustaz. Mulai dari $8/bulan.",
+      "Belajar Quran, Hifz, Bahasa Arab & Ilmu Islam online dengan guru langsung + AI Ustaz. Mulai dari $33/bulan.",
   },
 };
 
