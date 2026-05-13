@@ -4,6 +4,7 @@ import { Calendar, Clock, Sparkles } from "lucide-react";
 
 interface BlogCardProps {
   slug: string;
+  href?: string;
   title: string;
   excerpt: string;
   publishedAt: Date | null;
@@ -22,6 +23,7 @@ function estimateReadTime(content: string): number {
 
 export function BlogCard({
   slug,
+  href,
   title,
   excerpt,
   publishedAt,
@@ -35,7 +37,7 @@ export function BlogCard({
   const readTime = estimateReadTime(excerpt);
 
   return (
-    <Link href={`/blog/${slug}`} className="group block">
+    <Link href={href ?? `/blog/${slug}`} className="group block">
       <article className="h-full rounded-2xl border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/30 group-hover:-translate-y-1">
         {/* Hero Image */}
         {heroImage ? (

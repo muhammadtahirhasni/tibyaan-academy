@@ -174,14 +174,14 @@ export function CourseDetailClient({
 
                 {/* Single-book layout */}
                 {hasSingleBook && (
-                  <div className="flex items-start gap-3">
-                    <div className="shrink-0 text-center w-24">
+                  <div className="flex flex-col sm:flex-row items-start gap-3">
+                    <div className="shrink-0 text-center mx-auto sm:mx-0">
                       {section.pdfUrl ? (
                         <a href={section.pdfUrl} target="_blank" rel="noopener noreferrer" className="block group">
                           <img
                             src={section.bookImage!}
                             alt={section.bookName ?? ts(section.titleKey)}
-                            className="w-24 h-32 object-cover rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
+                            className="w-[280px] h-[185px] object-cover rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                           <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded bg-primary/10 text-primary text-[11px] font-medium">
@@ -192,7 +192,7 @@ export function CourseDetailClient({
                         <img
                           src={section.bookImage!}
                           alt={section.bookName ?? ts(section.titleKey)}
-                          className="w-24 h-32 object-cover rounded-lg shadow border border-muted"
+                          className="w-[280px] h-[185px] object-cover rounded-lg shadow border border-muted"
                           onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                         />
                       )}
@@ -203,7 +203,7 @@ export function CourseDetailClient({
 
                 {/* Multi-book responsive grid — fills full width, no empty space */}
                 {hasMultiBooks && (
-                  <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(100px,1fr))]">
+                  <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(160px,1fr))]">
                     {section.books!.map((book) => (
                       <div key={book.name} className="text-center">
                         {book.pdfUrl ? (

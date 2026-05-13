@@ -64,6 +64,7 @@ export async function generateMetadata({
 
 interface BlogPost {
   slug: string;
+  href?: string;
   titleEn: string | null;
   titleUr: string | null;
   titleAr: string | null;
@@ -122,11 +123,13 @@ export default async function BlogPage({
   let posts: BlogPost[] = [];
   try {
     const { getDb } = await import("@/lib/db");
-    const { blogPosts } = await import("@/lib/db/schema");
+    const { blogPosts, dailyDars } = await import("@/lib/db/schema");
     const { eq, desc } = await import("drizzle-orm");
 
     const db = getDb();
-    posts = await db
+
+    // Fetch blog posts
+    const dbPosts = await db
       .select({
         slug: blogPosts.slug,
         titleEn: blogPosts.titleEn,
@@ -146,11 +149,54 @@ export default async function BlogPage({
       .from(blogPosts)
       .where(eq(blogPosts.isPublished, true))
       .orderBy(desc(blogPosts.publishedAt));
+
+    // Fetch daily dars posts — same source as homepage DailyDarsSection
+    const darsRows = await db
+      .select({
+        slug: dailyDars.slug,
+        titleEn: dailyDars.titleEn,
+        titleUr: dailyDars.titleUr,
+        titleAr: dailyDars.titleAr,
+        titleFr: dailyDars.titleFr,
+        titleId: dailyDars.titleId,
+        contentEn: dailyDars.contentEn,
+        contentUr: dailyDars.contentUr,
+        contentAr: dailyDars.contentAr,
+        contentFr: dailyDars.contentFr,
+        contentId: dailyDars.contentId,
+        category: dailyDars.category,
+        publishedAt: dailyDars.publishedAt,
+      })
+      .from(dailyDars)
+      .where(eq(dailyDars.isPublished, true))
+      .orderBy(desc(dailyDars.publishedAt))
+      .limit(20);
+
+    const darsPosts: BlogPost[] = darsRows.map((d) => ({
+      slug: d.slug,
+      href: `/dars/${d.slug}`,
+      titleEn: d.titleEn,
+      titleUr: d.titleUr,
+      titleAr: d.titleAr,
+      titleFr: d.titleFr,
+      titleId: d.titleId,
+      contentEn: d.contentEn,
+      contentUr: d.contentUr,
+      contentAr: d.contentAr,
+      contentFr: d.contentFr,
+      contentId: d.contentId,
+      keywords: [d.category],
+      publishedAt: d.publishedAt,
+      aiGenerated: true,
+    }));
+
+    // Merge: blog posts first, then daily dars
+    posts = [...dbPosts, ...darsPosts];
   } catch {
     // DB unavailable — use static seed posts
   }
 
-  // Merge static seed posts when DB is empty or has no posts
+  // Fall back to static seed posts when DB has nothing
   if (posts.length === 0) {
     posts = STATIC_BLOG_POSTS.map((sp) => ({
       slug: sp.slug,
@@ -202,6 +248,7 @@ export default async function BlogPage({
                   <BlogCard
                     key={post.slug}
                     slug={post.slug}
+                    href={post.href}
                     title={getTitle(post, locale)}
                     excerpt={getExcerpt(post, locale)}
                     publishedAt={post.publishedAt}

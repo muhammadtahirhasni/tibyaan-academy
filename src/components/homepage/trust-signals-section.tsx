@@ -1,26 +1,39 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Users, Globe, BookOpen, Award } from "lucide-react";
 
 function AnimatedCounter({ target }: { target: number }) {
-  const [mounted, setMounted] = useState(false);
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => Math.round(v));
+  const [displayed, setDisplayed] = useState(target);
 
   useEffect(() => {
-    setMounted(true);
-    const controls = animate(count, target, {
-      duration: 2,
-      ease: "easeOut",
-    });
-    return controls.stop;
-  }, [count, target]);
+    const duration = 1800;
+    // Capture start time before timeout so elapsed includes the delay
+    const startTime = performance.now();
+    let frame: number;
 
-  if (!mounted) return <span>{target}</span>;
-  return <motion.span>{rounded}</motion.span>;
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayed(Math.round(eased * target));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+
+    // 300ms delay ensures first animated value is well above 0 (no "0+" flash)
+    const tid = window.setTimeout(() => {
+      frame = requestAnimationFrame(tick);
+    }, 300);
+
+    return () => {
+      clearTimeout(tid);
+      cancelAnimationFrame(frame);
+    };
+  }, [target]);
+
+  return <span>{displayed}</span>;
 }
 
 const signals = [

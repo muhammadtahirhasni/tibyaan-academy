@@ -11,7 +11,7 @@ const courses = [
   {
     key: "nazra",
     icon: BookOpen,
-    price: "$18",
+    price: "$33",
     color: "from-emerald-500/10 to-emerald-500/5 border-emerald-200 dark:border-emerald-800",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     slug: "nazra-quran",
@@ -19,7 +19,7 @@ const courses = [
   {
     key: "hifz",
     icon: Sparkles,
-    price: "$22",
+    price: "$37",
     color: "from-amber-500/10 to-amber-500/5 border-amber-200 dark:border-amber-800",
     iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     slug: "hifz-quran",
@@ -27,7 +27,7 @@ const courses = [
   {
     key: "arabic",
     icon: Languages,
-    price: "$20",
+    price: "$35",
     color: "from-blue-500/10 to-blue-500/5 border-blue-200 dark:border-blue-800",
     iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     slug: "arabic-language",
@@ -35,7 +35,7 @@ const courses = [
   {
     key: "aalim",
     icon: GraduationCap,
-    price: "$25",
+    price: "$40",
     color: "from-purple-500/10 to-purple-500/5 border-purple-200 dark:border-purple-800",
     iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     slug: "aalim-course",

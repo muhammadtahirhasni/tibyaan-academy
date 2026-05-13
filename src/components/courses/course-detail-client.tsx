@@ -268,14 +268,14 @@ export default function CourseDetailClient() {
 
                   {/* Single-book layout */}
                   {hasSingleBook && (
-                    <div className="flex items-start gap-4">
-                      <div className="shrink-0 w-36 text-center">
+                    <div className="flex flex-col sm:flex-row items-start gap-4">
+                      <div className="shrink-0 text-center mx-auto sm:mx-0">
                         {section.pdfUrl ? (
                           <a href={section.pdfUrl} target="_blank" rel="noopener noreferrer" className="block group">
                             <img
                               src={section.bookImage!}
                               alt={section.bookName ?? t(section.titleKey)}
-                              className="w-36 h-48 object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
+                              className="w-[300px] h-[200px] object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                             <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
@@ -286,7 +286,7 @@ export default function CourseDetailClient() {
                           <img
                             src={section.bookImage!}
                             alt={section.bookName ?? t(section.titleKey)}
-                            className="w-36 h-48 object-cover rounded-lg shadow border border-muted mx-auto"
+                            className="w-[300px] h-[200px] object-cover rounded-lg shadow border border-muted mx-auto"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                         )}
@@ -297,7 +297,7 @@ export default function CourseDetailClient() {
 
                   {/* Multi-book responsive grid — fills full width, all cards equal size */}
                   {hasMultiBooks && (
-                    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(140px,1fr))]">
+                    <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(200px,1fr))]">
                       {section.books!.map((book) => (
                         <div key={book.name} className="text-center">
                           {book.pdfUrl ? (
