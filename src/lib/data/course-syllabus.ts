@@ -48,8 +48,13 @@ const PARA_EXTS: Record<number, string> = {
   26: "png", 27: "png", 28: "png", 29: "png", 30: "png",
 };
 
+// Percent-encode each path segment so <img src> works for filenames with spaces
+function encodeImagePath(path: string): string {
+  return path.split("/").map(encodeURIComponent).join("/");
+}
+
 function paraImage(n: number): string {
-  return `/Quran Parah Images/Para ${n} — ${PARA_NAMES[n]}.${PARA_EXTS[n]}`;
+  return encodeImagePath(`/Quran Parah Images/Para ${n} — ${PARA_NAMES[n]}.${PARA_EXTS[n]}`);
 }
 
 // Para PDFs hosted on Supabase Storage (uploaded with clean filenames)
@@ -60,52 +65,52 @@ function paraPdf(n: number): string {
 // ─── All image paths ─────────────────────────────────────────────────────────
 const B = {
   // Nazra per-lesson images
-  nazra1: "/Nazra/Huroof-e-Mufradat (Alif to Yaa).jpg",
+  nazra1: encodeImagePath("/Nazra/Huroof-e-Mufradat (Alif to Yaa).jpg"),
   nazra2: "/Nazra/Huroof-e-Murakkabat.jpg",
-  nazra3: "/Nazra/Harakaat (Fatha, Kasra, Damma).jpg",
+  nazra3: encodeImagePath("/Nazra/Harakaat (Fatha, Kasra, Damma).jpg"),
   nazra4: "/Nazra/Tanween.jpg",
-  nazra5: "/Nazra/Madd (Long Vowels).jpg",
+  nazra5: encodeImagePath("/Nazra/Madd (Long Vowels).jpg"),
   nazra6: "/Nazra/Jazm-o-Sukoon.jpg",
   nazra7: "/Nazra/Tashdeed.jpg",
   nazra8: "/Nazra/Practice-Exercises.jpg",
   nazra9: "/Nazra/Beginning-Quran-Reading.png",
 
   // Aalim Course — Arabic grammar + Fiqh
-  nahvMeer:      "/Aalim Course/Nahv Meer.webp",
-  ilmusSeeghah:  "/Aalim Course/Ilm-us-Seeghah.jpg",
-  hidayatulNahv: "/Aalim Course/Hidayat-ul-Nahv.webp",
-  sharhMiatAmil: "/Aalim Course/Sharh Miat Amil.webp",
-  qudoori:       "/Aalim Course/Qudoori.webp",
-  kanzulDaqaiq:  "/Aalim Course/Kanzul Daqaiq.webp",
-  sharhJami:     "/Aalim Course/Sharh Jami.webp",
-  mishkat:       "/Aalim Course/Mishkat-ul-Masabih.jpg",
-  jalalain:      "/Aalim Course/Tafseer Jalalain.webp",
+  nahvMeer:      encodeImagePath("/Aalim Course/Nahv Meer.webp"),
+  ilmusSeeghah:  encodeImagePath("/Aalim Course/Ilm-us-Seeghah.jpg"),
+  hidayatulNahv: encodeImagePath("/Aalim Course/Hidayat-ul-Nahv.webp"),
+  sharhMiatAmil: encodeImagePath("/Aalim Course/Sharh Miat Amil.webp"),
+  qudoori:       encodeImagePath("/Aalim Course/Qudoori.webp"),
+  kanzulDaqaiq:  encodeImagePath("/Aalim Course/Kanzul Daqaiq.webp"),
+  sharhJami:     encodeImagePath("/Aalim Course/Sharh Jami.webp"),
+  mishkat:       encodeImagePath("/Aalim Course/Mishkat-ul-Masabih.jpg"),
+  jalalain:      encodeImagePath("/Aalim Course/Tafseer Jalalain.webp"),
 
   // Aalim Course — Siha Sitta
-  bukhari:  "/Aalim Course/Sahih Bukhari.webp",
-  muslim:   "/Aalim Course/Sahih Muslim.webp",
-  tirmidhi: "/Aalim Course/Tirmidhi.webp",
-  abuDawud: "/Aalim Course/Abu Dawud.webp",
-  nasai:    "/Aalim Course/Nasai.jpg",
-  ibnMajah: "/Aalim Course/Ibn Majah.jpg",
+  bukhari:  encodeImagePath("/Aalim Course/Sahih Bukhari.webp"),
+  muslim:   encodeImagePath("/Aalim Course/Sahih Muslim.webp"),
+  tirmidhi: encodeImagePath("/Aalim Course/Tirmidhi.webp"),
+  abuDawud: encodeImagePath("/Aalim Course/Abu Dawud.webp"),
+  nasai:    encodeImagePath("/Aalim Course/Nasai.jpg"),
+  ibnMajah: encodeImagePath("/Aalim Course/Ibn Majah.jpg"),
 
   // Aalim Course — Year 7-8
-  muwatta: "/Aalim Course/Muwatta Imam Malik.jpg",
-  tahawi:  "/Aalim Course/Tahawi.png",
-  hidaya:  "/Aalim Course/Hidaya.webp",
+  muwatta: encodeImagePath("/Aalim Course/Muwatta Imam Malik.jpg"),
+  tahawi:  encodeImagePath("/Aalim Course/Tahawi.png"),
+  hidaya:  encodeImagePath("/Aalim Course/Hidaya.webp"),
 
   // Arabic Language
-  arabNahwMeer:      "/Arabic Language/Nahw Meer.webp",
-  arabIlmusSeeghah:  "/Arabic Language/Ilm-us-Seeghah.jpg",
-  arabVocabulary:    "/Arabic Language/Basic Vocabulary building.png",
-  arabHidayatulNahw: "/Arabic Language/Hidayat-un-Nahw.webp",
-  arabSharhMiatAmil: "/Arabic Language/Sharh Miat Amil.webp",
-  arabSarf:          "/Arabic Language/Sarf exercises.png",
-  arabKafiya:        "/Arabic Language/Kafiya.jpeg",
-  arabIbnAqeel:      "/Arabic Language/Sharah Ibn Aqeel.webp",
-  arabLiterature:    "/Arabic Language/Arabic Literature.jpg",
-  arabConversation:  "/Arabic Language/Conversational Practice.jpg",
-  arabComposition:   "/Arabic Language/Composition.webp",
+  arabNahwMeer:      encodeImagePath("/Arabic Language/Nahw Meer.webp"),
+  arabIlmusSeeghah:  encodeImagePath("/Arabic Language/Ilm-us-Seeghah.jpg"),
+  arabVocabulary:    encodeImagePath("/Arabic Language/Basic Vocabulary building.png"),
+  arabHidayatulNahw: encodeImagePath("/Arabic Language/Hidayat-un-Nahw.webp"),
+  arabSharhMiatAmil: encodeImagePath("/Arabic Language/Sharh Miat Amil.webp"),
+  arabSarf:          encodeImagePath("/Arabic Language/Sarf exercises.png"),
+  arabKafiya:        encodeImagePath("/Arabic Language/Kafiya.jpeg"),
+  arabIbnAqeel:      encodeImagePath("/Arabic Language/Sharah Ibn Aqeel.webp"),
+  arabLiterature:    encodeImagePath("/Arabic Language/Arabic Literature.jpg"),
+  arabConversation:  encodeImagePath("/Arabic Language/Conversational Practice.jpg"),
+  arabComposition:   encodeImagePath("/Arabic Language/Composition.webp"),
 };
 
 // ─── Nazra (9 sections — per-lesson images) ──────────────────────────────────

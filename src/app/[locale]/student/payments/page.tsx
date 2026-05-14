@@ -25,7 +25,7 @@ const currentSubscription = {
   plan: "human_ai" as const,
   course: "Nazra Quran",
   courseType: "nazra" as const,
-  amount: 15,
+  amount: 40,
   interval: "month" as const,
   status: "active" as const,
   currentPeriodEnd: "2026-04-22",
@@ -39,18 +39,18 @@ const trialInfo = {
 };
 
 const paymentHistory = [
-  { id: "1", date: "2026-03-22", description: "Nazra Quran — Human + AI", amount: "$15.00", status: "paid" },
-  { id: "2", date: "2026-02-22", description: "Nazra Quran — Human + AI", amount: "$15.00", status: "paid" },
-  { id: "3", date: "2026-01-22", description: "Nazra Quran — Human + AI", amount: "$15.00", status: "paid" },
+  { id: "1", date: "2026-03-22", description: "Nazra Quran — Human + AI", amount: "$40.00", status: "paid" },
+  { id: "2", date: "2026-02-22", description: "Nazra Quran — Human + AI", amount: "$40.00", status: "paid" },
+  { id: "3", date: "2026-01-22", description: "Nazra Quran — Human + AI", amount: "$40.00", status: "paid" },
 ];
 
 const familyCode = "TBY-FAM-A1B2C3";
 
 const coursePricing = [
-  { course: "Nazra Quran", type: "nazra", plan1: 15, plan2: 8 },
-  { course: "Hifz Quran", type: "hifz", plan1: 20, plan2: 12 },
-  { course: "Arabic Language", type: "arabic", plan1: 18, plan2: 10 },
-  { course: "Aalim Course", type: "aalim", plan1: 25, plan2: 15 },
+  { course: "Nazra Quran", type: "nazra", plan1: 40, plan2: 33 },
+  { course: "Hifz Quran", type: "hifz", plan1: 45, plan2: 37 },
+  { course: "Arabic Language", type: "arabic", plan1: 43, plan2: 35 },
+  { course: "Aalim Course", type: "aalim", plan1: 50, plan2: 40 },
 ];
 
 const statusConfig = {
@@ -445,7 +445,7 @@ export default function PaymentsPage() {
               </div>
               <div className="flex items-center justify-between py-2">
                 <span className="text-sm text-muted-foreground">Total Paid</span>
-                <span className="text-sm font-bold text-emerald-600">$45.00</span>
+                <span className="text-sm font-bold text-emerald-600">$120.00</span>
               </div>
             </div>
           </motion.div>
