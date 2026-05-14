@@ -275,7 +275,7 @@ export default function CourseDetailClient() {
                             <img
                               src={section.bookImage!}
                               alt={section.bookName ?? t(section.titleKey)}
-                              className="w-[300px] h-[200px] object-cover rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
+                              className="w-[260px] h-[340px] object-contain bg-muted/30 rounded-lg shadow border border-muted mx-auto group-hover:shadow-md transition-shadow"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                             <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium">
@@ -286,7 +286,7 @@ export default function CourseDetailClient() {
                           <img
                             src={section.bookImage!}
                             alt={section.bookName ?? t(section.titleKey)}
-                            className="w-[300px] h-[200px] object-cover rounded-lg shadow border border-muted mx-auto"
+                            className="w-[260px] h-[340px] object-contain bg-muted/30 rounded-lg shadow border border-muted mx-auto"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                         )}
@@ -305,7 +305,7 @@ export default function CourseDetailClient() {
                               <img
                                 src={book.image}
                                 alt={book.name}
-                                className="w-full aspect-[2/3] object-cover rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
+                                className="w-full aspect-[2/3] object-contain bg-muted/30 rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
                                 onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                               />
                               <p className="text-xs font-medium text-foreground mt-2 leading-tight line-clamp-2 px-1">
@@ -320,7 +320,7 @@ export default function CourseDetailClient() {
                               <img
                                 src={book.image}
                                 alt={book.name}
-                                className="w-full aspect-[2/3] object-cover rounded-lg shadow border border-muted"
+                                className="w-full aspect-[2/3] object-contain bg-muted/30 rounded-lg shadow border border-muted"
                                 onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                               />
                               <p className="text-xs font-medium text-foreground mt-2 leading-tight line-clamp-2 px-1">

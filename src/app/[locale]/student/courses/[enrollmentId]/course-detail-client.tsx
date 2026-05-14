@@ -181,7 +181,7 @@ export function CourseDetailClient({
                           <img
                             src={section.bookImage!}
                             alt={section.bookName ?? ts(section.titleKey)}
-                            className="w-[280px] h-[185px] object-cover rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
+                            className="w-[240px] h-[310px] object-contain bg-muted/30 rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                           />
                           <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded bg-primary/10 text-primary text-[11px] font-medium">
@@ -192,7 +192,7 @@ export function CourseDetailClient({
                         <img
                           src={section.bookImage!}
                           alt={section.bookName ?? ts(section.titleKey)}
-                          className="w-[280px] h-[185px] object-cover rounded-lg shadow border border-muted"
+                          className="w-[240px] h-[310px] object-contain bg-muted/30 rounded-lg shadow border border-muted"
                           onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                         />
                       )}
@@ -203,7 +203,7 @@ export function CourseDetailClient({
 
                 {/* Multi-book responsive grid — fills full width, no empty space */}
                 {hasMultiBooks && (
-                  <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(160px,1fr))]">
+                  <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(180px,1fr))]">
                     {section.books!.map((book) => (
                       <div key={book.name} className="text-center">
                         {book.pdfUrl ? (
@@ -211,7 +211,7 @@ export function CourseDetailClient({
                             <img
                               src={book.image}
                               alt={book.name}
-                              className="w-full aspect-[2/3] object-cover rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
+                              className="w-full aspect-[2/3] object-contain bg-muted/30 rounded-lg shadow border border-muted group-hover:shadow-md transition-shadow"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                             <p className="text-xs font-medium text-foreground mt-1.5 leading-tight line-clamp-2 px-0.5">
@@ -226,7 +226,7 @@ export function CourseDetailClient({
                             <img
                               src={book.image}
                               alt={book.name}
-                              className="w-full aspect-[2/3] object-cover rounded-lg shadow border border-muted"
+                              className="w-full aspect-[2/3] object-contain bg-muted/30 rounded-lg shadow border border-muted"
                               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                             />
                             <p className="text-xs font-medium text-foreground mt-1.5 leading-tight line-clamp-2 px-0.5">
