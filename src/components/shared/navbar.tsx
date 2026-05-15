@@ -39,7 +39,14 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+    <>
+    <div className="bg-[#0f172a] text-white py-2.5 px-4 text-sm">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-1">
+        <span>WhatsApp: <a href="https://wa.me/923129114002" className="hover:underline font-medium">+92 312 9114002</a></span>
+        <span className="hidden sm:inline">academytibyaan@gmail.com</span>
+      </div>
+    </div>
+    <nav className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -202,5 +209,6 @@ export function Navbar() {
         </div>
       )}
     </nav>
+    </>
   );
 }
