@@ -106,9 +106,38 @@ export abstract class BaseAgent {
   }
 
   protected parseJSON<T>(text: string): T {
-    const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
-    const jsonStr = jsonMatch ? jsonMatch[1] : text;
-    return JSON.parse(jsonStr.trim()) as T;
+    let jsonStr = text;
+
+    // Strategy 1: ```json ... ```
+    const jsonBlockMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+    if (jsonBlockMatch) {
+      jsonStr = jsonBlockMatch[1];
+    } else {
+      // Strategy 2: ``` ... ``` (any code block)
+      const codeBlockMatch = text.match(/```(?:\w*)?\s*([\s\S]*?)\s*```/);
+      if (codeBlockMatch) {
+        jsonStr = codeBlockMatch[1];
+      } else {
+        // Strategy 3: find outermost { ... } boundaries
+        const firstBrace = text.indexOf("{");
+        const lastBrace = text.lastIndexOf("}");
+        if (firstBrace !== -1 && lastBrace > firstBrace) {
+          jsonStr = text.slice(firstBrace, lastBrace + 1);
+        }
+      }
+    }
+
+    jsonStr = jsonStr.trim();
+    // Remove trailing commas before } or ] (common Claude mistake)
+    jsonStr = jsonStr.replace(/,(\s*[}\]])/g, "$1");
+
+    try {
+      return JSON.parse(jsonStr) as T;
+    } catch (e) {
+      throw new Error(
+        `JSON parse failed: ${e instanceof Error ? e.message : "Unknown error"}. Response snippet: ${text.slice(0, 300)}`
+      );
+    }
   }
 
   private async log(

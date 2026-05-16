@@ -5,6 +5,49 @@ import type { AgentName, AgentTask } from "./types";
 
 const DARS_CATEGORIES = ["quran", "hadith", "fiqh", "seerah", "dua"] as const;
 
+const COUNTRY_SEO = [
+  {
+    country: "UK",
+    mention: "Muslims in the United Kingdom — London, Birmingham, Manchester, Bradford",
+    keywords: ["online Quran classes UK", "Islamic education United Kingdom", "Quran tutor London", "learn Arabic UK", "Muslim school online UK"],
+  },
+  {
+    country: "USA",
+    mention: "Muslims across the United States — New York, Chicago, Houston, Los Angeles, Dearborn",
+    keywords: ["online Quran classes USA", "Islamic school America", "Quran tutor New York", "learn Quran online United States", "Muslim education USA"],
+  },
+  {
+    country: "UAE",
+    mention: "Muslims in the UAE — Dubai, Abu Dhabi, Sharjah",
+    keywords: ["online Quran classes UAE", "Islamic education Dubai", "Quran tutor Abu Dhabi", "learn Arabic UAE", "Muslim school Dubai"],
+  },
+  {
+    country: "Canada",
+    mention: "Muslims in Canada — Toronto, Vancouver, Calgary, Montreal",
+    keywords: ["online Quran classes Canada", "Islamic education Canada", "Quran tutor Toronto", "learn Arabic Canada", "Muslim school online Canada"],
+  },
+  {
+    country: "Australia",
+    mention: "Muslims in Australia — Sydney, Melbourne, Brisbane, Perth",
+    keywords: ["online Quran classes Australia", "Islamic school Australia", "Quran tutor Sydney", "learn Arabic Australia", "Muslim education Melbourne"],
+  },
+  {
+    country: "Indonesia",
+    mention: "umat Muslim di Indonesia — Jakarta, Surabaya, Bandung, Medan",
+    keywords: ["kelas Quran online Indonesia", "madrasah online Indonesia", "belajar Quran online", "pendidikan Islam online Indonesia", "guru Quran online"],
+  },
+  {
+    country: "Germany",
+    mention: "Muslime in Deutschland — Berlin, Hamburg, Köln, München, Frankfurt",
+    keywords: ["Quran Unterricht online Deutschland", "islamische Bildung online", "Arabisch lernen online Deutschland", "Quran lernen Deutschland", "muslimische Schule online"],
+  },
+  {
+    country: "Saudi Arabia",
+    mention: "المسلمين في المملكة العربية السعودية — الرياض، جدة، مكة المكرمة",
+    keywords: ["تعلم القرآن أونلاين", "التعليم الإسلامي عبر الإنترنت", "معلم قرآن أونلاين", "تحفيظ القرآن", "تعليم اللغة العربية"],
+  },
+] as const;
+
 interface DarsContent {
   slug: string;
   titleEn: string;
@@ -62,6 +105,12 @@ Rules:
       (task.input.category as string) ??
       DARS_CATEGORIES[Math.floor(Math.random() * DARS_CATEGORIES.length)];
 
+    // Rotate target country daily for geo-targeted SEO
+    const dayOfYear = Math.floor(
+      (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
+    );
+    const countrySeo = COUNTRY_SEO[dayOfYear % COUNTRY_SEO.length];
+
     const categoryPrompts: Record<string, string> = {
       quran: "Generate a short Quran Tafseer post. Pick a meaningful verse, provide Arabic text, translation, and brief tafseer (explanation). Include Surah name and verse number.",
       hadith: "Generate a Hadith of the Day post. Pick an authentic hadith, provide Arabic text, translation, narrator chain, and brief explanation of its lesson. Include source book.",
@@ -79,22 +128,25 @@ Rules:
 SEO Requirements:
 - Article must be minimum 600 words
 - Include primary keyword naturally in first 100 words
-- Mention Muslim communities globally (e.g., 'Muslims in UK, USA, and Canada...')
+- PRIMARY TARGET COUNTRY TODAY: ${countrySeo.country}
+  - Mention specifically: "${countrySeo.mention}"
+  - Naturally weave in these keywords: ${countrySeo.keywords.join(", ")}
+- Also mention Muslim communities in UK, USA, UAE, Canada, Australia, Indonesia, Germany, and Saudi Arabia broadly
 - Use proper HTML heading hierarchy: one <h2>, 2-3 <h3>s as needed
 - End with a call to action linking to Tibyaan Academy courses
 - Write content in proper HTML (not Markdown)
 
-Respond in JSON format:
+Respond in JSON format (valid JSON only, no extra text):
 \`\`\`json
 {
   "slug": "kebab-case-unique-slug",
   "titleEn": "Title in English — max 60 characters, include primary keyword",
   "metaTitle": "SEO title — max 60 characters",
   "metaDescription": "SEO description — max 160 characters, include primary keyword and call to action",
-  "primaryKeyword": "main keyword this article targets",
-  "secondaryKeywords": ["keyword2", "keyword3"],
-  "targetCountries": ["UK", "USA", "UAE", "Canada", "Australia"],
-  "targetAudience": "e.g. Muslim parents, adult learners, children",
+  "primaryKeyword": "${countrySeo.keywords[0]}",
+  "secondaryKeywords": ${JSON.stringify(countrySeo.keywords.slice(1))},
+  "targetCountries": ["UK", "USA", "UAE", "Canada", "Australia", "Indonesia", "Germany", "Saudi Arabia"],
+  "targetAudience": "Muslim parents, adult learners, children in ${countrySeo.country}",
   "contentEn": "Full article content in proper HTML with H2, H3 tags, minimum 600 words. End with CTA linking to /en/courses/nazra-quran or relevant course.",
   "sourceReference": "Source reference (e.g., Sahih Bukhari #123)"
 }

@@ -6,7 +6,6 @@ import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { BookOpen, ChevronRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 interface DarsItem {
   id: string;
@@ -23,14 +22,16 @@ interface DarsItem {
   createdAt: string;
 }
 
-const categoryColors: Record<string, string> = {
-  fiqh: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
-  tafseer: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
-  hadith: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
-  seerah: "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
-  aqeedah: "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
-  akhlaq: "bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300",
+// Islamic poster gradient per category
+const categoryPosters: Record<string, { bg: string; badge: string; label: string }> = {
+  quran:  { bg: "from-[#1B4332] via-[#1a3d2e] to-[#0F2922]",  badge: "text-emerald-300 border-emerald-500/40", label: "القرآن" },
+  hadith: { bg: "from-[#0c2461] via-[#0a1f55] to-[#060d2e]",  badge: "text-blue-300 border-blue-500/40",       label: "الحديث" },
+  fiqh:   { bg: "from-[#2d1b69] via-[#231455] to-[#120a30]",  badge: "text-purple-300 border-purple-500/40",   label: "الفقه" },
+  seerah: { bg: "from-[#78350f] via-[#5c280b] to-[#2c1005]",  badge: "text-amber-300 border-amber-500/40",     label: "السيرة" },
+  dua:    { bg: "from-[#7f1d1d] via-[#631616] to-[#3d0808]",  badge: "text-rose-300 border-rose-500/40",       label: "الدعاء" },
 };
+
+const ISLAMIC_PATTERN = `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L40 80M0 40L80 40M0 0L80 80M80 0L0 80M20 0L20 80M60 0L60 80M0 20L80 20M0 60L80 60' stroke='%23ffffff' stroke-width='0.4' fill='none'/%3E%3C/svg%3E")`;
 
 export function DailyDarsSection() {
   const t = useTranslations("dailyDarsSection");
@@ -62,23 +63,23 @@ export function DailyDarsSection() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24 bg-muted/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="mb-10"
         >
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-3">
             <BookOpen className="w-4 h-4" />
             {t("title")}
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary">
             {t("title")}
           </h2>
-          <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-2 text-lg text-muted-foreground max-w-2xl">
             {t("subtitle")}
           </p>
         </motion.div>
@@ -86,62 +87,73 @@ export function DailyDarsSection() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-xl border bg-card p-6 animate-pulse space-y-3">
-                <div className="h-4 bg-muted rounded w-1/4" />
-                <div className="h-5 bg-muted rounded w-3/4" />
-                <div className="h-3 bg-muted rounded w-full" />
-                <div className="h-3 bg-muted rounded w-2/3" />
-              </div>
+              <div key={i} className="rounded-2xl bg-muted animate-pulse h-[280px]" />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {darsItems.map((item, i) => {
-              const categoryColor = categoryColors[item.category] ?? categoryColors.akhlaq;
+              const poster = categoryPosters[item.category] ?? categoryPosters.quran;
+              const excerpt = getDarsExcerpt(item);
+
               return (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className="rounded-xl border bg-card p-6 hover:shadow-md transition-shadow flex flex-col"
+                  transition={{ duration: 0.45, delay: i * 0.1 }}
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <Badge className={`text-xs font-medium ${categoryColor} border-0`}>
-                      {item.category}
-                    </Badge>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Calendar className="w-3 h-3" />
-                      <span>
-                        {new Date(item.publishedAt).toLocaleDateString(locale, {
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </span>
-                    </div>
-                  </div>
-
-                  <h3 className="font-semibold text-foreground line-clamp-2 flex-1">
-                    {getDarsTitle(item)}
-                  </h3>
-
-                  {getDarsExcerpt(item) && (
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-                      {getDarsExcerpt(item)}
-                      {getDarsExcerpt(item).length >= 100 ? "..." : ""}
-                    </p>
-                  )}
-
-                  <Link href={`/dars/${item.id}`} className="mt-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-between text-primary hover:text-primary hover:bg-primary/5"
+                  <Link href={`/dars/${item.id}`} className="block group">
+                    <div
+                      className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${poster.bg} p-6 h-[280px] flex flex-col justify-between text-white shadow-xl`}
                     >
-                      {t("readMore")}
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
+                      {/* Islamic geometric pattern overlay */}
+                      <div
+                        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+                        style={{ backgroundImage: ISLAMIC_PATTERN }}
+                      />
+
+                      {/* Gold top accent line */}
+                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
+
+                      {/* Top row: category + date */}
+                      <div className="relative z-10 flex items-center justify-between">
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest border bg-white/5 ${poster.badge}`}>
+                          {poster.label} · {item.category}
+                        </span>
+                        <div className="flex items-center gap-1 text-xs text-white/40">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(item.publishedAt).toLocaleDateString(locale, {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Title */}
+                      <div className="relative z-10 flex-1 mt-4">
+                        <h3 className="text-lg font-bold leading-snug line-clamp-3 group-hover:text-[#C9A84C] transition-colors duration-200">
+                          {getDarsTitle(item)}
+                        </h3>
+                        {excerpt && (
+                          <p className="mt-2 text-sm text-white/55 line-clamp-2 leading-relaxed">
+                            {excerpt}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Bottom: branding + read more */}
+                      <div className="relative z-10 flex items-center justify-between pt-3 border-t border-white/10">
+                        <span className="text-[11px] text-white/30 font-semibold tracking-wide uppercase">
+                          Tibyaan Academy
+                        </span>
+                        <span className="flex items-center gap-1 text-xs font-semibold text-[#C9A84C] group-hover:gap-2 transition-all">
+                          {t("readMore")}
+                          <ChevronRight className="w-3 h-3" />
+                        </span>
+                      </div>
+                    </div>
                   </Link>
                 </motion.div>
               );
@@ -154,10 +166,10 @@ export function DailyDarsSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mt-8"
+            className="mt-8"
           >
             <Link href="/dars">
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2 rounded-full border-primary/30 hover:bg-primary hover:text-primary-foreground">
                 {t("viewAll")}
                 <ChevronRight className="w-4 h-4" />
               </Button>
