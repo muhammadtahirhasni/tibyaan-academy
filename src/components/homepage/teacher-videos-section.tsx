@@ -17,6 +17,7 @@ interface TeacherVideo {
   teacherId: string;
   teacherName: string;
   teacherCode: string;
+  courseCategory: string | null;
 }
 
 export function TeacherVideosSection() {
@@ -34,7 +35,7 @@ export function TeacherVideosSection() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (!loading && videos.length === 0) return null;
+  // Don't render null when empty — show placeholder below
 
   return (
     <section className="py-16 md:py-24 bg-muted/30">
@@ -65,6 +66,11 @@ export function TeacherVideosSection() {
                 </div>
               </div>
             ))}
+          </div>
+        ) : videos.length === 0 ? (
+          <div className="text-center py-12 text-muted-foreground">
+            <Video className="w-10 h-10 mx-auto mb-3 opacity-30" />
+            <p className="text-sm">{t("comingSoon")}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -125,6 +131,11 @@ export function TeacherVideosSection() {
                   </div>
 
                   <div className="p-4">
+                    {video.courseCategory && (
+                      <span className="inline-block text-xs font-semibold text-primary bg-primary/10 rounded-full px-2 py-0.5 mb-1">
+                        {video.courseCategory}
+                      </span>
+                    )}
                     <h3 className="font-semibold text-foreground text-sm line-clamp-2">
                       {video.title}
                     </h3>

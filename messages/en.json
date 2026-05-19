@@ -109,7 +109,9 @@
     "f5Title": "Hifz Smart Tracker",
     "f5Desc": "AI-powered Sabaq, Sabqi & Manzil scheduling",
     "f6Title": "Online Aalim Course",
-    "f6Desc": "2 to 8 year Aalim programs — with Ijazah"
+    "f6Desc": "2 to 8 year Aalim programs — with Ijazah",
+    "f7Title": "Your Own Schedule",
+    "f7Desc": "Book classes with your preferred teacher at your preferred time — no fixed timing"
   },
   "coursesSection": {
     "title": "Our Courses",
@@ -157,7 +159,12 @@
     "students": "Students",
     "countries": "Countries",
     "classes": "Classes",
-    "huffaz": "Huffaz"
+    "huffaz": "Huffaz",
+    "studentsSub": "and growing every month",
+    "countriesSub": "UK, USA, UAE, CA, AU & more",
+    "classesSub": "Successfully completed",
+    "huffazSub": "Trained on our platform",
+    "footnote": "Tibyaan Academy — Data as of May 2026"
   },
   "pricingTeaser": {
     "title": "Starting from just $38/month",
@@ -208,7 +215,8 @@
     "terms": "Terms & Conditions",
     "languages": "Languages",
     "madeWith": "Made with Islamic values",
-    "rights": "All rights reserved"
+    "rights": "All rights reserved",
+    "refundPolicy": "Refund Policy"
   },
   "coursesPage": {
     "title": "Our Courses",
@@ -244,7 +252,8 @@
     "arabicFeature3": "Grammar exercises with AI",
     "aalimFeature1": "Complete Dars-e-Nizami curriculum",
     "aalimFeature2": "2, 4, 6, or 8 year programs",
-    "aalimFeature3": "Ijazah for 8-year graduates"
+    "aalimFeature3": "Ijazah for 8-year graduates",
+    "flexibleSchedule": "✓ Flexible scheduling — book as you like"
   },
   "courseDetail": {
     "enrollNow": "Enroll Now",
@@ -442,7 +451,8 @@
     "faq3Q": "How does yearly billing work?",
     "faq3A": "Pay for 10 months and get 12 months of access — that's 2 months free!",
     "faq4Q": "Can I change my plan later?",
-    "faq4A": "Absolutely. Upgrade or downgrade anytime. Changes apply to your next billing cycle."
+    "faq4A": "Absolutely. Upgrade or downgrade anytime. Changes apply to your next billing cycle.",
+    "moneyBack": "✓ 7-day money-back guarantee — no questions asked"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -503,9 +513,6 @@
     "hifzCompleted": "Hifz Entries",
     "noClass": "None",
     "enrolledOn": "Enrolled",
-    "sidebarKidsActivities": "Kids Activities",
-    "sidebarTajweedChecker": "Tajweed Checker",
-    "sidebarDarsCircles": "Dars Circles",
     "syllabusOverview": "Course Syllabus",
     "showAllParas": "Show All 30 Paras",
     "showLess": "Show Less"
@@ -914,7 +921,8 @@
     "role": "Role",
     "joined": "Joined",
     "status": "Status",
-    "noResults": "No results found"
+    "noResults": "No results found",
+    "sidebarEnrollmentRequests": "Enrollment Requests"
   },
   "notifications": {
     "title": "Notifications",
@@ -1197,12 +1205,64 @@
     "title": "Learn from Our Teachers",
     "subtitle": "Watch sample tilawat and lessons from our verified teachers",
     "viewProfile": "View Profile",
-    "views": "views"
+    "views": "views",
+    "comingSoon": "Coming soon — Teacher videos"
   },
   "dailyDarsSection": {
     "title": "Daily Dars",
     "subtitle": "Benefit from our daily Islamic lessons and reminders",
     "readMore": "Read More",
     "viewAll": "View All Dars"
+  },
+  "dashboardPreview": {
+    "title": "What's Inside the Dashboard?",
+    "tabStudent": "Student",
+    "tabTeacher": "Teacher",
+    "tabAdmin": "Admin",
+    "s1": "My upcoming classes",
+    "s2": "Hifz tracker (Sabaq / Sabqi / Manzil)",
+    "s3": "Ask AI Ustaz",
+    "s4": "Course progress",
+    "s5": "Assignments & tests",
+    "t1": "Student requests (pending / approved)",
+    "t2": "My schedule (videos + live classes)",
+    "t3": "Earnings this month",
+    "t4": "Class recordings",
+    "a1": "All students overview",
+    "a2": "Zoom link management",
+    "a3": "Revenue & subscriptions",
+    "a4": "Teacher approvals"
+  },
+  "enrollmentForm": {
+    "title": "Enroll Now — In 5 Minutes",
+    "subtitle": "Fill in the form and we will get in touch within 24 hours.",
+    "name": "Name",
+    "namePlaceholder": "Your full name",
+    "whatsapp": "WhatsApp Number",
+    "country": "Country",
+    "selectCountry": "Select country",
+    "course": "Course",
+    "selectCourse": "Select course",
+    "plan": "Plan",
+    "selectPlan": "Select plan",
+    "plan1": "Plan 1: Human Teacher + AI",
+    "plan2": "Plan 2: AI Only",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Any questions or special requirements?",
+    "submit": "Send Request",
+    "successTitle": "Thank you!",
+    "successDesc": "We'll contact you within 24 hours."
+  },
+  "refundPolicy": {
+    "title": "Refund Policy",
+    "lastUpdated": "Last updated: May 2026",
+    "trialTitle": "5-Day Free Trial",
+    "trialContent": "You can use the platform completely free for 5 days — no credit card required.\nNo charges during the trial period.",
+    "refundTitle": "Refunds After Subscription",
+    "refundContent": "✅ First 7 days: Full refund — no questions asked\n✅ Technical issue (platform not working): Case-by-case — we will work together to resolve it\n❌ After 7 days: No refund, but you can cancel at any time",
+    "cancelTitle": "Cancellation",
+    "cancelContent": "You can cancel your subscription at any time.\nIf cancelled before the next billing cycle starts, you will not be charged.",
+    "requestTitle": "Requesting a Refund",
+    "requestContent": "Email: support@tibyaan.com\nWhatsApp: +92 312 9114002\nWe will respond within 48 hours."
   }
 }

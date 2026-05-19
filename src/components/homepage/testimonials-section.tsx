@@ -5,11 +5,12 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import InitialsAvatar from "@/components/shared/initials-avatar";
 
 const testimonials = [
-  { key: "t1", rating: 5, avatarSeed: "AhmadAliPakistan" },
-  { key: "t2", rating: 5, avatarSeed: "FatimaZahraUK" },
-  { key: "t3", rating: 5, avatarSeed: "AbdulRahmanSaudi" },
+  { key: "t1", rating: 5, name: "Ahmad Ali" },
+  { key: "t2", rating: 5, name: "Fatima Zahra" },
+  { key: "t3", rating: 5, name: "Abdul Rahman" },
 ] as const;
 
 export function TestimonialsSection() {
@@ -55,11 +56,7 @@ export function TestimonialsSection() {
 
               {/* Author */}
               <div className="mt-4 pt-4 border-t flex items-center gap-3">
-                <img
-                  src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${review.avatarSeed}`}
-                  alt={t(`${review.key}Name`)}
-                  className="w-10 h-10 rounded-full bg-muted shrink-0"
-                />
+                <InitialsAvatar name={review.name} size={40} />
                 <div>
                   <div className="font-semibold text-sm text-foreground">
                     {t(`${review.key}Name`)}

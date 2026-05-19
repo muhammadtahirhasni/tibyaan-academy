@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
-import { teacherVideos, users } from "@/lib/db/schema";
+import { teacherVideos, users, teacherProfiles } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 
 /**
@@ -22,9 +22,11 @@ export async function GET() {
         createdAt: teacherVideos.createdAt,
         teacherId: teacherVideos.teacherId,
         teacherName: users.fullName,
+        specializations: teacherProfiles.specializations,
       })
       .from(teacherVideos)
       .innerJoin(users, eq(teacherVideos.teacherId, users.id))
+      .leftJoin(teacherProfiles, eq(teacherProfiles.userId, users.id))
       .where(eq(teacherVideos.status, "approved"))
       .orderBy(desc(teacherVideos.createdAt))
       .limit(4);
@@ -38,6 +40,7 @@ export async function GET() {
       teacherId: r.teacherId,
       teacherName: r.teacherName || "Teacher",
       teacherCode: `TBA-${r.teacherId.substring(0, 8).toUpperCase()}`,
+      courseCategory: (r.specializations as string[] | null)?.[0] ?? null,
     }));
 
     return NextResponse.json({ videos });

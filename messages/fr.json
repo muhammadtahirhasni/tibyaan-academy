@@ -109,7 +109,9 @@
     "f5Title": "Suivi Hifz intelligent",
     "f5Desc": "Planification Sabaq, Sabqi et Manzil par IA",
     "f6Title": "Cours Aalim en ligne",
-    "f6Desc": "Programmes de 2 à 8 ans — avec Ijazah"
+    "f6Desc": "Programmes de 2 à 8 ans — avec Ijazah",
+    "f7Title": "Votre propre emploi du temps",
+    "f7Desc": "Réservez des cours avec l'enseignant de votre choix à l'heure qui vous convient"
   },
   "coursesSection": {
     "title": "Nos cours",
@@ -157,7 +159,12 @@
     "students": "Étudiants",
     "countries": "Pays",
     "classes": "Cours",
-    "huffaz": "Huffaz"
+    "huffaz": "Huffaz",
+    "studentsSub": "et ça augmente chaque mois",
+    "countriesSub": "UK, USA, EAU, CA, AU et plus",
+    "classesSub": "Complétées avec succès",
+    "huffazSub": "Formés sur notre plateforme",
+    "footnote": "Tibyaan Academy — Données de mai 2026"
   },
   "pricingTeaser": {
     "title": "Starting from just $38/month",
@@ -208,7 +215,8 @@
     "terms": "Conditions générales",
     "languages": "Langues",
     "madeWith": "Fait avec les valeurs islamiques",
-    "rights": "Tous droits réservés"
+    "rights": "Tous droits réservés",
+    "refundPolicy": "Politique de remboursement"
   },
   "coursesPage": {
     "title": "Nos cours",
@@ -244,7 +252,8 @@
     "arabicFeature3": "Exercices de grammaire avec IA",
     "aalimFeature1": "Programme complet Dars-e-Nizami",
     "aalimFeature2": "Programmes de 2, 4, 6 ou 8 ans",
-    "aalimFeature3": "Ijazah pour les diplômés de 8 ans"
+    "aalimFeature3": "Ijazah pour les diplômés de 8 ans",
+    "flexibleSchedule": "✓ Horaires flexibles — réservez comme vous voulez"
   },
   "courseDetail": {
     "enrollNow": "S'inscrire maintenant",
@@ -442,7 +451,8 @@
     "faq3Q": "Comment fonctionne la facturation annuelle ?",
     "faq3A": "Payez 10 mois et accédez pendant 12 mois — soit 2 mois gratuits !",
     "faq4Q": "Puis-je changer de plan plus tard ?",
-    "faq4A": "Absolument. Mettez à niveau ou rétrogradez à tout moment. Les changements s'appliquent au prochain cycle de facturation."
+    "faq4A": "Absolument. Mettez à niveau ou rétrogradez à tout moment. Les changements s'appliquent au prochain cycle de facturation.",
+    "moneyBack": "✓ Garantie de remboursement 7 jours — sans questions"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -918,7 +928,8 @@
     "role": "Rôle",
     "joined": "Inscription",
     "status": "Statut",
-    "noResults": "Aucun résultat trouvé"
+    "noResults": "Aucun résultat trouvé",
+    "sidebarEnrollmentRequests": "Demandes d'inscription"
   },
   "notifications": {
     "title": "Notifications",
@@ -1198,15 +1209,67 @@
     "alreadyTeacher": "Déjà enseignant ? Se connecter"
   },
   "teacherVideos": {
-    "title": "Apprenez de nos enseignants",
+    "title": "Apprenez avec nos enseignants",
     "subtitle": "Regardez des exemples de tilawat et leçons de nos enseignants vérifiés",
     "viewProfile": "Voir le profil",
-    "views": "vues"
+    "views": "vues",
+    "comingSoon": "Bientôt disponible — Vidéos des enseignants"
   },
   "dailyDarsSection": {
     "title": "Dars quotidien",
     "subtitle": "Profitez de nos leçons islamiques quotidiennes et rappels",
     "readMore": "Lire plus",
     "viewAll": "Voir tous les dars"
+  },
+  "dashboardPreview": {
+    "title": "Que contient le tableau de bord ?",
+    "tabStudent": "Étudiant",
+    "tabTeacher": "Enseignant",
+    "tabAdmin": "Admin",
+    "s1": "Mes prochains cours",
+    "s2": "Suivi Hifz (Sabaq / Sabqi / Manzil)",
+    "s3": "Demander à l'IA Ustaz",
+    "s4": "Progression du cours",
+    "s5": "Devoirs et tests",
+    "t1": "Demandes des étudiants (en attente / approuvées)",
+    "t2": "Mon planning (vidéos + cours en direct)",
+    "t3": "Revenus ce mois-ci",
+    "t4": "Enregistrements de cours",
+    "a1": "Vue d'ensemble de tous les étudiants",
+    "a2": "Gestion des liens Zoom",
+    "a3": "Revenus et abonnements",
+    "a4": "Approbation des enseignants"
+  },
+  "enrollmentForm": {
+    "title": "Inscrivez-vous maintenant — En 5 minutes",
+    "subtitle": "Remplissez le formulaire et nous vous contacterons dans les 24 heures.",
+    "name": "Nom",
+    "namePlaceholder": "Votre nom complet",
+    "whatsapp": "Numéro WhatsApp",
+    "country": "Pays",
+    "selectCountry": "Sélectionnez le pays",
+    "course": "Cours",
+    "selectCourse": "Sélectionnez le cours",
+    "plan": "Plan",
+    "selectPlan": "Sélectionnez le plan",
+    "plan1": "Plan 1 : Enseignant humain + IA",
+    "plan2": "Plan 2 : IA uniquement",
+    "message": "Message (optionnel)",
+    "messagePlaceholder": "Des questions ou exigences particulières ?",
+    "submit": "Envoyer la demande",
+    "successTitle": "Merci !",
+    "successDesc": "Nous vous contacterons dans les 24 heures."
+  },
+  "refundPolicy": {
+    "title": "Politique de remboursement",
+    "lastUpdated": "Dernière mise à jour : mai 2026",
+    "trialTitle": "Essai gratuit de 5 jours",
+    "trialContent": "Vous pouvez utiliser la plateforme gratuitement pendant 5 jours — aucune carte de crédit requise.\nAucun frais pendant la période d'essai.",
+    "refundTitle": "Remboursements après abonnement",
+    "refundContent": "✅ 7 premiers jours : remboursement complet — sans questions\n✅ Problème technique (plateforme hors service) : cas par cas — nous travaillerons ensemble à résoudre le problème\n❌ Après 7 jours : pas de remboursement, mais vous pouvez annuler à tout moment",
+    "cancelTitle": "Annulation",
+    "cancelContent": "Vous pouvez annuler votre abonnement à tout moment.\nSi vous annulez avant le début du prochain cycle de facturation, vous ne serez pas facturé.",
+    "requestTitle": "Demander un remboursement",
+    "requestContent": "E-mail : support@tibyaan.com\nWhatsApp : +92 312 9114002\nNous répondrons dans les 48 heures."
   }
 }

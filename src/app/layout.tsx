@@ -141,6 +141,9 @@ export default async function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1B4332" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Tibyaan Academy" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
         <link rel="alternate" type="application/rss+xml" title="Tibyaan Academy Blog" href="/feed.xml" />
         <script

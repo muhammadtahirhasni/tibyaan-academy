@@ -9,6 +9,7 @@ import {
   Languages,
   Brain,
   GraduationCap,
+  Calendar,
 } from "lucide-react";
 
 const features = [
@@ -18,6 +19,7 @@ const features = [
   { key: "f4", icon: Languages, color: "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300" },
   { key: "f5", icon: Brain, color: "bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300" },
   { key: "f6", icon: GraduationCap, color: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/50 dark:text-cyan-300" },
+  { key: "f7", icon: Calendar, color: "bg-teal-100 text-teal-700 dark:bg-teal-900/50 dark:text-teal-300" },
 ] as const;
 
 export function FeaturesSection() {

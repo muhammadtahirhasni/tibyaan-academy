@@ -97,6 +97,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/refund-policy" className="opacity-70 hover:opacity-100 transition-opacity">
+                  {t("refundPolicy")}
+                </Link>
+              </li>
+              <li>
                 <Link href="/dars" className="opacity-70 hover:opacity-100 transition-opacity">
                   Daily Dars
                 </Link>

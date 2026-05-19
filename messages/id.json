@@ -109,7 +109,9 @@
     "f5Title": "Pelacak Hifz Cerdas",
     "f5Desc": "Penjadwalan Sabaq, Sabqi & Manzil oleh AI",
     "f6Title": "Kursus Aalim Online",
-    "f6Desc": "Program 2 sampai 8 tahun — dengan Ijazah"
+    "f6Desc": "Program 2 sampai 8 tahun — dengan Ijazah",
+    "f7Title": "Jadwal Sesukamu",
+    "f7Desc": "Pesan kelas dengan guru pilihan di waktu yang kamu inginkan — tidak ada jadwal tetap"
   },
   "coursesSection": {
     "title": "Kursus Kami",
@@ -157,7 +159,12 @@
     "students": "Siswa",
     "countries": "Negara",
     "classes": "Kelas",
-    "huffaz": "Huffaz"
+    "huffaz": "Huffaz",
+    "studentsSub": "dan terus bertambah setiap bulan",
+    "countriesSub": "UK, USA, UAE, CA, AU & lainnya",
+    "classesSub": "Berhasil diselesaikan",
+    "huffazSub": "Terlatih di platform kami",
+    "footnote": "Tibyaan Academy — Data per Mei 2026"
   },
   "pricingTeaser": {
     "title": "Starting from just $38/month",
@@ -208,7 +215,8 @@
     "terms": "Syarat & Ketentuan",
     "languages": "Bahasa",
     "madeWith": "Dibuat dengan nilai-nilai Islam",
-    "rights": "Hak cipta dilindungi"
+    "rights": "Hak cipta dilindungi",
+    "refundPolicy": "Kebijakan Pengembalian Dana"
   },
   "coursesPage": {
     "title": "Kursus Kami",
@@ -244,7 +252,8 @@
     "arabicFeature3": "Latihan tata bahasa dengan AI",
     "aalimFeature1": "Kurikulum Dars-e-Nizami lengkap",
     "aalimFeature2": "Program 2, 4, 6, atau 8 tahun",
-    "aalimFeature3": "Ijazah untuk lulusan program 8 tahun"
+    "aalimFeature3": "Ijazah untuk lulusan program 8 tahun",
+    "flexibleSchedule": "✓ Jadwal fleksibel — pesan sesukamu"
   },
   "courseDetail": {
     "enrollNow": "Daftar Sekarang",
@@ -442,7 +451,8 @@
     "faq3Q": "Bagaimana tagihan tahunan bekerja?",
     "faq3A": "Bayar 10 bulan dan dapatkan akses 12 bulan — itu 2 bulan gratis!",
     "faq4Q": "Bisakah saya mengubah paket nanti?",
-    "faq4A": "Tentu saja. Upgrade atau downgrade kapan saja. Perubahan berlaku pada siklus tagihan berikutnya."
+    "faq4A": "Tentu saja. Upgrade atau downgrade kapan saja. Perubahan berlaku pada siklus tagihan berikutnya.",
+    "moneyBack": "✓ Garansi uang kembali 7 hari — tanpa pertanyaan"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -918,7 +928,8 @@
     "role": "Peran",
     "joined": "Bergabung",
     "status": "Status",
-    "noResults": "Tidak ada hasil"
+    "noResults": "Tidak ada hasil",
+    "sidebarEnrollmentRequests": "Permintaan Pendaftaran"
   },
   "notifications": {
     "title": "Notifikasi",
@@ -1201,12 +1212,64 @@
     "title": "Belajar dari Guru Kami",
     "subtitle": "Tonton contoh tilawat dan pelajaran dari guru terverifikasi kami",
     "viewProfile": "Lihat Profil",
-    "views": "tayangan"
+    "views": "tayangan",
+    "comingSoon": "Segera hadir — Video para guru"
   },
   "dailyDarsSection": {
     "title": "Dars Harian",
     "subtitle": "Manfaatkan pelajaran Islam harian dan pengingat kami",
     "readMore": "Baca Selengkapnya",
     "viewAll": "Lihat Semua Dars"
+  },
+  "dashboardPreview": {
+    "title": "Apa yang Ada di Dashboard?",
+    "tabStudent": "Siswa",
+    "tabTeacher": "Guru",
+    "tabAdmin": "Admin",
+    "s1": "Kelas mendatang saya",
+    "s2": "Pelacak Hifz (Sabaq / Sabqi / Manzil)",
+    "s3": "Tanya AI Ustaz",
+    "s4": "Progres kursus",
+    "s5": "Tugas & ujian",
+    "t1": "Permintaan siswa (menunggu / disetujui)",
+    "t2": "Jadwal saya (video + kelas langsung)",
+    "t3": "Penghasilan bulan ini",
+    "t4": "Rekaman kelas",
+    "a1": "Ringkasan semua siswa",
+    "a2": "Manajemen tautan Zoom",
+    "a3": "Pendapatan & langganan",
+    "a4": "Persetujuan guru"
+  },
+  "enrollmentForm": {
+    "title": "Daftar Sekarang — Dalam 5 Menit",
+    "subtitle": "Isi formulir dan kami akan menghubungi Anda dalam 24 jam.",
+    "name": "Nama",
+    "namePlaceholder": "Nama lengkap Anda",
+    "whatsapp": "Nomor WhatsApp",
+    "country": "Negara",
+    "selectCountry": "Pilih negara",
+    "course": "Kursus",
+    "selectCourse": "Pilih kursus",
+    "plan": "Paket",
+    "selectPlan": "Pilih paket",
+    "plan1": "Paket 1: Guru Manusia + AI",
+    "plan2": "Paket 2: Hanya AI",
+    "message": "Pesan (opsional)",
+    "messagePlaceholder": "Ada pertanyaan atau kebutuhan khusus?",
+    "submit": "Kirim Permintaan",
+    "successTitle": "Terima kasih!",
+    "successDesc": "Kami akan menghubungi Anda dalam 24 jam."
+  },
+  "refundPolicy": {
+    "title": "Kebijakan Pengembalian Dana",
+    "lastUpdated": "Terakhir diperbarui: Mei 2026",
+    "trialTitle": "Uji Coba Gratis 5 Hari",
+    "trialContent": "Anda dapat menggunakan platform sepenuhnya gratis selama 5 hari — tidak perlu kartu kredit.\nTidak ada biaya selama periode uji coba.",
+    "refundTitle": "Pengembalian Dana Setelah Berlangganan",
+    "refundContent": "✅ 7 hari pertama: pengembalian dana penuh — tanpa pertanyaan\n✅ Masalah teknis (platform tidak berfungsi): kasus per kasus — kami akan bekerja sama untuk menyelesaikannya\n❌ Setelah 7 hari: tidak ada pengembalian dana, tetapi Anda dapat membatalkan kapan saja",
+    "cancelTitle": "Pembatalan",
+    "cancelContent": "Anda dapat membatalkan langganan kapan saja.\nJika dibatalkan sebelum siklus penagihan berikutnya dimulai, Anda tidak akan dikenai biaya.",
+    "requestTitle": "Meminta Pengembalian Dana",
+    "requestContent": "Email: support@tibyaan.com\nWhatsApp: +92 312 9114002\nKami akan merespons dalam 48 jam."
   }
 }
