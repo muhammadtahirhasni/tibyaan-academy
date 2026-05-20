@@ -106,7 +106,7 @@ const team = [
   {
     id: 1,
     name: "Professor Muhammad Tahir Hasni",
-    image: "/Our Team/Muhammad_Tahir_Hasni.jpg",
+    image: "/OurTeam/Muhammad_Tahir_Hasni.jpg",
     role: "Founder of Tibyaan Academy",
     description: "Professor Muhammad Tahir Hasni founded Tibyaan Academy with a vision to make authentic Islamic education accessible to Muslims across the globe. With decades of academic excellence, he has been a pioneer in bringing traditional Islamic learning to the online world. His mission is to bridge the gap between technology and religion, serving the Ummah through modern yet authentic means.",
     whatsapp: "923478599839",
@@ -114,7 +114,7 @@ const team = [
   {
     id: 2,
     name: "Mufti Muhammad Rafeeq Golarwi",
-    image: "/Our Team/Mufti_Muhammad_Rafeeq_Golarwi.jpeg",
+    image: "/OurTeam/Mufti_Muhammad_Rafeeq_Golarwi.jpeg",
     role: "Director of Tibyaan Academy",
     description: "Mufti Muhammad Rafeeq Golarwi oversees the day-to-day academic operations of Tibyaan Academy. His core expertise lies in Islamic Jurisprudence (Fiqh) and Usool-ul-Fiqh, and he has played a key role in adapting the traditional Dars-e-Nizami curriculum for the modern digital age. Under his leadership, Tibyaan's Aalim Course and Fatwa department serve students from around the world.",
     whatsapp: "923212485198",
@@ -122,7 +122,7 @@ const team = [
   {
     id: 3,
     name: "Mufti Owais Ahmed",
-    image: "/Our Team/Mufti_Owais_Ahmed.png",
+    image: "/OurTeam/Mufti_Owais_Ahmed.png",
     role: "Head of Aalim Course",
     description: "Mufti Owais Ahmed leads Tibyaan Academy's flagship Aalim Course. He has successfully restructured the complete Dars-e-Nizami syllabus into an effective online format, enabling students to pursue the full journey of becoming a qualified Aalim from the comfort of their homes. His teaching style is clear, engaging, and deeply rooted in classical Islamic scholarship.",
     whatsapp: "923218035236",
@@ -130,7 +130,7 @@ const team = [
   {
     id: 4,
     name: "Sheikh Abdul Jabbar",
-    image: "/Our Team/Sheikh Abdul Jabbar.jpeg",
+    image: "/OurTeam/Sheikh_Abdul_Jabbar.jpeg",
     role: "Head of Arabic Language",
     description: "Sheikh Abdul Jabbar is a specialist in the Arabic language with deep expertise in Sarf, Nahw, Balaghat, and Classical Arabic Literature. He firmly believes that the direct path to understanding the Quran and Hadith is through mastering the Arabic language. His classes are structured in a way that even absolute beginners can quickly begin to understand the Quran with confidence.",
     whatsapp: "923152363498",
@@ -138,7 +138,7 @@ const team = [
   {
     id: 5,
     name: "Maulana Ali Haider",
-    image: "/Our Team/Maulana Ali Haider.jpeg",
+    image: "/OurTeam/Maulana_Ali_Haider.jpeg",
     role: "Head of Hifz-ul-Quran",
     description: "Maulana Ali Haider has dedicated his entire life to the service of the Holy Quran. He specializes in teaching Hifz to students of all ages — from young children to adults. His proven teaching methodology instills consistency and strength in memorization. He has designed Tibyaan's online Hifz program in a way that allows every student to progress at their own pace without compromising quality.",
     whatsapp: "923476676147",
@@ -146,7 +146,7 @@ const team = [
   {
     id: 6,
     name: "Qari Muhammad Musheer",
-    image: "/Our Team/Qari Muhammad Musheer.jpg",
+    image: "/OurTeam/Qari_Muhammad_Musheer.jpg",
     role: "Head of Nazrat-ul-Quran",
     description: "Qari Muhammad Musheer heads the Nazrat and Tajweed department at Tibyaan Academy. His specialty lies in the precise articulation of Arabic letters (Makhaarij) and the rules of Tajweed. Thousands of students have learned to recite the Quran correctly under his guidance. His interactive and engaging teaching approach makes learning Quran enjoyable, particularly for children.",
     whatsapp: "923269244960",
@@ -154,7 +154,7 @@ const team = [
   {
     id: 7,
     name: "Qari Muhammad Ismail Hasni",
-    image: "/Our Team/Qari Muhammad Ismail Hasni.jpeg",
+    image: "/OurTeam/Qari_Muhammad_Ismail_Hasni.jpeg",
     role: "Admin of Tibyaan Academy",
     description: "Qari Muhammad Ismail Hasni manages the complete administrative framework of Tibyaan Academy. From student enrollments and scheduling to fee management and teacher coordination — every operational matter falls under his supervision. His dedication and organizational skills ensure that the entire Academy runs smoothly and efficiently. He is always available and approachable for students' needs.",
     whatsapp: "923453184434",
@@ -162,7 +162,7 @@ const team = [
   {
     id: 8,
     name: "Ustaza Fatima Al-Zahra",
-    image: "/Our Team/Ustaza Fatima Al-Zahra.jpg",
+    image: "/OurTeam/Ustaza_Fatima_Al-Zahra.jpg",
     role: "Head of Women's & Children's Programs",
     description: "Ustaza Fatima Al-Zahra oversees all women's and children's programs at Tibyaan Academy. Her teaching approach is built on innovative methods and a nurturing, compassionate style that has helped thousands of women and children learn the Quran and Islamic sciences. She is the creative force behind Tibyaan's Kids Activities section. She believes that every Muslim home should be the first school of Deen.",
     whatsapp: "923042043314",
