@@ -19,7 +19,28 @@ import {
   AlertCircle,
   Plus,
   IdCard,
+  FileText,
 } from "lucide-react";
+import { getSyllabus, type SyllabusSection } from "@/lib/data/course-syllabus";
+
+function getCourseBooks(courseType: string): { name: string; image: string; pdfUrl?: string }[] {
+  const sections: SyllabusSection[] = getSyllabus(courseType);
+  const result: { name: string; image: string; pdfUrl?: string }[] = [];
+  for (const sec of sections) {
+    if (sec.books) {
+      sec.books.forEach((b) => result.push({ name: b.name, image: b.image, pdfUrl: b.pdfUrl }));
+    } else if (sec.bookImage) {
+      const label =
+        courseType === "hifz"
+          ? `Para ${sec.id}`
+          : courseType === "nazra"
+          ? `Lesson ${sec.id}`
+          : `Section ${sec.id}`;
+      result.push({ name: label, image: sec.bookImage, pdfUrl: sec.pdfUrl });
+    }
+  }
+  return result;
+}
 
 interface DashboardProps {
   userId: string;
@@ -204,6 +225,89 @@ export function DashboardClient({
           })}
         </div>
       )}
+
+      {/* ===== COURSE MATERIALS ===== */}
+      {enrolledCourses.length > 0 && enrolledCourses.map((course) => {
+        const books = getCourseBooks(course.courseType);
+        if (!books.length) return null;
+        return (
+          <motion.div
+            key={`materials-${course.id}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="rounded-xl border bg-card p-6"
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                <BookOpen className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-semibold text-foreground truncate">
+                  {course.name}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Course Books &amp; PDF Materials — {books.length} items
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3">
+              {books.map((book, i) => (
+                <div key={i} className="flex flex-col items-center gap-1">
+                  {book.pdfUrl ? (
+                    <a
+                      href={book.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block w-full"
+                      title={book.name}
+                    >
+                      <div className="aspect-[3/4] rounded-lg overflow-hidden border border-border bg-muted relative shadow-sm group-hover:shadow-md transition-shadow">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={book.image}
+                          alt={book.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = "none";
+                          }}
+                        />
+                        <div className="absolute bottom-0 inset-x-0 flex justify-center pb-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="bg-primary/90 rounded px-1.5 py-0.5 flex items-center gap-0.5">
+                            <FileText className="w-2.5 h-2.5 text-white" />
+                            <span className="text-white text-[9px] font-medium">PDF</span>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="mt-1 text-[10px] text-center text-muted-foreground leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                        {book.name}
+                      </p>
+                    </a>
+                  ) : (
+                    <div className="w-full" title={book.name}>
+                      <div className="aspect-[3/4] rounded-lg overflow-hidden border border-border bg-muted shadow-sm">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={book.image}
+                          alt={book.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = "none";
+                          }}
+                        />
+                      </div>
+                      <p className="mt-1 text-[10px] text-center text-muted-foreground leading-tight line-clamp-2">
+                        {book.name}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        );
+      })}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column */}
