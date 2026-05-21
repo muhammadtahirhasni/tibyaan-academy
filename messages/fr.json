@@ -47,7 +47,8 @@
     "termsLink": "Conditions générales",
     "startTrial": "Commencer l'essai gratuit de 5 jours",
     "parentWhatsapp": "Numéro WhatsApp des parents",
-    "parentWhatsappPlaceholder": "+33-6-12345678"
+    "parentWhatsappPlaceholder": "+33-6-12345678",
+    "addPhoto": "Ajouter une photo de profil"
   },
   "onboarding": {
     "title": "Commençons !",
@@ -1208,5 +1209,25 @@
     "subtitle": "Profitez de nos leçons islamiques quotidiennes et rappels",
     "readMore": "Lire plus",
     "viewAll": "Voir tous les dars"
+  },
+  "enrollmentForm": {
+    "title": "Inscrivez-vous maintenant — En 5 minutes",
+    "subtitle": "Remplissez le formulaire et nous vous contacterons dans les 24 heures.",
+    "name": "Nom",
+    "namePlaceholder": "Votre nom complet",
+    "whatsapp": "Numéro WhatsApp",
+    "country": "Pays",
+    "selectCountry": "Sélectionnez le pays",
+    "course": "Cours",
+    "selectCourse": "Sélectionnez le cours",
+    "plan": "Plan",
+    "selectPlan": "Sélectionnez le plan",
+    "plan1": "Plan 1 : Enseignant humain + IA",
+    "plan2": "Plan 2 : IA uniquement",
+    "message": "Message (optionnel)",
+    "messagePlaceholder": "Des questions ou exigences particulières ?",
+    "submit": "Envoyer la demande",
+    "successTitle": "Merci !",
+    "successDesc": "Nous vous contacterons dans les 24 heures."
   }
 }

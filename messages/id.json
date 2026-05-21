@@ -47,7 +47,8 @@
     "termsLink": "Syarat & Ketentuan",
     "startTrial": "Mulai Uji Coba Gratis 5 Hari",
     "parentWhatsapp": "Nomor WhatsApp Orang Tua",
-    "parentWhatsappPlaceholder": "+62-812-3456789"
+    "parentWhatsappPlaceholder": "+62-812-3456789",
+    "addPhoto": "Tambah Foto Profil"
   },
   "onboarding": {
     "title": "Ayo Mulai!",
@@ -1208,5 +1209,25 @@
     "subtitle": "Manfaatkan pelajaran Islam harian dan pengingat kami",
     "readMore": "Baca Selengkapnya",
     "viewAll": "Lihat Semua Dars"
+  },
+  "enrollmentForm": {
+    "title": "Daftar Sekarang — Dalam 5 Menit",
+    "subtitle": "Isi formulir dan kami akan menghubungi Anda dalam 24 jam.",
+    "name": "Nama",
+    "namePlaceholder": "Nama lengkap Anda",
+    "whatsapp": "Nomor WhatsApp",
+    "country": "Negara",
+    "selectCountry": "Pilih negara",
+    "course": "Kursus",
+    "selectCourse": "Pilih kursus",
+    "plan": "Paket",
+    "selectPlan": "Pilih paket",
+    "plan1": "Paket 1: Guru Manusia + AI",
+    "plan2": "Paket 2: Hanya AI",
+    "message": "Pesan (opsional)",
+    "messagePlaceholder": "Ada pertanyaan atau kebutuhan khusus?",
+    "submit": "Kirim Permintaan",
+    "successTitle": "Terima kasih!",
+    "successDesc": "Kami akan menghubungi Anda dalam 24 jam."
   }
 }

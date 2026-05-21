@@ -4,6 +4,8 @@ import { eq, and, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Star, BookOpen, Calendar, Play, Eye } from "lucide-react";
+import { Navbar } from "@/components/shared/navbar";
+import { Footer } from "@/components/shared/footer";
 
 export default async function TeacherProfilePage({
   params,
@@ -49,6 +51,9 @@ export default async function TeacherProfilePage({
   };
 
   return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-1">
     <div className="max-w-4xl mx-auto px-4 py-12">
       <Link
         href="/teachers"
@@ -180,6 +185,9 @@ export default async function TeacherProfilePage({
           <p>No videos available yet.</p>
         </div>
       )}
+    </div>
+      </main>
+      <Footer />
     </div>
   );
 }

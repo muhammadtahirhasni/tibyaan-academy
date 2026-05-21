@@ -47,7 +47,8 @@
     "termsLink": "Terms & Conditions",
     "startTrial": "Start 5-Day Free Trial",
     "parentWhatsapp": "Parent WhatsApp Number",
-    "parentWhatsappPlaceholder": "+92-300-1234567"
+    "parentWhatsappPlaceholder": "+92-300-1234567",
+    "addPhoto": "Add Profile Photo"
   },
   "onboarding": {
     "title": "Let's Get Started!",
@@ -503,9 +504,6 @@
     "hifzCompleted": "Hifz Entries",
     "noClass": "None",
     "enrolledOn": "Enrolled",
-    "sidebarKidsActivities": "Kids Activities",
-    "sidebarTajweedChecker": "Tajweed Checker",
-    "sidebarDarsCircles": "Dars Circles",
     "syllabusOverview": "Course Syllabus",
     "showAllParas": "Show All 30 Paras",
     "showLess": "Show Less"
@@ -1204,5 +1202,25 @@
     "subtitle": "Benefit from our daily Islamic lessons and reminders",
     "readMore": "Read More",
     "viewAll": "View All Dars"
+  },
+  "enrollmentForm": {
+    "title": "Enroll Now — In 5 Minutes",
+    "subtitle": "Fill in the form and we will get in touch within 24 hours.",
+    "name": "Name",
+    "namePlaceholder": "Your full name",
+    "whatsapp": "WhatsApp Number",
+    "country": "Country",
+    "selectCountry": "Select country",
+    "course": "Course",
+    "selectCourse": "Select course",
+    "plan": "Plan",
+    "selectPlan": "Select plan",
+    "plan1": "Plan 1: Human Teacher + AI",
+    "plan2": "Plan 2: AI Only",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Any questions or special requirements?",
+    "submit": "Send Request",
+    "successTitle": "Thank you!",
+    "successDesc": "We'll contact you within 24 hours."
   }
 }

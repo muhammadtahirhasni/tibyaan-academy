@@ -47,7 +47,8 @@
     "termsLink": "شرائط و ضوابط",
     "startTrial": "5 دن مفت شروع کریں",
     "parentWhatsapp": "والدین کا واٹس ایپ نمبر",
-    "parentWhatsappPlaceholder": "+92-300-1234567"
+    "parentWhatsappPlaceholder": "+92-300-1234567",
+    "addPhoto": "پروفائل فوٹو شامل کریں"
   },
   "onboarding": {
     "title": "آئیے شروع کرتے ہیں!",
@@ -1201,5 +1202,25 @@
     "subtitle": "ہمارے روزانہ اسلامی دروس اور نصیحتوں سے فائدہ اٹھائیں",
     "readMore": "مزید پڑھیں",
     "viewAll": "تمام دروس دیکھیں"
+  },
+  "enrollmentForm": {
+    "title": "ابھی داخلہ لیں — 5 منٹ میں",
+    "subtitle": "فارم بھریں اور ہم 24 گھنٹوں میں آپ سے رابطہ کریں گے۔",
+    "name": "نام",
+    "namePlaceholder": "آپ کا پورا نام",
+    "whatsapp": "واٹس ایپ نمبر",
+    "country": "ملک",
+    "selectCountry": "ملک منتخب کریں",
+    "course": "کورس",
+    "selectCourse": "کورس منتخب کریں",
+    "plan": "پلان",
+    "selectPlan": "پلان منتخب کریں",
+    "plan1": "پلان 1: انسانی استاد + AI",
+    "plan2": "پلان 2: صرف AI",
+    "message": "پیغام (اختیاری)",
+    "messagePlaceholder": "کوئی سوال یا خاص ضرورت؟",
+    "submit": "درخواست بھیجیں",
+    "successTitle": "شکریہ!",
+    "successDesc": "ہم 24 گھنٹوں میں آپ سے رابطہ کریں گے۔"
   }
 }

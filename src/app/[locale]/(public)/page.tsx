@@ -12,6 +12,7 @@ import { CtaSection } from "@/components/homepage/cta-section";
 import { TeacherCtaSection } from "@/components/homepage/teacher-cta-section";
 import { TeacherVideosSection } from "@/components/homepage/teacher-videos-section";
 import { DailyDarsSection } from "@/components/homepage/daily-dars-section";
+import { EnrollmentFormSection } from "@/components/homepage/enrollment-form-section";
 import { Footer } from "@/components/shared/footer";
 
 const BASE_URL = "https://tibyaan.com";
@@ -78,6 +79,7 @@ export default function HomePage() {
         <HowItWorksSection />
         <DailyDarsSection />
         <TestimonialsSection />
+        <EnrollmentFormSection />
         <TrustSignalsSection />
         <PricingTeaserSection />
         <TeacherCtaSection />

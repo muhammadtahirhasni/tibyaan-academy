@@ -47,7 +47,8 @@
     "termsLink": "الشروط والأحكام",
     "startTrial": "ابدأ التجربة المجانية 5 أيام",
     "parentWhatsapp": "رقم واتساب ولي الأمر",
-    "parentWhatsappPlaceholder": "+966-50-1234567"
+    "parentWhatsappPlaceholder": "+966-50-1234567",
+    "addPhoto": "أضف صورة الملف الشخصي"
   },
   "onboarding": {
     "title": "لنبدأ!",
@@ -1208,5 +1209,25 @@
     "subtitle": "استفد من دروسنا الإسلامية اليومية والتذكيرات",
     "readMore": "اقرأ المزيد",
     "viewAll": "عرض جميع الدروس"
+  },
+  "enrollmentForm": {
+    "title": "سجّل الآن — في 5 دقائق",
+    "subtitle": "أكمل النموذج وسنتواصل معك خلال 24 ساعة.",
+    "name": "الاسم",
+    "namePlaceholder": "اسمك الكامل",
+    "whatsapp": "رقم واتساب",
+    "country": "الدولة",
+    "selectCountry": "اختر الدولة",
+    "course": "الدورة",
+    "selectCourse": "اختر الدورة",
+    "plan": "الخطة",
+    "selectPlan": "اختر الخطة",
+    "plan1": "الخطة 1: معلم بشري + ذكاء اصطناعي",
+    "plan2": "الخطة 2: ذكاء اصطناعي فقط",
+    "message": "رسالة (اختياري)",
+    "messagePlaceholder": "أي أسئلة أو متطلبات خاصة؟",
+    "submit": "إرسال الطلب",
+    "successTitle": "شكرًا!",
+    "successDesc": "سنتواصل معك خلال 24 ساعة."
   }
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { Camera } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -85,6 +86,8 @@ export default function SignupPage() {
   const [selectedRole, setSelectedRole] = useState("student");
   const [countryCode, setCountryCode] = useState("+92");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
   async function handleSignup(formData: FormData) {
     if (!termsAccepted) return;
@@ -171,6 +174,43 @@ export default function SignupPage() {
 
           {/* Email Signup Form */}
           <form action={handleSignup} className="space-y-4">
+            {/* Profile Photo */}
+            <div className="flex flex-col items-center gap-2">
+              <button
+                type="button"
+                onClick={() => avatarInputRef.current?.click()}
+                className="relative w-20 h-20 rounded-full bg-primary/10 border-2 border-dashed border-primary/30 hover:border-primary/60 transition-colors overflow-hidden flex items-center justify-center group"
+              >
+                {avatarPreview ? (
+                  <img
+                    src={avatarPreview}
+                    alt="avatar preview"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Camera className="w-7 h-7 text-primary/40 group-hover:text-primary/70 transition-colors" />
+                )}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Camera className="w-5 h-5 text-white" />
+                </div>
+              </button>
+              <p className="text-xs text-muted-foreground">{t("addPhoto")}</p>
+              <input
+                ref={avatarInputRef}
+                name="avatar"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const url = URL.createObjectURL(file);
+                    setAvatarPreview(url);
+                  }
+                }}
+              />
+            </div>
+
             {/* Full Name */}
             <div className="space-y-2">
               <Label htmlFor="fullName">{t("fullName")}</Label>
