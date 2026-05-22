@@ -152,7 +152,249 @@
     "t3Country": "Arab Saudi",
     "t3Course": "Kursus Aalim",
     "t3Text": "Saya mendaftar kursus Aalim dari Arab Saudi. Kualitas keilmuan para asatidza dan kurikulum Dars-e-Nizami yang lengkap benar-benar mengesankan.",
-    "viewAll": "Lihat Semua Ulasan"
+    "viewAll": "Lihat Semua Ulasan",
+    "reviews": [
+      {
+        "review": "Saya memulai Nazra Quran dengan Tibyaan. AI Ustaz tersedia 24/7 — tanyakan apa saja, dapatkan jawaban instan. Hanya dalam 4 bulan, saya kini bisa membaca Al-Quran dengan lancar. Alhamdulillah!",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Pelacak Hifz telah mengubah hidup saya. Jadwal sabak, sabqi, dan manzil yang diatur AI sangat terorganisir sehingga saya tidak pernah lupa pelajaran. Dikombinasikan dengan guru manusia, aplikasi ini sungguh menakjubkan.",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Menemukan Qari yang baik di Inggris itu sulit. Tibyaan memecahkan masalah itu. Kelas langsung terasa seperti tatap muka. Anak saya sangat senang!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya memulai perjalanan Hifz bersama putra saya dari Nigeria. AI Ustaz menjelaskan dalam bahasa Inggris dan guru manusia mengoreksi tajwid. Kombinasi terbaik!",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Tinggal di Jerman, saya ingin belajar bahasa Arab. Kelas sarf dan nahw begitu jelas sehingga yang terasa sulit menjadi mudah. Dukungan dalam berbagai bahasa sungguh luar biasa.",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Saya dari Bangladesh. Pelacak Hifz Tibyaan telah menjadi pengubah permainan bagi saya. Pengingat harian AI dan melihat grafik kemajuan saya meningkatkan motivasi. Masha'Allah!",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Indonesia. Memiliki dukungan dalam bahasa Indonesia adalah keuntungan besar. Anda bisa menanyakan pertanyaan kepada AI Ustaz dalam bahasa Anda sendiri. Tibyaan benar-benar akademi berkelas dunia!",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Bergabung dengan Kursus Aalim dari Turki. Menemukan kurikulum Dars-e-Nizami lengkap secara online sungguh menakjubkan. Tingkat keilmuan guru dan kursus dengan ijazah — hanya mungkin di Tibyaan!",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Saya dari Afrika Barat. Mengambil uji coba gratis 5 hari dan langsung menyukainya dari kelas pertama, jadi saya langsung berlangganan. Guru mengajar dengan sangat sabar.",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Putri saya menghafal dan menunggu kelas Tibyaan dengan antusias. Permainan interaktif anak-anak membuat belajar huruf kini terasa seperti bermain!",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Mengambil kursus bahasa Arab dari Indonesia. Fokus khusus pada bahasa Arab percakapan yang tidak ditemukan di tempat lain. Berlatih dengan AI Ustaz kapan saja — tanpa rasa malu!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Saya dari Arab Saudi dan bergabung dengan Kursus Aalim. Melihat kualifikasi dan latar belakang akademis para guru memberikan ketenangan pikiran. Meskipun online, lingkungannya terasa persis seperti madrasah.",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Putra saya menghafal 10 juz dalam 8 bulan! Pelacak Hifz dan upaya gabungan guru membuatnya mungkin. Tes mingguan menunjukkan kemajuan yang jelas.",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "AI Ustaz Tibyaan luar biasa. Tanyakan pertanyaan pukul 2 pagi — jawaban instan! Dikombinasikan dengan guru manusia, kombinasi ini tidak dapat dipercaya.",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari UEA. Waktu yang fleksibel sangat penting dalam kehidupan saya yang sibuk. Opsi Tibyaan untuk menetapkan jadwal sendiri membuat segalanya mudah. Pengucapan anak saya sangat meningkat!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya mengikuti Kursus Aalim dari Indonesia. Apa yang saya pelajari dalam 2 tahun tidak mungkin di lembaga lokal mana pun. Saya sangat menghargai perhatian pribadi para guru kepada murid-muridnya.",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Masalah pendidikan Islam bagi anak-anak Muslim di Kanada kini terpecahkan. Dengan Tibyaan, pendidikan agama dimungkinkan dari rumah. Hubungan putra saya dengan Al-Quran terus berkembang.",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya menyelesaikan Kursus Aalim online dan juga menerima ijazah. Ini adalah pencapaian akademis terbesar dalam hidup saya. Guru-guru Tibyaan luar biasa dalam ilmu dan karakter.",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Saya ibu yang sibuk di Inggris. Tibyaan menghubungkan putri saya dengan Al-Quran — dia kini duduk dan membaca sendiri setiap hari. Dia suka berlatih pengulangan dengan AI Ustaz!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Mengambil kursus bahasa Arab dari Australia. Saya tidak tahu bahasa Arab sebelumnya, sekarang mulai memahami terjemahan Qurani. Tibyaan benar-benar mendekatkan Al-Quran. Terima kasih Tibyaan!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Saya dari Irak. Kelas Tibyaan mendekatkan saya pada Al-Quran. AI Ustaz menjawab pertanyaan kapan saja siang atau malam — saya tidak menemukan kenyamanan ini di tempat lain. Terima kasih!",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya memulai perjalanan Hifz bersama putri saya dari Nigeria. Lingkungan Tibyaan persis seperti madrasah. Putri saya senang, saya senang — Alhamdulillah, akademi ini terbukti menjadi pilihan terbaik!",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Rusia dan setelah memeluk Islam, ingin belajar Al-Quran. Tibyaan memberikan dukungan penuh dalam bahasa Inggris. Kesabaran guru dan bantuan AI — keduanya membuat belajar mudah.",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya dari Mauritania. Pelacak Hifz Tibyaan sangat berguna bagi saya — ada sistem lengkap untuk sabak, sabqi, dan manzil. Guru-gurunya sangat berpengalaman dan memberikan perhatian khusus pada tajwid.",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Pakistan. Memulai Hifz dengan Tibyaan dan menghafal 7 juz dalam 5 bulan. Pengingat harian AI dan bimbingan guru manusia — keduanya bersama-sama membuat keajaiban!",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Mendaftar di Kursus Aalim dari Bangladesh. Mendapatkan kurikulum Dars-e-Nizami lengkap secara online sungguh luar biasa. Kompetensi ilmiah para guru dan kelas langsung — semuanya seperti madrasah nyata!",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Saya mendaftarkan putra kecil saya untuk Nazra di Tibyaan. Dia menyukai belajar huruf melalui permainan interaktif anak-anak. Sekarang dia meminta kelas sendiri — Masha'Allah!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Melihat tes mingguan dan grafik kemajuan AI membuat saya tetap termotivasi. Cara guru manusia dan AI bekerja bersama di Tibyaan — ini sungguh madrasah untuk era modern!",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Indonesia. Mengambil kursus bahasa Arab dan perjalanan dari dasar ke percakapan sangat terorganisir. Memiliki dukungan dalam bahasa Indonesia adalah keuntungan nyata yang besar. Terima kasih Tibyaan!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Hati saya senang melihat hubungan putra saya dengan Al-Quran. Cara guru Tibyaan mengajar dengan penuh cinta — itu tak terlupakan. Memulai dengan uji coba gratis 5 hari lalu langsung berlangganan.",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Vietnam. Dukungan dalam bahasa Inggris memungkinkan belajar Al-Quran. Berlatih dengan AI Ustaz kapan saja — tidak ada batasan waktu. Tibyaan benar-benar untuk Muslim di seluruh dunia!",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya mengikuti kursus Hifz dari Indonesia. Pelacak Hifz Tibyaan membuat jadwal harian — pelajaran tetap terhafal, kemajuan terlihat. Guru dan AI bersama-sama — memberikan ketenangan pikiran!",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya belajar bahasa Arab dari Indonesia. Kelas sarf dan nahw diajarkan dengan cara yang sangat mudah. Bicara bahasa Arab dengan AI Ustaz kapan saja — semua rasa takut dan malu hilang!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Bergabung dengan Kursus Aalim dari Mesir. Guru-guru Tibyaan memiliki standar akademis yang sangat tinggi. Menyelesaikan kursus dengan ijazah adalah impian hidup saya — Tibyaan mewujudkannya!",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Tinggal di Inggris, saya khawatir tentang pendidikan agama putra saya. Tibyaan menghilangkan kekhawatiran itu. Kelas langsung, pelacak AI, dan tes mingguan — semuanya bersama memberikan hasil terbaik!",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Pendidikan Islam di Kanada adalah tantangan. Tibyaan memungkinkan belajar Al-Quran dari rumah. Putra saya kini membaca dengan penuh keyakinan — Masha'Allah!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya dari Pakistan. Tibyaan mendekatkan saya dengan Al-Quran. Latihan tajwid dengan AI Ustaz dan pelajaran dengan guru manusia — keduanya bersama membuat Hifz jauh lebih mudah!",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Prancis. Mendapatkan dukungan dalam bahasa Prancis terbukti menjadi berkah terbesar bagi saya. Setelah kursus bahasa Arab, saya mulai memahami terjemahan Qurani — terima kasih yang tulus untuk Tibyaan!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Saya mendaftarkan putra-putra saya di Tibyaan dari Arab Saudi. Standar tajwidnya sangat tinggi. Guru-guru Tibyaan mengajar dengan cinta dan ketulusan — semoga Allah membalas mereka dengan kebaikan!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya dari Indonesia. Ketika mulai belajar bahasa Arab dengan Tibyaan, saya merasa sebuah dunia baru terbuka. Membaca Al-Quran dengan pemahaman kini mungkin — ini adalah hadiah terbesar Tibyaan!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Saya dari Tanzania. Putra saya mulai membaca Al-Quran dengan Tibyaan — kini dia duduk dan membaca sendiri setiap hari. AI Ustaz sangat membantu mengoreksi tajwidnya. Jazakumullah Khairan!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya dari Indonesia dan mengambil kursus bahasa Arab. Sebelumnya saya tidak tahu apa-apa — sekarang bisa mengucapkan kalimat dasar. Berlatih percakapan dengan AI Ustaz meningkatkan kepercayaan diri saya. Saya sangat senang!",
+        "role": "Siswa",
+        "course": "Bahasa Arab"
+      },
+      {
+        "review": "Saya menghafal dari Bangladesh. Pelacak Hifz Tibyaan mengingatkan saya akan pelajaran harian, dan melihat grafik kemajuan membuat saya semakin termotivasi untuk bekerja lebih keras. Bimbingan penuh kasih guru — semuanya bersama-sama luar biasa!",
+        "role": "Siswa",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari UEA. Tibyaan mewujudkan impian saya belajar Al-Quran bersama putra saya. Perhatian guru di kelas langsung, revisi sabqi AI — keduanya bersama memberikan hasil terbaik! Semoga Allah membalas Tibyaan.",
+        "role": "Orang Tua",
+        "course": "Hifz Quran"
+      },
+      {
+        "review": "Saya dari Pakistan. Mendaftar di Kursus Aalim dan dari awal, kualitas kelas membuat saya terpesona. Ilmu guru, karakter, dan cinta mereka — ketiganya tak tertandingi. Tibyaan benar-benar madrasah untuk era modern!",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Saya dari Bangladesh. Mendaftarkan putra saya di Tibyaan — perbedaannya terlihat dari minggu pertama. Belajar huruf melalui permainan anak-anak kini menjadi menyenangkan. Metode mengajar guru luar biasa!",
+        "role": "Orang Tua",
+        "course": "Nazra Quran"
+      },
+      {
+        "review": "Saya mengikuti Kursus Aalim dari Pakistan. Pengalaman Dars-e-Nizami online ini menakjubkan. Menerima sertifikat dengan ijazah akan menjadi kehormatan besar bagi saya. Guru-guru Tibyaan mengajar dari hati — semoga Allah membalas mereka!",
+        "role": "Siswa",
+        "course": "Kursus Aalim"
+      },
+      {
+        "review": "Saya dari Turki. Mengambil uji coba gratis 5 hari dan langsung menyukai gaya guru dari kelas pertama — langsung berlangganan. Sekarang saya membaca Al-Quran dengan lancar — ini adalah berkah Tibyaan!",
+        "role": "Siswa",
+        "course": "Nazra Quran"
+      }
+    ]
   },
   "stats": {
     "students": "Siswa",
@@ -982,7 +1224,41 @@
     "value3Title": "Metode Modern",
     "value3Desc": "Ustaz AI, pelacakan kemajuan, dan aktivitas interaktif menjadikan pembelajaran menarik dan efektif.",
     "value4Title": "Nilai-Nilai Islami",
-    "value4Desc": "Kami tidak hanya membina ilmu pengetahuan tetapi juga akhlak, dengan Tarbiyah yang terintegrasi dalam setiap pelajaran."
+    "value4Desc": "Kami tidak hanya membina ilmu pengetahuan tetapi juga akhlak, dengan Tarbiyah yang terintegrasi dalam setiap pelajaran.",
+    "team": [
+      {
+        "role": "Pendiri Tibyaan Academy",
+        "description": "Profesor Muhammad Tahir Hasni mendirikan Tibyaan Academy dengan visi untuk membuat pendidikan Islam yang autentik dapat diakses oleh Muslim di seluruh dunia. Dengan puluhan tahun keunggulan akademis, beliau telah menjadi pelopor dalam membawa pembelajaran Islam tradisional ke dunia online. Misinya adalah menjembatani kesenjangan antara teknologi dan agama, melayani Umat melalui cara yang modern namun autentik."
+      },
+      {
+        "role": "Direktur Tibyaan Academy",
+        "description": "Mufti Muhammad Rafeeq Golarwi mengawasi operasional akademik sehari-hari Tibyaan Academy. Keahlian utamanya terletak pada Fiqih Islam dan Usool-ul-Fiqh, dan beliau telah memainkan peran kunci dalam mengadaptasi kurikulum Dars-e-Nizami tradisional untuk era digital modern. Di bawah kepemimpinannya, Kursus Aalim dan departemen Fatwa Tibyaan melayani siswa dari seluruh dunia."
+      },
+      {
+        "role": "Kepala Kursus Aalim",
+        "description": "Mufti Owais Ahmed memimpin Kursus Aalim unggulan Tibyaan Academy. Beliau telah berhasil merestrukturisasi kurikulum Dars-e-Nizami lengkap ke dalam format online yang efektif, memungkinkan siswa menempuh perjalanan penuh menjadi Aalim yang berkualifikasi dari kenyamanan rumah mereka. Gaya mengajarnya jelas, menarik, dan berakar dalam pada beasiswa Islam klasik."
+      },
+      {
+        "role": "Kepala Departemen Bahasa Arab",
+        "description": "Sheikh Abdul Jabbar adalah spesialis bahasa Arab dengan keahlian mendalam dalam Sarf, Nahw, Balaghat, dan Sastra Arab Klasik. Beliau sangat percaya bahwa jalan langsung untuk memahami Al-Quran dan Hadits adalah melalui penguasaan bahasa Arab. Kelasnya terstruktur sedemikian rupa sehingga bahkan pemula absolut pun dapat segera mulai memahami Al-Quran dengan percaya diri."
+      },
+      {
+        "role": "Kepala Program Hifz-ul-Quran",
+        "description": "Maulana Ali Haider telah mendedikasikan seluruh hidupnya untuk pelayanan Al-Quran. Beliau berspesialisasi dalam mengajar Hifz kepada siswa dari segala usia — dari anak-anak kecil hingga orang dewasa. Metodologi pengajaran beliau yang terbukti menanamkan konsistensi dan kekuatan dalam hafalan. Beliau telah merancang program Hifz online Tibyaan sedemikian rupa sehingga setiap siswa dapat berkembang sesuai kecepatan mereka sendiri tanpa mengorbankan kualitas."
+      },
+      {
+        "role": "Kepala Program Nazrat-ul-Quran",
+        "description": "Qari Muhammad Musheer memimpin departemen Nazrat dan Tajwid di Tibyaan Academy. Keahliannya terletak pada artikulasi tepat huruf-huruf Arab (Makhaarij) dan aturan-aturan Tajwid. Ribuan siswa telah belajar membaca Al-Quran dengan benar di bawah bimbingannya. Pendekatan pengajaran interaktif dan menariknya membuat belajar Al-Quran menyenangkan, terutama bagi anak-anak."
+      },
+      {
+        "role": "Admin Tibyaan Academy",
+        "description": "Qari Muhammad Ismail Hasni mengelola kerangka administratif lengkap Tibyaan Academy. Dari pendaftaran siswa dan penjadwalan hingga manajemen biaya dan koordinasi guru — setiap masalah operasional berada di bawah pengawasannya. Dedikasi dan keterampilan organisasinya memastikan seluruh Akademi berjalan dengan lancar dan efisien. Beliau selalu tersedia dan mudah dihubungi untuk kebutuhan siswa."
+      },
+      {
+        "role": "Kepala Program Wanita & Anak-anak",
+        "description": "Ustaza Fatima Al-Zahra mengawasi semua program wanita dan anak-anak di Tibyaan Academy. Pendekatan pengajarannya dibangun di atas metode inovatif dan gaya yang penuh kasih sayang yang telah membantu ribuan wanita dan anak-anak belajar Al-Quran dan ilmu Islam. Beliau adalah kekuatan kreatif di balik bagian Kegiatan Anak-anak Tibyaan. Beliau percaya bahwa setiap rumah Muslim harus menjadi sekolah pertama Deen."
+      }
+    ]
   },
   "contactPage": {
     "title": "Hubungi Kami",

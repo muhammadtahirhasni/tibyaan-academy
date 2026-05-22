@@ -152,7 +152,249 @@
     "t3Country": "Arabie Saoudite",
     "t3Course": "Cours Aalim",
     "t3Text": "Je me suis inscrit au cours Aalim depuis l'Arabie Saoudite. Le niveau des enseignants et le programme Dars-e-Nizami complet m'ont vraiment impressionné.",
-    "viewAll": "Voir tous les avis"
+    "viewAll": "Voir tous les avis",
+    "reviews": [
+      {
+        "review": "J'ai commencé la lecture du Coran avec Tibyaan. Le maître IA est disponible 24h/24 — posez n'importe quelle question, obtenez une réponse instantanée. En seulement 4 mois, je peux maintenant lire le Coran couramment. Alhamdulillah!",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Le tracker Hifz a changé ma vie. Le programme de leçon, sabqi et manzil organisé par l'IA est si bien structuré que je n'oublie jamais mes leçons. Combiné avec un enseignant humain, cette application est vraiment incroyable.",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Trouver un bon Qari au Royaume-Uni était difficile. Tibyaan a résolu ce problème. Le cours en direct ressemble à du face-à-face. Mon enfant est très heureux!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "J'ai commencé le voyage du Hifz avec mon fils depuis le Nigéria. Le maître IA explique en anglais et l'enseignant humain corrige le tajwid. Meilleure combinaison!",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Vivant en Allemagne, je voulais apprendre l'arabe. Les cours de sarf et nahw sont si clairs que ce qui semblait difficile est devenu facile. Le support en plusieurs langues est vraiment exceptionnel.",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "Je viens du Bangladesh. Le tracker Hifz de Tibyaan a tout changé pour moi. Les rappels quotidiens de l'IA et la visualisation de mon graphique de progression boostent ma motivation. Masha'Allah!",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens d'Indonésie. Avoir un support en langue indonésienne est une grande commodité. Vous pouvez poser des questions au maître IA dans votre propre langue. Tibyaan est vraiment une académie de classe mondiale!",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "J'ai rejoint le Cours Aalim depuis la Turquie. Trouver l'intégralité du programme Dars-e-Nizami en ligne est incroyable. Le niveau scientifique des enseignants et le cours avec ijazah — seulement possible à Tibyaan!",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Je viens d'Afrique de l'Ouest. J'ai pris l'essai gratuit de 5 jours et j'ai adoré dès le premier cours, alors je me suis abonné immédiatement. L'enseignant enseigne avec beaucoup de patience.",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Ma fille fait le hifz et attend impatiemment les cours de Tibyaan. Les jeux interactifs pour enfants font que l'apprentissage des lettres ressemble maintenant à un jeu!",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "J'ai pris le cours de langue arabe depuis l'Indonésie. L'accent particulier sur l'arabe parlé que l'on ne trouve nulle part ailleurs. Pratiquez avec le maître IA à tout moment — sans gêne!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "Je viens d'Arabie Saoudite et j'ai rejoint le Cours Aalim. Voir les qualifications et les antécédents académiques des enseignants m'a donné la tranquillité d'esprit. Malgré être en ligne, l'environnement ressemble tout à fait à une madrasa.",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Mon fils a mémorisé 10 parties en 8 mois! Le tracker Hifz et l'effort combiné de l'enseignant l'ont rendu possible. Les tests hebdomadaires montrent des progrès clairs.",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Le maître IA de Tibyaan est incroyable. Posez une question à 2h du matin — réponse instantanée! Combiné avec un enseignant humain, cette combinaison est incroyable.",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens des Émirats Arabes Unis. Des horaires flexibles étaient essentiels dans ma vie chargée. L'option de Tibyaan pour définir votre propre emploi du temps a tout facilité. La prononciation de mon enfant s'est énormément améliorée!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je suis le Cours Aalim depuis l'Indonésie. Ce que j'ai appris en 2 ans n'était pas possible dans aucun établissement local. J'apprécie vraiment l'attention personnelle des enseignants à leurs étudiants.",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Le problème de l'éducation islamique pour les enfants musulmans au Canada est maintenant résolu. Avec Tibyaan, l'éducation religieuse est possible depuis la maison. Le lien de mon fils avec le Coran ne cesse de grandir.",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "J'ai complété le Cours Aalim en ligne et j'ai également reçu l'ijazah. C'est le plus grand accomplissement académique de ma vie. Les enseignants de Tibyaan sont exceptionnels dans le savoir et le caractère.",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Je suis une maman occupée au Royaume-Uni. Tibyaan a connecté ma fille au Coran — elle s'assoit maintenant et lit seule chaque jour. Elle adore pratiquer les répétitions avec le maître IA!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "J'ai pris le cours de langue arabe depuis l'Australie. Je n'avais aucune connaissance de l'arabe avant, maintenant je commence à comprendre la traduction coranique. Tibyaan a vraiment rapproché le Coran. Merci Tibyaan!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "Je viens d'Irak. Les cours de Tibyaan m'ont rapproché du Coran. Le maître IA répond aux questions à n'importe quel moment, jour ou nuit — je n'ai pas trouvé cette commodité ailleurs. Merci!",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "J'ai commencé le voyage du Hifz avec ma fille depuis le Nigéria. L'environnement de Tibyaan ressemble tout à fait à une madrasa. Ma fille est heureuse, je suis heureux — Alhamdulillah, cette académie s'est avérée être le meilleur choix!",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens de Russie et après avoir embrassé l'Islam, je voulais apprendre le Coran. Tibyaan a fourni un support complet en anglais. La patience de l'enseignant et l'aide de l'IA — les deux ont rendu l'apprentissage facile.",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je viens de Mauritanie. Le tracker Hifz de Tibyaan est très utile pour moi — il y a un système complet pour le sabaq, sabqi et manzil. Les enseignants sont très expérimentés et accordent une attention particulière au tajwid.",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens du Pakistan. J'ai commencé le Hifz avec Tibyaan et mémorisé 7 parties en 5 mois. Les rappels quotidiens de l'IA et les conseils de l'enseignant humain — les deux ensemble font des merveilles!",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je me suis inscrit au Cours Aalim depuis le Bangladesh. Obtenir l'intégralité du programme Dars-e-Nizami en ligne est incroyable. La compétence académique des enseignants et les cours en direct — tout comme une vraie madrasa!",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "J'ai inscrit mon jeune fils à la Nazra chez Tibyaan. Il a adoré apprendre les lettres à travers les jeux interactifs pour enfants. Maintenant il demande le cours lui-même — Masha'Allah!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Voir les tests hebdomadaires et le graphique de progression de l'IA me garde motivé. La façon dont l'enseignant humain et l'IA travaillent ensemble à Tibyaan — c'est vraiment une madrasa pour l'ère moderne!",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens d'Indonésie. J'ai pris le cours de langue arabe et le voyage des bases à la conversation était très organisé. Avoir un support en indonésien est vraiment un grand avantage. Merci Tibyaan!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "Mon cœur était ravi de voir le lien de mon fils avec le Coran. La façon dont l'enseignant de Tibyaan enseignait avec tant d'amour — c'est inoubliable. J'ai commencé avec l'essai gratuit de 5 jours puis me suis abonné immédiatement.",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens du Vietnam. Le support en anglais a rendu possible l'apprentissage du Coran. Pratiquez avec le maître IA quand vous voulez — aucune restriction de temps. Tibyaan est vraiment pour les musulmans du monde entier!",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je suis le cours Hifz depuis l'Indonésie. Le tracker Hifz de Tibyaan crée un programme quotidien — les leçons restent mémorisées, les progrès sont visibles. Enseignant et IA ensemble — cela donne la tranquillité d'esprit!",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "J'apprends l'arabe depuis l'Indonésie. Les cours de sarf et nahw sont enseignés de manière très simple. Parlez en arabe avec le maître IA quand vous voulez — toute peur et timidité a disparu!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "J'ai rejoint le Cours Aalim depuis l'Égypte. Les enseignants de Tibyaan ont un très haut niveau académique. Compléter le cours avec l'ijazah était le rêve de ma vie — Tibyaan l'a réalisé!",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Vivant au Royaume-Uni, j'étais inquiet pour l'éducation religieuse de mon fils. Tibyaan a éliminé cette inquiétude. Les cours en direct, le tracker IA et les tests hebdomadaires — tous ensemble donnent les meilleurs résultats!",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "L'éducation islamique au Canada était un défi. Tibyaan a rendu possible l'apprentissage du Coran depuis la maison. Mon fils récite maintenant avec une grande confiance — Masha'Allah!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je viens du Pakistan. Tibyaan m'a rapproché énormément du Coran. La pratique du tajwid avec le maître IA et les leçons avec l'enseignant humain — les deux ensemble rendent le Hifz tellement plus facile!",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens de France. Obtenir un support en français s'est avéré être la plus grande bénédiction pour moi. Après le cours de langue arabe, j'ai commencé à comprendre la traduction coranique — un remerciement sincère à Tibyaan!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "J'ai inscrit mes fils à Tibyaan depuis l'Arabie Saoudite. Le niveau du tajwid est très élevé. Les enseignants de Tibyaan enseignent avec amour et sincérité — qu'Allah les récompense grandement!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je viens d'Indonésie. Quand j'ai commencé à apprendre l'arabe avec Tibyaan, j'ai eu l'impression qu'un nouveau monde s'ouvrait. Lire le Coran avec compréhension est maintenant possible — c'est le plus grand cadeau de Tibyaan!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "Je viens de Tanzanie. Mon fils a commencé à lire le Coran avec Tibyaan — maintenant il s'assoit et récite seul chaque jour. Le maître IA a beaucoup aidé à corriger son tajwid. Jazakumullah Khairan!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je viens d'Indonésie et j'ai pris le cours de langue arabe. Je ne savais rien avant — maintenant je peux dire des phrases de base. Pratiquer la conversation avec le maître IA a boosté ma confiance. Je suis tellement heureux!",
+        "role": "Étudiant(e)",
+        "course": "Langue Arabe"
+      },
+      {
+        "review": "Je fais le Hifz depuis le Bangladesh. Le tracker Hifz de Tibyaan me rappelle ma leçon quotidienne, et voir le graphique de progression me remplit d'encore plus de motivation pour travailler dur. Les conseils bienveillants de l'enseignant — tout ensemble est merveilleux!",
+        "role": "Étudiant(e)",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens des Émirats Arabes Unis. Tibyaan a réalisé mon rêve d'apprendre le Coran avec mon fils. L'attention de l'enseignant en cours en direct, la révision sabqi de l'IA — les deux ensemble donnent les meilleurs résultats! Qu'Allah récompense Tibyaan.",
+        "role": "Parent",
+        "course": "Hifz Coran"
+      },
+      {
+        "review": "Je viens du Pakistan. Je me suis inscrit au Cours Aalim et dès le début, la qualité des cours m'a impressionné. La connaissance des enseignants, leur caractère et leur amour — les trois sont sans pareil. Tibyaan est vraiment une madrasa pour l'ère moderne!",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Je viens du Bangladesh. J'ai inscrit mon fils à Tibyaan — la différence était visible dès la première semaine. Apprendre les lettres à travers les jeux pour enfants est maintenant amusant. La méthode d'enseignement de l'enseignant est exceptionnelle!",
+        "role": "Parent",
+        "course": "Nazra Coran"
+      },
+      {
+        "review": "Je suis le Cours Aalim depuis le Pakistan. Cette expérience de Dars-e-Nizami en ligne est incroyable. Recevoir un certificat avec ijazah sera un grand honneur pour moi. Les enseignants de Tibyaan enseignent du cœur — qu'Allah les récompense!",
+        "role": "Étudiant(e)",
+        "course": "Cours Aalim"
+      },
+      {
+        "review": "Je viens de Turquie. J'ai pris l'essai gratuit de 5 jours et j'ai adoré le style de l'enseignant dès le premier cours — je me suis abonné immédiatement. Maintenant je lis le Coran couramment — c'est la bénédiction de Tibyaan!",
+        "role": "Étudiant(e)",
+        "course": "Nazra Coran"
+      }
+    ]
   },
   "stats": {
     "students": "Étudiants",
@@ -982,7 +1224,41 @@
     "value3Title": "Méthodes modernes",
     "value3Desc": "L'Ustaz IA, le suivi des progrès et les activités interactives rendent l'apprentissage engageant et efficace.",
     "value4Title": "Valeurs islamiques",
-    "value4Desc": "Nous cultivons non seulement le savoir mais aussi le caractère, avec la Tarbiyah intégrée dans chaque leçon."
+    "value4Desc": "Nous cultivons non seulement le savoir mais aussi le caractère, avec la Tarbiyah intégrée dans chaque leçon.",
+    "team": [
+      {
+        "role": "Fondateur de Tibyaan Academy",
+        "description": "Le professeur Muhammad Tahir Hasni a fondé Tibyaan Academy avec la vision de rendre l'éducation islamique authentique accessible aux musulmans du monde entier. Avec des décennies d'excellence académique, il a été un pionnier dans l'apport de l'apprentissage islamique traditionnel au monde en ligne. Sa mission est de combler le fossé entre la technologie et la religion, servant la Ummah par des moyens modernes mais authentiques."
+      },
+      {
+        "role": "Directeur de Tibyaan Academy",
+        "description": "Mufti Muhammad Rafeeq Golarwi supervise les opérations académiques quotidiennes de Tibyaan Academy. Son expertise principale réside dans la jurisprudence islamique (Fiqh) et Usool-ul-Fiqh, et il a joué un rôle clé dans l'adaptation du curriculum traditionnel Dars-e-Nizami pour l'ère numérique moderne. Sous sa direction, le Cours Aalim et le département Fatwa de Tibyaan servent des étudiants du monde entier."
+      },
+      {
+        "role": "Responsable du Cours Aalim",
+        "description": "Mufti Owais Ahmed dirige le programme phare du Cours Aalim de Tibyaan Academy. Il a restructuré avec succès l'intégralité du programme Dars-e-Nizami dans un format en ligne efficace, permettant aux étudiants de poursuivre le voyage complet pour devenir un Aalim qualifié depuis le confort de leur foyer. Son style d'enseignement est clair, engageant et profondément ancré dans la bourse islamique classique."
+      },
+      {
+        "role": "Responsable de la Langue Arabe",
+        "description": "Sheikh Abdul Jabbar est un spécialiste de la langue arabe avec une expertise approfondie en Sarf, Nahw, Balaghat et littérature arabe classique. Il croit fermement que le chemin direct vers la compréhension du Coran et du Hadith est à travers la maîtrise de la langue arabe. Ses cours sont structurés de telle manière que même les débutants absolus peuvent rapidement commencer à comprendre le Coran avec confiance."
+      },
+      {
+        "role": "Responsable du Hifz-ul-Quran",
+        "description": "Maulana Ali Haider a consacré toute sa vie au service du Saint Coran. Il se spécialise dans l'enseignement du Hifz aux étudiants de tous âges — des jeunes enfants aux adultes. Sa méthodologie d'enseignement éprouvée instille la cohérence et la force dans la mémorisation. Il a conçu le programme Hifz en ligne de Tibyaan de manière à ce que chaque étudiant puisse progresser à son propre rythme sans compromettre la qualité."
+      },
+      {
+        "role": "Responsable du Nazrat-ul-Quran",
+        "description": "Qari Muhammad Musheer dirige le département Nazrat et Tajweed de Tibyaan Academy. Sa spécialité réside dans l'articulation précise des lettres arabes (Makhaarij) et les règles du Tajweed. Des milliers d'étudiants ont appris à réciter le Coran correctement sous sa direction. Son approche d'enseignement interactive et engageante rend l'apprentissage du Coran agréable, particulièrement pour les enfants."
+      },
+      {
+        "role": "Administrateur de Tibyaan Academy",
+        "description": "Qari Muhammad Ismail Hasni gère le cadre administratif complet de Tibyaan Academy. Des inscriptions des étudiants et de la planification à la gestion des frais et à la coordination des enseignants — chaque question opérationnelle relève de sa supervision. Son dévouement et ses compétences organisationnelles garantissent que toute l'Académie fonctionne de manière fluide et efficace. Il est toujours disponible et accessible pour les besoins des étudiants."
+      },
+      {
+        "role": "Responsable des Programmes Femmes & Enfants",
+        "description": "Ustaza Fatima Al-Zahra supervise tous les programmes pour femmes et enfants de Tibyaan Academy. Son approche pédagogique est basée sur des méthodes innovantes et un style nourricier et compatissant qui a aidé des milliers de femmes et d'enfants à apprendre le Coran et les sciences islamiques. Elle est la force créative derrière la section Activités pour enfants de Tibyaan. Elle croit que chaque foyer musulman devrait être la première école de Deen."
+      }
+    ]
   },
   "contactPage": {
     "title": "Contactez-nous",
