@@ -1603,3 +1603,20 @@ export const scheduleRequestsRelations = relations(
     }),
   })
 );
+
+// ========================
+// 38. ENROLLMENT_REQUESTS TABLE (homepage form submissions)
+// ========================
+export const enrollmentRequests = pgTable("enrollment_requests", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  whatsapp: varchar("whatsapp", { length: 50 }).notNull(),
+  country: varchar("country", { length: 100 }).notNull(),
+  course: varchar("course", { length: 100 }).notNull(),
+  plan: varchar("plan", { length: 50 }).notNull(),
+  message: text("message"),
+  locale: varchar("locale", { length: 10 }).notNull().default("en"),
+  status: varchar("status", { length: 50 }).notNull().default("pending"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});

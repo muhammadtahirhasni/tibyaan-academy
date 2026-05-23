@@ -65,10 +65,15 @@ export function TrustSignalsSection() {
                   {signal.suffix}
                 </div>
                 <div className="text-sm mt-1 opacity-80">{t(signal.key)}</div>
+                <div className="text-xs mt-1 opacity-60">{t(`${signal.key}Sub`)}</div>
               </div>
             );
           })}
         </motion.div>
+
+        <p className="mt-10 text-center text-xs opacity-40">
+          {t("footnote")}
+        </p>
       </div>
     </section>
   );

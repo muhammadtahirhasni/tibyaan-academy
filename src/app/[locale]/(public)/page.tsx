@@ -12,6 +12,7 @@ import { CtaSection } from "@/components/homepage/cta-section";
 import { TeacherCtaSection } from "@/components/homepage/teacher-cta-section";
 import { TeacherVideosSection } from "@/components/homepage/teacher-videos-section";
 import { DailyDarsSection } from "@/components/homepage/daily-dars-section";
+import { DashboardPreviewSection } from "@/components/homepage/dashboard-preview-section";
 import { EnrollmentFormSection } from "@/components/homepage/enrollment-form-section";
 import { Footer } from "@/components/shared/footer";
 
@@ -81,7 +82,9 @@ export default function HomePage() {
         <TestimonialsSection />
         <EnrollmentFormSection />
         <TrustSignalsSection />
+        <DashboardPreviewSection />
         <PricingTeaserSection />
+        <EnrollmentFormSection />
         <TeacherCtaSection />
         <SocialLinksSection />
         <CtaSection />

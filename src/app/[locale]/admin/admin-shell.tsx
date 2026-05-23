@@ -29,6 +29,7 @@ import {
   Award,
   AlertCircle,
   RefreshCw,
+  ClipboardList,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -53,6 +54,11 @@ const navItems = [
     key: "sidebarParentReports",
     href: "/admin/parent-reports",
     icon: MessageSquare,
+  },
+  {
+    key: "sidebarEnrollmentRequests",
+    href: "/admin/enrollment-requests",
+    icon: ClipboardList,
   },
 ];
 

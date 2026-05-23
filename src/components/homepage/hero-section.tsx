@@ -141,9 +141,9 @@ export function HeroSection() {
               ))}
             </div>
 
-            <Link href="/signup" className="block mt-6">
-              <Button className="w-full rounded-full bg-accent hover:bg-accent/90 text-white font-semibold">
-                {t("cta1")}
+            <Link href="/courses" className="block mt-6">
+              <Button className="w-full rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                {t("cta2")}
               </Button>
             </Link>
           </motion.div>

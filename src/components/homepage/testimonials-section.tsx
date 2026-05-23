@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTranslations, useMessages } from "next-intl";
 import { Star } from "lucide-react";
+import InitialsAvatar from "@/components/shared/initials-avatar";
 
 const reviews = [
   { id: 1, name: "Aaliya Mahmood", image: "/Reviewer/Aaliya_Mahmood.jpg", country: "Pakistan", flag: "🇵🇰", course: "Nazra Quran", rating: 5, review: "I started Nazra Quran with Tibyaan. The AI Ustaz is available 24/7 — ask anything, get an instant answer. In just 4 months, I can now read the Quran fluently. Alhamdulillah!", role: "Student" },

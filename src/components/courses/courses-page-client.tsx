@@ -234,8 +234,13 @@ export default function CoursesPageClient() {
                       </div>
                     </div>
 
+                    {/* Flexible scheduling line */}
+                    <p className="mt-4 text-xs text-primary font-medium">
+                      {t("flexibleSchedule")}
+                    </p>
+
                     {/* Actions */}
-                    <div className="mt-6 flex gap-3">
+                    <div className="mt-3 flex gap-3">
                       <Link href="/signup" className="flex-1">
                         <Button className="w-full bg-primary hover:bg-primary/90">
                           {t("enroll")}

@@ -277,6 +277,13 @@ export default function PricingPageClient() {
                 </Link>
               </motion.div>
             </div>
+
+            {/* Money-back guarantee */}
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              <a href="/refund-policy" className="text-primary hover:underline font-medium">
+                {t("moneyBack")}
+              </a>
+            </p>
           </div>
         </section>
 

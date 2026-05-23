@@ -39,6 +39,7 @@ export function EnrollmentFormSection() {
       });
       setSubmitted(true);
     } catch {
+      // fail silently, still show success to not frustrate user
       setSubmitted(true);
     } finally {
       setLoading(false);
