@@ -356,7 +356,6 @@ export default async function AboutPage() {
                       width={300}
                       height={300}
                       className="w-full h-full object-cover"
-                      onError={() => {}}
                     />
                   </div>
                   <div className="p-5 flex flex-col flex-1">
