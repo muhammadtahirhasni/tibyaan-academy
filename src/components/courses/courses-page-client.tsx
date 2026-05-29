@@ -39,8 +39,8 @@ const courses: {
   {
     key: "nazra",
     icon: BookOpen,
-    plan1Price: "$40",
-    plan2Price: "$33",
+    plan1Price: "$25",
+    plan2Price: "$18",
     color:
       "from-emerald-500/10 to-emerald-500/5 border-emerald-200 dark:border-emerald-800",
     iconColor:
@@ -51,8 +51,8 @@ const courses: {
   {
     key: "hifz",
     icon: Sparkles,
-    plan1Price: "$45",
-    plan2Price: "$37",
+    plan1Price: "$30",
+    plan2Price: "$22",
     color:
       "from-amber-500/10 to-amber-500/5 border-amber-200 dark:border-amber-800",
     iconColor:
@@ -63,8 +63,8 @@ const courses: {
   {
     key: "arabic",
     icon: Languages,
-    plan1Price: "$43",
-    plan2Price: "$35",
+    plan1Price: "$28",
+    plan2Price: "$20",
     color:
       "from-blue-500/10 to-blue-500/5 border-blue-200 dark:border-blue-800",
     iconColor:
@@ -75,8 +75,8 @@ const courses: {
   {
     key: "aalim",
     icon: GraduationCap,
-    plan1Price: "$50",
-    plan2Price: "$40",
+    plan1Price: "$35",
+    plan2Price: "$25",
     color:
       "from-purple-500/10 to-purple-500/5 border-purple-200 dark:border-purple-800",
     iconColor:

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { BookOpen, Sparkles, Languages, GraduationCap } from "lucide-react";
+import { COURSE_FEES, formatFee } from "@/lib/data/fees-config";
 
 const courses = [
   {

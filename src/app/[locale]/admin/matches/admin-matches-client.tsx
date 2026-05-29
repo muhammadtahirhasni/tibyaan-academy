@@ -13,16 +13,18 @@ type MatchItem = {
   zoomLink: string | null;
   createdAt: string;
   respondedAt: string | null;
+  classCount: number;
+  matchId: string | null;
 };
 
-type Tab = "all" | "requested" | "accepted" | "active" | "rejected" | "completed";
+type Tab = "all" | "approved" | "rejected" | "pending";
 
 const statusConfig: Record<string, { color: string; bg: string; label: string }> = {
-  requested: { color: "text-amber-600", bg: "bg-amber-100 dark:bg-amber-900", label: "Pending" },
-  accepted: { color: "text-blue-600", bg: "bg-blue-100 dark:bg-blue-900", label: "Accepted" },
-  active: { color: "text-emerald-600", bg: "bg-emerald-100 dark:bg-emerald-900", label: "Active" },
-  rejected: { color: "text-red-600", bg: "bg-red-100 dark:bg-red-900", label: "Rejected" },
-  completed: { color: "text-muted-foreground", bg: "bg-muted", label: "Completed" },
+  approved:  { color: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-100 dark:bg-emerald-900", label: "Active" },
+  confirmed: { color: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-100 dark:bg-emerald-900", label: "Confirmed" },
+  pending:   { color: "text-amber-700 dark:text-amber-400",   bg: "bg-amber-100 dark:bg-amber-900",   label: "Pending" },
+  suggested: { color: "text-blue-700 dark:text-blue-400",     bg: "bg-blue-100 dark:bg-blue-900",     label: "Suggested" },
+  rejected:  { color: "text-red-700 dark:text-red-400",       bg: "bg-red-100 dark:bg-red-900",       label: "Rejected" },
 };
 
 function ZoomLinkEditor({ matchId, initial }: { matchId: string; initial: string | null }) {
@@ -88,14 +90,20 @@ function ZoomLinkEditor({ matchId, initial }: { matchId: string; initial: string
 export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
   const [tab, setTab] = useState<Tab>("all");
 
-  const filtered = tab === "all" ? matches : matches.filter((m) => m.status === tab);
+  const isActive = (s: string) => s === "approved" || s === "confirmed";
+  const isPending = (s: string) => s === "pending" || s === "suggested";
+
+  const filtered =
+    tab === "all"      ? matches :
+    tab === "approved" ? matches.filter((m) => isActive(m.status)) :
+    tab === "rejected" ? matches.filter((m) => m.status === "rejected") :
+                         matches.filter((m) => isPending(m.status));
 
   const tabs: { key: Tab; label: string; count: number }[] = [
-    { key: "all", label: "All", count: matches.length },
-    { key: "requested", label: "Pending", count: matches.filter((m) => m.status === "requested").length },
-    { key: "active", label: "Active", count: matches.filter((m) => m.status === "active").length },
-    { key: "accepted", label: "Accepted", count: matches.filter((m) => m.status === "accepted").length },
-    { key: "rejected", label: "Rejected", count: matches.filter((m) => m.status === "rejected").length },
+    { key: "all",      label: "All",     count: matches.length },
+    { key: "approved", label: "Active",  count: matches.filter((m) => isActive(m.status)).length },
+    { key: "pending",  label: "Pending", count: matches.filter((m) => isPending(m.status)).length },
+    { key: "rejected", label: "Rejected",count: matches.filter((m) => m.status === "rejected").length },
   ];
 
   return (
@@ -103,7 +111,7 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Users className="w-6 h-6 text-red-600" />
-          Student-Teacher Matches
+          Student-Teacher Matches & Zoom Links
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
           Manage matches and set Zoom links for classes
@@ -134,7 +142,7 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
       ) : (
         <div className="space-y-3">
           {filtered.map((match) => {
-            const cfg = statusConfig[match.status] ?? statusConfig.requested;
+            const cfg = statusConfig[match.status] ?? statusConfig.pending;
             return (
               <div key={match.id} className="rounded-xl border bg-card p-4">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3">
@@ -151,6 +159,16 @@ export function AdminMatchesClient({ matches }: { matches: MatchItem[] }) {
                   <div className="flex items-center gap-3 shrink-0">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${cfg.bg} ${cfg.color}`}>
                       {cfg.label}
+                    </span>
+                    {match.classCount > 0 && (
+                      <span className="text-xs text-muted-foreground">
+                        {match.classCount} class{match.classCount !== 1 ? "es" : ""} scheduled
+                      </span>
+                    )}
+                    <span className="text-[11px] text-muted-foreground">
+                      {new Date(match.createdAt).toLocaleDateString("en-GB", {
+                        day: "2-digit", month: "short", year: "numeric"
+                      })}
                     </span>
                     <div className="text-xs text-muted-foreground text-right">
                       <div>{new Date(match.createdAt).toLocaleDateString()}</div>

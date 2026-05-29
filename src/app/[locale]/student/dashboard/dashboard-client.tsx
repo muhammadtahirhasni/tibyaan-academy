@@ -61,6 +61,7 @@ interface DashboardProps {
     completedHifzEntries: number;
   };
   nextClass: {
+    classId: string;
     courseName: string;
     scheduledAt: string;
     meetingLink: string | null;

@@ -26,6 +26,7 @@ import {
   Users,
   Sparkles,
 } from "lucide-react";
+import { COURSE_FEES, formatFee } from "@/lib/data/fees-config";
 
 const plan1Features = [
   { key: "liveClasses", icon: Video, included: true },

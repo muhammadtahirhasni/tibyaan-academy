@@ -34,10 +34,10 @@ export default async function TeacherStudentsPage({
       email: r.student.email,
       avatarUrl: r.student.avatarUrl,
       courseName: (r.course[localeKey] as string) || r.course.nameEn,
-      courseType: r.course.courseType,
-      planType: r.enrollment.planType,
-      status: r.enrollment.status,
-      enrolledAt: r.enrollment.createdAt?.toISOString() ?? "",
+      courseType: r.course.courseType as string,
+      planType: (r.enrollment?.planType ?? null) as string,
+      status: (r.enrollment?.status ?? "active") as string,
+      enrolledAt: r.enrollment?.createdAt?.toISOString() ?? "",
     }));
   } catch (err) {
     console.error("Failed to load students:", err);

@@ -206,6 +206,43 @@ export const scheduleRequestStatusEnum = pgEnum("schedule_request_status", [
   "rejected",
 ]);
 
+export const progressRatingEnum = pgEnum("progress_rating", [
+  "excellent",
+  "good",
+  "needs_improvement",
+]);
+
+export const assignmentTypeEnum = pgEnum("assignment_type", [
+  "test",
+  "assignment",
+]);
+
+export const assignmentFrequencyEnum = pgEnum("assignment_frequency", [
+  "daily",
+  "weekly",
+  "once",
+]);
+
+export const assignmentStatusEnum = pgEnum("assignment_status", [
+  "pending",
+  "submitted",
+  "graded",
+]);
+
+export const complaintCategoryEnum = pgEnum("complaint_category", [
+  "teacher",
+  "schedule",
+  "technical",
+  "fees",
+  "other",
+]);
+
+export const complaintStatusEnum = pgEnum("complaint_status", [
+  "new",
+  "in_review",
+  "resolved",
+]);
+
 // ========================
 // 1. USERS TABLE
 // ========================
@@ -1046,44 +1083,6 @@ export const scheduleRequests = pgTable("schedule_requests", {
 // we use a separate table for admin recordings here
 // ========================
 
-// Enum additions for new features
-export const progressRatingEnum = pgEnum("progress_rating", [
-  "excellent",
-  "good",
-  "average",
-  "needs_improvement",
-]);
-
-export const assignmentTypeEnum = pgEnum("assignment_type", [
-  "test",
-  "assignment",
-]);
-
-export const assignmentFrequencyEnum = pgEnum("assignment_frequency", [
-  "daily",
-  "weekly",
-  "once",
-]);
-
-export const assignmentStatusEnum = pgEnum("assignment_status", [
-  "pending",
-  "submitted",
-  "graded",
-]);
-
-export const complaintCategoryEnum = pgEnum("complaint_category", [
-  "teacher",
-  "schedule",
-  "technical",
-  "fees",
-  "other",
-]);
-
-export const complaintStatusEnum = pgEnum("complaint_status", [
-  "new",
-  "in_review",
-  "resolved",
-]);
 
 export const changeRequestStatusEnum = pgEnum("change_request_status", [
   "pending",

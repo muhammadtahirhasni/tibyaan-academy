@@ -1,235 +1,155 @@
-"use client";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { getDb } from "@/lib/db";
+import { users, enrollments, courses, lessons, hifzTracker, kidsActivities, classes } from "@/lib/db/schema";
+import { eq, and, count, sql } from "drizzle-orm";
+import { StudentDetailClient } from "./student-detail-client";
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
-import {
-  User,
-  BookOpen,
-  Brain,
-  Gamepad2,
-  MessageSquare,
-  StickyNote,
-  ArrowLeft,
-  Mail,
-  CheckCircle2,
-  Star,
-} from "lucide-react";
-import { Link } from "@/i18n/navigation";
+export default async function StudentDetailPage({
+  params,
+}: {
+  params: Promise<{ locale: string; studentId: string }>;
+}) {
+  const { locale, studentId } = await params;
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect(`/${locale}/login`);
 
-const studentData = {
-  name: "Ahmed Ali",
-  email: "ahmed@example.com",
-  course: "Nazra Quran",
-  plan: "Human + AI",
-  level: "Level 3",
-  enrolledDate: "2025-09-01",
-};
+  const db = getDb();
 
-const tabs = ["progressTab", "hifzTab", "activitiesTab", "chatTab", "notesTab"] as const;
-const tabIcons = [BookOpen, Brain, Gamepad2, MessageSquare, StickyNote];
+  // Fetch student user record
+  const [student] = await db
+    .select({ id: users.id, fullName: users.fullName, email: users.email, createdAt: users.createdAt })
+    .from(users)
+    .where(eq(users.id, studentId))
+    .limit(1);
 
-const mockNotes = [
-  { date: "2026-03-20", text: "Great progress on Tajweed rules. Needs more practice on Idgham." },
-  { date: "2026-03-15", text: "Completed Level 2 assessment with 92% score. MashaAllah!" },
-];
+  if (!student) redirect(`/${locale}/teacher/students`);
 
-export default function StudentDetailPage() {
-  const t = useTranslations("teacher");
-  const [activeTab, setActiveTab] = useState<string>("progressTab");
-  const [noteText, setNoteText] = useState("");
+  // Fetch enrollments + courses for this student that belong to this teacher
+  const enrollmentRows = await db
+    .select({
+      enrollmentId: enrollments.id,
+      courseNameEn: courses.nameEn,
+      courseNameUr: courses.nameUr,
+      enrollmentStatus: enrollments.status,
+      planType: enrollments.planType,
+      enrolledAt: enrollments.createdAt,
+    })
+    .from(enrollments)
+    .innerJoin(courses, eq(enrollments.courseId, courses.id))
+    .innerJoin(classes, eq(classes.enrollmentId, enrollments.id))
+    .where(
+      and(
+        eq(enrollments.studentId, studentId),
+        eq(classes.teacherId, user.id),
+      )
+    )
+    .limit(10);
+
+  // Deduplicate by enrollmentId
+  const seen = new Set<string>();
+  const uniqueEnrollments = enrollmentRows.filter((e) => {
+    if (seen.has(e.enrollmentId)) return false;
+    seen.add(e.enrollmentId);
+    return true;
+  });
+
+  const enrollmentIds = uniqueEnrollments.map((e) => e.enrollmentId);
+
+  // Fetch lesson stats per enrollment
+  let totalLessons = 0;
+  let completedLessons = 0;
+  let lessonNotes: Array<{ date: string; title: string; notes: string }> = [];
+
+  if (enrollmentIds.length > 0) {
+    const lessonRows = await db
+      .select({
+        isCompleted: lessons.isCompleted,
+        completedAt: lessons.completedAt,
+        titleEn: lessons.titleEn,
+        teacherNotes: lessons.teacherNotes,
+      })
+      .from(lessons)
+      .where(sql`${lessons.enrollmentId} = ANY(${enrollmentIds})`)
+      .orderBy(sql`${lessons.completedAt} DESC NULLS LAST`)
+      .limit(50);
+
+    totalLessons = lessonRows.length;
+    completedLessons = lessonRows.filter((l) => l.isCompleted).length;
+    lessonNotes = lessonRows
+      .filter((l) => l.teacherNotes)
+      .map((l) => ({
+        date: l.completedAt
+          ? new Date(l.completedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+          : "",
+        title: l.titleEn || "Lesson",
+        notes: l.teacherNotes!,
+      }));
+  }
+
+  // Hifz stats
+  const hifzRows = await db
+    .select({
+      surahNumber: hifzTracker.surahNumber,
+      ayahFrom: hifzTracker.ayahFrom,
+      ayahTo: hifzTracker.ayahTo,
+      score: hifzTracker.score,
+      type: hifzTracker.type,
+      createdAt: hifzTracker.createdAt,
+    })
+    .from(hifzTracker)
+    .where(eq(hifzTracker.studentId, studentId))
+    .orderBy(sql`${hifzTracker.createdAt} DESC`)
+    .limit(50);
+
+  const uniqueSurahs = new Set(hifzRows.map((h) => h.surahNumber)).size;
+  const totalAyaatMemorized = hifzRows.reduce((sum, h) => sum + (h.ayahTo - h.ayahFrom + 1), 0);
+  const avgScore = hifzRows.length > 0
+    ? Math.round(hifzRows.filter((h) => h.score != null).reduce((s, h) => s + (h.score ?? 0), 0) / Math.max(1, hifzRows.filter((h) => h.score != null).length))
+    : 0;
+
+  // Kids activities stats
+  const activityRows = await db
+    .select({ count: count() })
+    .from(kidsActivities)
+    .where(eq(kidsActivities.studentId, studentId));
+  const gamesPlayed = activityRows[0]?.count ?? 0;
+
+  const progressPct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+  const primaryEnrollment = uniqueEnrollments[0];
 
   return (
-    <div className="space-y-6">
-      {/* Back Button */}
-      <Link href="/teacher/students">
-        <Button variant="ghost" size="sm" className="gap-2">
-          <ArrowLeft className="w-4 h-4" />
-          {t("allStudents")}
-        </Button>
-      </Link>
-
-      {/* Student Profile Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="rounded-xl border bg-card p-6"
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
-            <User className="w-8 h-8 text-emerald-600" />
-          </div>
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-foreground">{studentData.name}</h1>
-            <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-              <Mail className="w-4 h-4" />
-              <span>{studentData.email}</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 mt-2">
-              <Badge variant="outline" className="border-emerald-300 text-emerald-700 dark:text-emerald-400">
-                {studentData.course}
-              </Badge>
-              <Badge variant="outline">{studentData.plan}</Badge>
-              <Badge variant="outline">{studentData.level}</Badge>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Tabs */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-        className="flex gap-1 overflow-x-auto pb-1"
-      >
-        {tabs.map((tab, i) => {
-          const Icon = tabIcons[i];
-          return (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                activeTab === tab
-                  ? "bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300"
-                  : "text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              {t(tab)}
-            </button>
-          );
-        })}
-      </motion.div>
-
-      {/* Tab Content */}
-      <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="rounded-xl border bg-card p-6"
-      >
-        {activeTab === "progressTab" && (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-foreground">{t("courseCompletion")}</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="font-medium text-foreground">Nazra Quran</span>
-                  <span className="text-muted-foreground">65%</span>
-                </div>
-                <div className="h-3 rounded-full bg-muted">
-                  <div className="h-full rounded-full bg-emerald-500 transition-all duration-500" style={{ width: "65%" }} />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="rounded-lg border p-4 text-center">
-                  <p className="text-2xl font-bold text-emerald-600">26</p>
-                  <p className="text-xs text-muted-foreground mt-1">{t("lessonsCompleted")}</p>
-                </div>
-                <div className="rounded-lg border p-4 text-center">
-                  <p className="text-2xl font-bold text-blue-600">40</p>
-                  <p className="text-xs text-muted-foreground mt-1">Total Lessons</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "hifzTab" && (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-foreground">{t("hifzTab")}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-lg border p-4 text-center">
-                <p className="text-2xl font-bold text-emerald-600">12</p>
-                <p className="text-xs text-muted-foreground mt-1">{t("surahsMemorized")}</p>
-              </div>
-              <div className="rounded-lg border p-4 text-center">
-                <p className="text-2xl font-bold text-blue-600">487</p>
-                <p className="text-xs text-muted-foreground mt-1">{t("ayaatMemorized")}</p>
-              </div>
-              <div className="rounded-lg border p-4 text-center">
-                <p className="text-2xl font-bold text-amber-600">88%</p>
-                <p className="text-xs text-muted-foreground mt-1">{t("averageScore")}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "activitiesTab" && (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-foreground">{t("activitiesTab")}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-lg border p-4 text-center">
-                <p className="text-2xl font-bold text-purple-600">45</p>
-                <p className="text-xs text-muted-foreground mt-1">{t("gamesPlayed")}</p>
-              </div>
-              <div className="rounded-lg border p-4 text-center">
-                <div className="flex items-center justify-center gap-1">
-                  <Star className="w-5 h-5 text-amber-500" />
-                  <p className="text-2xl font-bold text-amber-600">238</p>
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">{t("totalStars")}</p>
-              </div>
-              <div className="rounded-lg border p-4 text-center">
-                <p className="text-2xl font-bold text-emerald-600">92%</p>
-                <p className="text-xs text-muted-foreground mt-1">{t("averageScore")}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "chatTab" && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">{t("chatTab")}</h3>
-            <div className="rounded-lg border p-4 bg-muted/30">
-              <p className="text-sm text-muted-foreground">
-                AI Chat history for this student will be displayed here. Recent conversations with the AI Ustaz can be reviewed.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "notesTab" && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">{t("notesTab")}</h3>
-
-            {/* Add Note */}
-            <div className="space-y-3">
-              <textarea
-                value={noteText}
-                onChange={(e) => setNoteText(e.target.value)}
-                placeholder={t("notePlaceholder")}
-                className="w-full p-3 rounded-lg border bg-background text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              />
-              <Button
-                size="sm"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white"
-                onClick={() => setNoteText("")}
-              >
-                {t("saveNote")}
-              </Button>
-            </div>
-
-            {/* Existing Notes */}
-            <div className="space-y-3 mt-4">
-              {mockNotes.map((note, i) => (
-                <div key={i} className="p-4 rounded-lg border bg-muted/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                    <span className="text-xs text-muted-foreground">{note.date}</span>
-                  </div>
-                  <p className="text-sm text-foreground">{note.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </motion.div>
-    </div>
+    <StudentDetailClient
+      student={{
+        id: student.id,
+        name: student.fullName,
+        email: student.email || "",
+        enrolledDate: student.createdAt.toISOString(),
+        course: primaryEnrollment?.courseNameEn ?? "—",
+        plan: primaryEnrollment?.planType ?? "—",
+        enrollmentStatus: primaryEnrollment?.enrollmentStatus ?? "active",
+      }}
+      progress={{
+        completedLessons,
+        totalLessons,
+        progressPct,
+      }}
+      hifz={{
+        uniqueSurahs,
+        totalAyaatMemorized,
+        avgScore,
+        recentRecords: hifzRows.slice(0, 5).map((h) => ({
+          surahNumber: Number(h.surahNumber),
+          ayahFrom: Number(h.ayahFrom),
+          ayahTo: Number(h.ayahTo),
+          score: h.score != null ? Number(h.score) : null,
+          type: h.type,
+          date: new Date(h.createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short" }),
+        })),
+      }}
+      activities={{ gamesPlayed: Number(gamesPlayed) }}
+      notes={lessonNotes}
+    />
   );
 }

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 interface TodayClass {
+  classId: string;
   studentName: string;
   courseName: string;
   time: string;

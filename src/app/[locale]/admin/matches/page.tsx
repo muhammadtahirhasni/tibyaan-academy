@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getDb } from "@/lib/db";
-import { users, teacherStudentMatches, courses } from "@/lib/db/schema";
-import { eq, desc, sql } from "drizzle-orm";
+import { users } from "@/lib/db/schema";
+import { eq, sql } from "drizzle-orm";
 import { AdminMatchesClient } from "./admin-matches-client";
 
 export default async function AdminMatchesPage({
@@ -12,20 +12,12 @@ export default async function AdminMatchesPage({
 }) {
   const { locale } = await params;
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect(`/${locale}/login`);
 
   const db = getDb();
-  const dbUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, user.id))
-    .limit(1);
-
-  if (!dbUser[0] || dbUser[0].role !== "admin") redirect(`/${locale}`);
+  const [dbUser] = await db.select().from(users).where(eq(users.id, user.id)).limit(1);
+  if (!dbUser || dbUser.role !== "admin") redirect(`/${locale}`);
 
   let matches: Array<{
     id: string;
@@ -36,6 +28,8 @@ export default async function AdminMatchesPage({
     zoomLink: string | null;
     createdAt: string;
     respondedAt: string | null;
+    classCount: number;
+    matchId: string | null;
   }> = [];
 
   try {
@@ -48,12 +42,19 @@ export default async function AdminMatchesPage({
         m.responded_at,
         s.full_name AS student_name,
         t.full_name AS teacher_name,
-        c.name_en AS course_name
-      FROM teacher_student_matches m
-      JOIN users s ON m.student_id = s.id
-      JOIN users t ON m.teacher_id = t.id
-      JOIN courses c ON m.course_id = c.id
-      ORDER BY m.created_at DESC
+        c.name_en   AS course_name,
+        COUNT(cl.id)::int AS class_count,
+        tsm.id AS match_id,
+        tsm.zoom_link
+      FROM schedule_requests sr
+      JOIN users s ON sr.student_id = s.id
+      JOIN users t ON sr.teacher_id = t.id
+      JOIN courses c ON sr.course_id = c.id
+      LEFT JOIN enrollments e ON (e.student_id = sr.student_id AND e.course_id = sr.course_id)
+      LEFT JOIN classes cl ON (cl.enrollment_id = e.id AND cl.teacher_id = sr.teacher_id)
+      LEFT JOIN teacher_student_matches tsm ON (tsm.student_id = sr.student_id AND tsm.teacher_id = sr.teacher_id AND tsm.course_id = sr.course_id)
+      GROUP BY sr.id, s.full_name, t.full_name, c.name_en, tsm.id, tsm.zoom_link
+      ORDER BY sr.created_at DESC
       LIMIT 100
     `);
 
@@ -68,6 +69,8 @@ export default async function AdminMatchesPage({
       respondedAt: r.responded_at
         ? new Date(r.responded_at as string).toISOString()
         : null,
+      classCount: (r.class_count as number) ?? 0,
+      matchId: (r.match_id as string | null) ?? null,
     }));
   } catch (err) {
     console.error("Failed to load matches:", err);
