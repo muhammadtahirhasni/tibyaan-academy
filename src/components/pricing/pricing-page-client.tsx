@@ -38,7 +38,6 @@ const plan1Features = [
 ];
 
 const plan2Features = [
-  { key: "liveClasses", icon: Video, included: false },
   { key: "aiUstaz", icon: Bot, included: true },
   { key: "hifzTracker", icon: Brain, included: true },
   { key: "weeklyTests", icon: ClipboardCheck, included: false },

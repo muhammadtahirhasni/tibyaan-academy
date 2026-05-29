@@ -96,16 +96,17 @@ const filters: { key: FilterKey; labelKey: string }[] = [
 
 const comparisonFeatures: {
   key: string;
+  label: string;
   icon: typeof Video;
   plan1: boolean;
   plan2: boolean;
 }[] = [
-  { key: "liveClasses", icon: Video, plan1: true, plan2: false },
-  { key: "aiUstaz", icon: Bot, plan1: true, plan2: true },
-  { key: "hifzTracker", icon: Brain, plan1: true, plan2: true },
-  { key: "weeklyTests", icon: ClipboardCheck, plan1: true, plan2: false },
-  { key: "kidsActivities", icon: Gamepad2, plan1: true, plan2: true },
-  { key: "certificates", icon: Award, plan1: true, plan2: false },
+  { key: "liveClasses", label: "Live 1-on-1 Classes", icon: Video, plan1: true, plan2: false },
+  { key: "aiUstaz", label: "AI Ustaz 24/7", icon: Bot, plan1: true, plan2: true },
+  { key: "hifzTracker", label: "Hifz Smart Tracker", icon: Brain, plan1: true, plan2: true },
+  { key: "weeklyTests", label: "Weekly Tests", icon: ClipboardCheck, plan1: true, plan2: false },
+  { key: "kidsActivities", label: "Kids Activities", icon: Gamepad2, plan1: true, plan2: true },
+  { key: "certificates", label: "Certificates", icon: Award, plan1: true, plan2: false },
 ];
 
 export default function CoursesPageClient() {
@@ -308,7 +309,7 @@ export default function CoursesPageClient() {
                           <td className="px-6 py-4 text-sm text-foreground">
                             <span className="flex items-center gap-2">
                               <FIcon className="w-4 h-4 text-muted-foreground" />
-                              {t(f.key)}
+                              {f.label}
                             </span>
                           </td>
                           <td className="px-6 py-4 text-center">

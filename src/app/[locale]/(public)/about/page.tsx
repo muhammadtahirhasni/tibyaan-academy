@@ -57,9 +57,9 @@ export async function generateMetadata({
 }
 
 const stats = [
-  { value: "5000+", label: "Students Worldwide" },
+  { value: "500+", label: "Students Worldwide" },
   { value: "50+", label: "Expert Teachers" },
-  { value: "30+", label: "Countries" },
+  { value: "15+", label: "Countries" },
   { value: "10K+", label: "Classes Delivered" },
 ];
 
@@ -106,7 +106,7 @@ const team = [
   {
     id: 1,
     name: "Professor Muhammad Tahir Hasni",
-    image: "/Our%20Team/Muhammad_Tahir_Hasni.jpg",
+    image: "/placeholder-teacher.svg",
     role: "Founder of Tibyaan Academy",
     description:
       "Professor Muhammad Tahir Hasni founded Tibyaan Academy with a vision to make authentic Islamic education accessible to Muslims across the globe. With decades of academic excellence, he has been a pioneer in bringing traditional Islamic learning to the online world. His mission is to bridge the gap between technology and religion, serving the Ummah through modern yet authentic means.",
@@ -115,7 +115,7 @@ const team = [
   {
     id: 2,
     name: "Mufti Muhammad Rafeeq Golarwi",
-    image: "/Our%20Team/Mufti_Muhammad_Rafeeq_Golarwi.jpeg",
+    image: "/placeholder-teacher.svg",
     role: "Director of Tibyaan Academy",
     description:
       "Mufti Muhammad Rafeeq Golarwi oversees the day-to-day academic operations of Tibyaan Academy. His core expertise lies in Islamic Jurisprudence (Fiqh) and Usool-ul-Fiqh, and he has played a key role in adapting the traditional Dars-e-Nizami curriculum for the modern digital age. Under his leadership, Tibyaan's Aalim Course and Fatwa department serve students from around the world.",
@@ -124,7 +124,7 @@ const team = [
   {
     id: 3,
     name: "Mufti Owais Ahmed",
-    image: "/Our%20Team/Mufti_Owais_Ahmed.png",
+    image: "/placeholder-teacher.svg",
     role: "Head of Aalim Course",
     description:
       "Mufti Owais Ahmed leads Tibyaan Academy's flagship Aalim Course. He has successfully restructured the complete Dars-e-Nizami syllabus into an effective online format, enabling students to pursue the full journey of becoming a qualified Aalim from the comfort of their homes. His teaching style is clear, engaging, and deeply rooted in classical Islamic scholarship.",
@@ -133,7 +133,7 @@ const team = [
   {
     id: 4,
     name: "Sheikh Abdul Jabbar",
-    image: "/Our%20Team/Sheikh%20Abdul%20Jabbar.jpeg",
+    image: "/placeholder-teacher.svg",
     role: "Head of Arabic Language",
     description:
       "Sheikh Abdul Jabbar is a specialist in the Arabic language with deep expertise in Sarf, Nahw, Balaghat, and Classical Arabic Literature. He firmly believes that the direct path to understanding the Quran and Hadith is through mastering the Arabic language. His classes are structured in a way that even absolute beginners can quickly begin to understand the Quran with confidence.",
@@ -142,7 +142,7 @@ const team = [
   {
     id: 5,
     name: "Maulana Ali Haider",
-    image: "/Our%20Team/Maulana%20Ali%20Haider.jpeg",
+    image: "/placeholder-teacher.svg",
     role: "Head of Hifz-ul-Quran",
     description:
       "Maulana Ali Haider has dedicated his entire life to the service of the Holy Quran. He specializes in teaching Hifz to students of all ages — from young children to adults. His proven teaching methodology instills consistency and strength in memorization. He has designed Tibyaan's online Hifz program in a way that allows every student to progress at their own pace without compromising quality.",
@@ -151,7 +151,7 @@ const team = [
   {
     id: 6,
     name: "Qari Muhammad Musheer",
-    image: "/Our%20Team/Qari%20Muhammad%20Musheer.jpg",
+    image: "/placeholder-teacher.svg",
     role: "Head of Nazrat-ul-Quran",
     description:
       "Qari Muhammad Musheer heads the Nazrat and Tajweed department at Tibyaan Academy. His specialty lies in the precise articulation of Arabic letters (Makhaarij) and the rules of Tajweed. Thousands of students have learned to recite the Quran correctly under his guidance. His interactive and engaging teaching approach makes learning Quran enjoyable, particularly for children.",
@@ -160,7 +160,7 @@ const team = [
   {
     id: 7,
     name: "Qari Muhammad Ismail Hasni",
-    image: "/Our%20Team/Qari%20Muhammad%20Ismail%20Hasni.jpeg",
+    image: "/placeholder-teacher.svg",
     role: "Admin of Tibyaan Academy",
     description:
       "Qari Muhammad Ismail Hasni manages the complete administrative framework of Tibyaan Academy. From student enrollments and scheduling to fee management and teacher coordination — every operational matter falls under his supervision. His dedication and organizational skills ensure that the entire Academy runs smoothly and efficiently. He is always available and approachable for students' needs.",
@@ -169,7 +169,7 @@ const team = [
   {
     id: 8,
     name: "Ustaza Fatima Al-Zahra",
-    image: "/Our%20Team/Ustaza%20Fatima%20Al-Zahra.jpg",
+    image: "/placeholder-teacher.svg",
     role: "Head of Women's & Children's Programs",
     description:
       "Ustaza Fatima Al-Zahra oversees all women's and children's programs at Tibyaan Academy. Her teaching approach is built on innovative methods and a nurturing, compassionate style that has helped thousands of women and children learn the Quran and Islamic sciences. She is the creative force behind Tibyaan's Kids Activities section. She believes that every Muslim home should be the first school of Deen.",
@@ -206,7 +206,7 @@ export default async function AboutPage() {
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-2 text-sm font-semibold mb-6">
               <Star className="w-4 h-4 fill-primary" />
-              Trusted by 5,000+ Students Across 30+ Countries
+              Trusted by 500+ Students Across 15+ Countries
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-primary leading-tight">
               {t("title")}
@@ -279,34 +279,33 @@ export default async function AboutPage() {
 
         {/* ===== VIDEO INTRO ===== */}
         <section className="py-8 md:py-16 bg-muted/30">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground">See Tibyaan in Action</h2>
-              <p className="mt-3 text-muted-foreground">Watch how our students learn Quran from anywhere in the world</p>
-            </div>
-            <div className="rounded-2xl overflow-hidden border shadow-xl bg-black aspect-video flex items-center justify-center">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
-                title="Tibyaan Academy Introduction"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-            <p className="mt-4 text-center text-sm text-muted-foreground">
-              Visit our{" "}
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold text-foreground">See Tibyaan in Action</h2>
+            <p className="mt-3 text-muted-foreground">Watch how our students learn Quran from anywhere in the world</p>
+            <div className="mt-8 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-12 flex flex-col items-center gap-6">
+              <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center shadow-lg">
+                <svg viewBox="0 0 24 24" fill="white" className="w-10 h-10 ml-1">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">Watch Our Lessons on YouTube</h3>
+                <p className="mt-2 text-muted-foreground max-w-md mx-auto text-sm">
+                  Quran recitation, Tajweed lessons, Islamic studies & student success stories — all on our channel.
+                </p>
+              </div>
               <a
                 href="https://www.youtube.com/channel/UCBU7Fc9ZjYU42SHfSQM9_rg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline font-medium"
+                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-xl transition-colors"
               >
-                YouTube Channel
-              </a>{" "}
-              for more lessons & student success stories
-            </p>
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+                Visit Our YouTube Channel
+              </a>
+            </div>
           </div>
         </section>
 
