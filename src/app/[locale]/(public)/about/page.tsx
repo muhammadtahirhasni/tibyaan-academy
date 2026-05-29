@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, getMessages } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
@@ -102,83 +102,97 @@ const features = [
   },
 ];
 
-const staticTeam = [
+const team = [
   {
     id: 1,
     name: "Professor Muhammad Tahir Hasni",
-    image: "/OurTeam/Muhammad_Tahir_Hasni.jpg",
+    image: "/Our%20Team/Muhammad_Tahir_Hasni.jpg",
     role: "Founder of Tibyaan Academy",
-    description: "Professor Muhammad Tahir Hasni founded Tibyaan Academy with a vision to make authentic Islamic education accessible to Muslims across the globe. With decades of academic excellence, he has been a pioneer in bringing traditional Islamic learning to the online world. His mission is to bridge the gap between technology and religion, serving the Ummah through modern yet authentic means.",
+    description:
+      "Professor Muhammad Tahir Hasni founded Tibyaan Academy with a vision to make authentic Islamic education accessible to Muslims across the globe. With decades of academic excellence, he has been a pioneer in bringing traditional Islamic learning to the online world. His mission is to bridge the gap between technology and religion, serving the Ummah through modern yet authentic means.",
     whatsapp: "923478599839",
   },
   {
     id: 2,
     name: "Mufti Muhammad Rafeeq Golarwi",
-    image: "/OurTeam/Mufti_Muhammad_Rafeeq_Golarwi.jpeg",
+    image: "/Our%20Team/Mufti_Muhammad_Rafeeq_Golarwi.jpeg",
     role: "Director of Tibyaan Academy",
-    description: "Mufti Muhammad Rafeeq Golarwi oversees the day-to-day academic operations of Tibyaan Academy. His core expertise lies in Islamic Jurisprudence (Fiqh) and Usool-ul-Fiqh, and he has played a key role in adapting the traditional Dars-e-Nizami curriculum for the modern digital age. Under his leadership, Tibyaan's Aalim Course and Fatwa department serve students from around the world.",
+    description:
+      "Mufti Muhammad Rafeeq Golarwi oversees the day-to-day academic operations of Tibyaan Academy. His core expertise lies in Islamic Jurisprudence (Fiqh) and Usool-ul-Fiqh, and he has played a key role in adapting the traditional Dars-e-Nizami curriculum for the modern digital age. Under his leadership, Tibyaan's Aalim Course and Fatwa department serve students from around the world.",
     whatsapp: "923212485198",
   },
   {
     id: 3,
     name: "Mufti Owais Ahmed",
-    image: "/OurTeam/Mufti_Owais_Ahmed.png",
+    image: "/Our%20Team/Mufti_Owais_Ahmed.png",
     role: "Head of Aalim Course",
-    description: "Mufti Owais Ahmed leads Tibyaan Academy's flagship Aalim Course. He has successfully restructured the complete Dars-e-Nizami syllabus into an effective online format, enabling students to pursue the full journey of becoming a qualified Aalim from the comfort of their homes. His teaching style is clear, engaging, and deeply rooted in classical Islamic scholarship.",
+    description:
+      "Mufti Owais Ahmed leads Tibyaan Academy's flagship Aalim Course. He has successfully restructured the complete Dars-e-Nizami syllabus into an effective online format, enabling students to pursue the full journey of becoming a qualified Aalim from the comfort of their homes. His teaching style is clear, engaging, and deeply rooted in classical Islamic scholarship.",
     whatsapp: "923218035236",
   },
   {
     id: 4,
     name: "Sheikh Abdul Jabbar",
-    image: "/OurTeam/Sheikh_Abdul_Jabbar.jpeg",
+    image: "/Our%20Team/Sheikh%20Abdul%20Jabbar.jpeg",
     role: "Head of Arabic Language",
-    description: "Sheikh Abdul Jabbar is a specialist in the Arabic language with deep expertise in Sarf, Nahw, Balaghat, and Classical Arabic Literature. He firmly believes that the direct path to understanding the Quran and Hadith is through mastering the Arabic language. His classes are structured in a way that even absolute beginners can quickly begin to understand the Quran with confidence.",
+    description:
+      "Sheikh Abdul Jabbar is a specialist in the Arabic language with deep expertise in Sarf, Nahw, Balaghat, and Classical Arabic Literature. He firmly believes that the direct path to understanding the Quran and Hadith is through mastering the Arabic language. His classes are structured in a way that even absolute beginners can quickly begin to understand the Quran with confidence.",
     whatsapp: "923152363498",
   },
   {
     id: 5,
     name: "Maulana Ali Haider",
-    image: "/OurTeam/Maulana_Ali_Haider.jpeg",
+    image: "/Our%20Team/Maulana%20Ali%20Haider.jpeg",
     role: "Head of Hifz-ul-Quran",
-    description: "Maulana Ali Haider has dedicated his entire life to the service of the Holy Quran. He specializes in teaching Hifz to students of all ages — from young children to adults. His proven teaching methodology instills consistency and strength in memorization. He has designed Tibyaan's online Hifz program in a way that allows every student to progress at their own pace without compromising quality.",
+    description:
+      "Maulana Ali Haider has dedicated his entire life to the service of the Holy Quran. He specializes in teaching Hifz to students of all ages — from young children to adults. His proven teaching methodology instills consistency and strength in memorization. He has designed Tibyaan's online Hifz program in a way that allows every student to progress at their own pace without compromising quality.",
     whatsapp: "923476676147",
   },
   {
     id: 6,
     name: "Qari Muhammad Musheer",
-    image: "/OurTeam/Qari_Muhammad_Musheer.jpg",
+    image: "/Our%20Team/Qari%20Muhammad%20Musheer.jpg",
     role: "Head of Nazrat-ul-Quran",
-    description: "Qari Muhammad Musheer heads the Nazrat and Tajweed department at Tibyaan Academy. His specialty lies in the precise articulation of Arabic letters (Makhaarij) and the rules of Tajweed. Thousands of students have learned to recite the Quran correctly under his guidance. His interactive and engaging teaching approach makes learning Quran enjoyable, particularly for children.",
+    description:
+      "Qari Muhammad Musheer heads the Nazrat and Tajweed department at Tibyaan Academy. His specialty lies in the precise articulation of Arabic letters (Makhaarij) and the rules of Tajweed. Thousands of students have learned to recite the Quran correctly under his guidance. His interactive and engaging teaching approach makes learning Quran enjoyable, particularly for children.",
     whatsapp: "923269244960",
   },
   {
     id: 7,
     name: "Qari Muhammad Ismail Hasni",
-    image: "/OurTeam/Qari_Muhammad_Ismail_Hasni.jpeg",
+    image: "/Our%20Team/Qari%20Muhammad%20Ismail%20Hasni.jpeg",
     role: "Admin of Tibyaan Academy",
-    description: "Qari Muhammad Ismail Hasni manages the complete administrative framework of Tibyaan Academy. From student enrollments and scheduling to fee management and teacher coordination — every operational matter falls under his supervision. His dedication and organizational skills ensure that the entire Academy runs smoothly and efficiently. He is always available and approachable for students' needs.",
+    description:
+      "Qari Muhammad Ismail Hasni manages the complete administrative framework of Tibyaan Academy. From student enrollments and scheduling to fee management and teacher coordination — every operational matter falls under his supervision. His dedication and organizational skills ensure that the entire Academy runs smoothly and efficiently. He is always available and approachable for students' needs.",
     whatsapp: "923453184434",
   },
   {
     id: 8,
     name: "Ustaza Fatima Al-Zahra",
-    image: "/OurTeam/Ustaza_Fatima_Al-Zahra.jpg",
+    image: "/Our%20Team/Ustaza%20Fatima%20Al-Zahra.jpg",
     role: "Head of Women's & Children's Programs",
-    description: "Ustaza Fatima Al-Zahra oversees all women's and children's programs at Tibyaan Academy. Her teaching approach is built on innovative methods and a nurturing, compassionate style that has helped thousands of women and children learn the Quran and Islamic sciences. She is the creative force behind Tibyaan's Kids Activities section. She believes that every Muslim home should be the first school of Deen.",
+    description:
+      "Ustaza Fatima Al-Zahra oversees all women's and children's programs at Tibyaan Academy. Her teaching approach is built on innovative methods and a nurturing, compassionate style that has helped thousands of women and children learn the Quran and Islamic sciences. She is the creative force behind Tibyaan's Kids Activities section. She believes that every Muslim home should be the first school of Deen.",
     whatsapp: "923042043314",
   },
 ];
 
+// WhatsApp SVG icon
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
+
 export default async function AboutPage() {
   const t = await getTranslations("aboutPage");
-  const messages = await getMessages();
-  const teamI18n = ((messages.aboutPage as Record<string, unknown>)?.team ?? []) as Array<{ role: string; description: string }>;
-
-  const team = staticTeam.map((member, i) => ({
-    ...member,
-    role: teamI18n[i]?.role || member.role,
-    description: teamI18n[i]?.description || member.description,
-  }));
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -331,31 +345,35 @@ export default async function AboutPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member) => (
-                <div key={member.id} className="bg-background rounded-2xl border p-6 text-center hover:shadow-md transition-shadow flex flex-col items-center">
-                  <div className="w-[160px] h-[160px] relative rounded-xl overflow-hidden mb-4 mx-auto">
+                <div
+                  key={member.id}
+                  className="bg-background rounded-2xl border overflow-hidden hover:shadow-lg transition-shadow flex flex-col"
+                >
+                  <div className="relative w-full aspect-square">
                     <Image
                       src={member.image}
                       alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="160px"
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3 className="font-bold text-foreground text-sm">{member.name}</h3>
-                  <p className="mt-1 text-xs text-primary font-semibold">{member.role}</p>
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed flex-1">{member.description}</p>
-                  <a
-                    href={`https://wa.me/${member.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`WhatsApp ${member.name}`}
-                    className="mt-4 inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20BD5C] text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
-                  >
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                    </svg>
-                    WhatsApp
-                  </a>
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-bold text-foreground text-sm leading-snug">{member.name}</h3>
+                    <p className="mt-1 text-xs font-semibold text-primary">{member.role}</p>
+                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed line-clamp-5 flex-1">
+                      {member.description}
+                    </p>
+                    <a
+                      href={`https://wa.me/${member.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors w-fit"
+                    >
+                      <WhatsAppIcon className="w-4 h-4" />
+                      WhatsApp
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
