@@ -167,7 +167,7 @@ export async function PATCH(
       // 3. Create weekday-only recurring classes for rest of month
       // No Jitsi/WebRTC — Admin will set Zoom link separately per match
       if (enrollmentId) {
-        const scheduledDates = getMonthWeekdayDates(preferredDays, startTime, timezone);
+        const scheduledDates = getMonthWeekdayDates(preferredDays, preferredTime, timezone);
         if (scheduledDates.length > 0) {
           await db.insert(classes).values(
             scheduledDates.map((scheduledAt) => ({

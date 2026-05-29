@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
       lessonCovered,
       rating,
       notes: notes ?? null,
-      sessionDate: new Date(),
+
     }).returning();
 
     return NextResponse.json({ success: true, entry });
