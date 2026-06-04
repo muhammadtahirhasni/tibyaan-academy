@@ -106,6 +106,11 @@ export function Footer() {
                   Daily Dars
                 </Link>
               </li>
+              <li>
+                <Link href="/faq" className="opacity-70 hover:opacity-100 transition-opacity">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 

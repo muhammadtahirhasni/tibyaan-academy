@@ -53,8 +53,8 @@ const courseData: Record<
     color: "emerald",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     heroGradient: "from-emerald-600/10 via-background to-emerald-600/5",
-    plan1Price: "$40",
-    plan2Price: "$33",
+    plan1Price: "$33",
+    plan2Price: "$25",
     duration: "3-6 months",
   },
   "hifz-quran": {
@@ -86,6 +86,37 @@ const courseData: Record<
     plan1Price: "$50",
     plan2Price: "$40",
     duration: "2-8 years",
+  },
+};
+
+const courseTeachers: Record<string, { name: string; role: string; image: string; bio: string; whatsapp: string }> = {
+  nazra: {
+    name: "Qari Muhammad Musheer",
+    role: "Head of Nazrat-ul-Quran",
+    image: "/Our Team/Qari Muhammad Musheer.jpg",
+    bio: "Qari Muhammad Musheer heads the Nazrat and Tajweed department at Tibyaan Academy. His specialty lies in the precise articulation of Arabic letters (Makhaarij) and the rules of Tajweed. Thousands of students have learned to recite the Quran correctly under his guidance.",
+    whatsapp: "923269244960",
+  },
+  hifz: {
+    name: "Maulana Ali Haider",
+    role: "Head of Hifz-ul-Quran",
+    image: "/Our Team/Maulana Ali Haider.jpeg",
+    bio: "Maulana Ali Haider has dedicated his entire life to the service of the Holy Quran. He specializes in teaching Hifz to students of all ages. His proven methodology instills consistency and strength in memorization.",
+    whatsapp: "923476676147",
+  },
+  arabic: {
+    name: "Sheikh Abdul Jabbar",
+    role: "Head of Arabic Language",
+    image: "/Our Team/Sheikh Abdul Jabbar.jpeg",
+    bio: "Sheikh Abdul Jabbar is a specialist in the Arabic language with deep expertise in Sarf, Nahw, Balaghat, and Classical Arabic Literature. His structured teaching method has helped hundreds of students achieve fluency in Quranic Arabic.",
+    whatsapp: "923152363498",
+  },
+  aalim: {
+    name: "Mufti Muhammad Rafeeq Golarwi",
+    role: "Director of Tibyaan Academy",
+    image: "/Our Team/Mufti_Muhammad_Rafeeq_Golarwi.jpeg",
+    bio: "Mufti Muhammad Rafeeq Golarwi oversees the Aalim Course at Tibyaan Academy. His core expertise lies in Islamic Jurisprudence (Fiqh) and Usool-ul-Fiqh. Under his leadership, the Aalim Course serves students from around the world.",
+    whatsapp: "923212485198",
   },
 };
 
@@ -383,25 +414,50 @@ export default function CourseDetailClient() {
         {/* Your Teacher */}
         <section className="py-16 bg-muted/30">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col md:flex-row items-center gap-8 p-8 rounded-2xl bg-card border shadow-sm"
+              className="text-2xl md:text-3xl font-bold text-primary mb-6"
             >
-              <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                <Video className="w-10 h-10 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">
-                  {t("teacherIntro")}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {t("teacherDesc")}
-                </p>
-              </div>
-            </motion.div>
+              {t("teacherIntro")}
+            </motion.h2>
+            {courseTeachers[k] && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col sm:flex-row items-start gap-6 p-6 rounded-2xl bg-card border shadow-sm"
+              >
+                <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0 bg-primary/10">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={courseTeachers[k].image}
+                    alt={courseTeachers[k].name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder-teacher.svg"; }}
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-foreground">{courseTeachers[k].name}</h3>
+                  <p className="text-sm font-semibold text-primary mt-0.5">{courseTeachers[k].role}</p>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{courseTeachers[k].bio}</p>
+                  <a
+                    href={`https://wa.me/${courseTeachers[k].whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    WhatsApp
+                  </a>
+                </div>
+              </motion.div>
+            )}
           </div>
         </section>
 

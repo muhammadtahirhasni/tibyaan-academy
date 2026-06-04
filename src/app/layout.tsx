@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = "https://tibyaan.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://tibyaan-academy.vercel.app";
 const rtlLocales = ["ur", "ar"];
 
 const organizationJsonLd = {

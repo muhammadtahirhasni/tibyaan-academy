@@ -27,6 +27,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { COURSE_FEES, formatFee } from "@/lib/data/fees-config";
+import { PRICING } from "@/lib/pricing";
 
 const plan1Features = [
   { key: "liveClasses", icon: Video, included: true },
@@ -48,31 +49,31 @@ const plan2Features = [
 const coursePricing = [
   {
     key: "nazra",
-    monthly1: "$40",
-    monthly2: "$33",
-    yearly1: "$400",
-    yearly2: "$330",
+    monthly1: `$${PRICING.nazra.human_ai}`,
+    monthly2: `$${PRICING.nazra.ai_only}`,
+    yearly1: `$${PRICING.nazra.human_ai_yearly}`,
+    yearly2: `$${PRICING.nazra.ai_only_yearly}`,
   },
   {
     key: "hifz",
-    monthly1: "$45",
-    monthly2: "$37",
-    yearly1: "$450",
-    yearly2: "$370",
+    monthly1: `$${PRICING.hifz.human_ai}`,
+    monthly2: `$${PRICING.hifz.ai_only}`,
+    yearly1: `$${PRICING.hifz.human_ai_yearly}`,
+    yearly2: `$${PRICING.hifz.ai_only_yearly}`,
   },
   {
     key: "arabic",
-    monthly1: "$43",
-    monthly2: "$35",
-    yearly1: "$430",
-    yearly2: "$350",
+    monthly1: `$${PRICING.arabic.human_ai}`,
+    monthly2: `$${PRICING.arabic.ai_only}`,
+    yearly1: `$${PRICING.arabic.human_ai_yearly}`,
+    yearly2: `$${PRICING.arabic.ai_only_yearly}`,
   },
   {
     key: "aalim",
-    monthly1: "$50",
-    monthly2: "$40",
-    yearly1: "$500",
-    yearly2: "$400",
+    monthly1: `$${PRICING.aalim.human_ai}`,
+    monthly2: `$${PRICING.aalim.ai_only}`,
+    yearly1: `$${PRICING.aalim.human_ai_yearly}`,
+    yearly2: `$${PRICING.aalim.ai_only_yearly}`,
   },
 ];
 
@@ -172,7 +173,7 @@ export default function PricingPageClient() {
                 </p>
                 <div className="mt-6 flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-primary">
-                    {isYearly ? "$400" : "$40"}
+                    {isYearly ? `$${PRICING.nazra.human_ai_yearly}` : `$${PRICING.nazra.human_ai}`}
                   </span>
                   <span className="text-sm text-muted-foreground">
                     {isYearly ? t("perYear") : t("perMonth")}
@@ -228,7 +229,7 @@ export default function PricingPageClient() {
                 </p>
                 <div className="mt-6 flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-accent">
-                    {isYearly ? "$330" : "$33"}
+                    {isYearly ? `$${PRICING.nazra.ai_only_yearly}` : `$${PRICING.nazra.ai_only}`}
                   </span>
                   <span className="text-sm text-muted-foreground">
                     {isYearly ? t("perYear") : t("perMonth")}

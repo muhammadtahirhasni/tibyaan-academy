@@ -7,12 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { BookOpen, Sparkles, Languages, GraduationCap } from "lucide-react";
 import { COURSE_FEES, formatFee } from "@/lib/data/fees-config";
+import { PRICING } from "@/lib/pricing";
 
 const courses = [
   {
     key: "nazra",
     icon: BookOpen,
-    price: "$33",
+    price: `$${PRICING.nazra.ai_only}`,
     color: "from-emerald-500/10 to-emerald-500/5 border-emerald-200 dark:border-emerald-800",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     slug: "nazra-quran",
@@ -20,7 +21,7 @@ const courses = [
   {
     key: "hifz",
     icon: Sparkles,
-    price: "$37",
+    price: `$${PRICING.hifz.ai_only}`,
     color: "from-amber-500/10 to-amber-500/5 border-amber-200 dark:border-amber-800",
     iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     slug: "hifz-quran",
@@ -28,7 +29,7 @@ const courses = [
   {
     key: "arabic",
     icon: Languages,
-    price: "$35",
+    price: `$${PRICING.arabic.ai_only}`,
     color: "from-blue-500/10 to-blue-500/5 border-blue-200 dark:border-blue-800",
     iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     slug: "arabic-language",
@@ -36,7 +37,7 @@ const courses = [
   {
     key: "aalim",
     icon: GraduationCap,
-    price: "$40",
+    price: `$${PRICING.aalim.ai_only}`,
     color: "from-purple-500/10 to-purple-500/5 border-purple-200 dark:border-purple-800",
     iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     slug: "aalim-course",

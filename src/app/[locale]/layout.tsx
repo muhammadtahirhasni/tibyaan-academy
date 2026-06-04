@@ -7,8 +7,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PWAInstallPrompt } from "@/components/shared/pwa-install-prompt";
 import { ServiceWorkerRegistration } from "@/components/shared/sw-register";
+import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
+import { ExitIntentPopup } from "@/components/shared/exit-intent-popup";
 
-const BASE_URL = "https://tibyaan.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://tibyaan-academy.vercel.app";
 
 const localeMetadata: Record<string, { title: string; description: string }> = {
   ur: {
@@ -91,6 +93,8 @@ export default async function LocaleLayout({
       <NextIntlClientProvider>
         {children}
         <PWAInstallPrompt />
+        <FloatingWhatsApp />
+        <ExitIntentPopup />
       </NextIntlClientProvider>
       <ServiceWorkerRegistration />
       <Analytics />

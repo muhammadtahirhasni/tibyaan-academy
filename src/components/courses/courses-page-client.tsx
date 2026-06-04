@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,8 @@ import {
 type CourseKey = "nazra" | "hifz" | "arabic" | "aalim";
 type FilterKey = "all" | CourseKey;
 
+import { PRICING } from "@/lib/pricing";
+
 const courses: {
   key: CourseKey;
   icon: typeof BookOpen;
@@ -35,54 +38,51 @@ const courses: {
   iconColor: string;
   slug: string;
   duration: string;
+  thumbnail: string;
 }[] = [
   {
     key: "nazra",
     icon: BookOpen,
-    plan1Price: "$25",
-    plan2Price: "$18",
-    color:
-      "from-emerald-500/10 to-emerald-500/5 border-emerald-200 dark:border-emerald-800",
-    iconColor:
-      "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
+    plan1Price: `$${PRICING.nazra.human_ai}`,
+    plan2Price: `$${PRICING.nazra.ai_only}`,
+    color: "from-emerald-500/10 to-emerald-500/5 border-emerald-200 dark:border-emerald-800",
+    iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     slug: "nazra-quran",
     duration: "3-6 months",
+    thumbnail: "/images/courses/nazra.jpg",
   },
   {
     key: "hifz",
     icon: Sparkles,
-    plan1Price: "$30",
-    plan2Price: "$22",
-    color:
-      "from-amber-500/10 to-amber-500/5 border-amber-200 dark:border-amber-800",
-    iconColor:
-      "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
+    plan1Price: `$${PRICING.hifz.human_ai}`,
+    plan2Price: `$${PRICING.hifz.ai_only}`,
+    color: "from-amber-500/10 to-amber-500/5 border-amber-200 dark:border-amber-800",
+    iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     slug: "hifz-quran",
     duration: "2-4 years",
+    thumbnail: "/images/courses/hifz.jpg",
   },
   {
     key: "arabic",
     icon: Languages,
-    plan1Price: "$28",
-    plan2Price: "$20",
-    color:
-      "from-blue-500/10 to-blue-500/5 border-blue-200 dark:border-blue-800",
-    iconColor:
-      "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+    plan1Price: `$${PRICING.arabic.human_ai}`,
+    plan2Price: `$${PRICING.arabic.ai_only}`,
+    color: "from-blue-500/10 to-blue-500/5 border-blue-200 dark:border-blue-800",
+    iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     slug: "arabic-language",
     duration: "6-12 months",
+    thumbnail: "/images/courses/arabic.jpg",
   },
   {
     key: "aalim",
     icon: GraduationCap,
-    plan1Price: "$35",
-    plan2Price: "$25",
-    color:
-      "from-purple-500/10 to-purple-500/5 border-purple-200 dark:border-purple-800",
-    iconColor:
-      "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
+    plan1Price: `$${PRICING.aalim.human_ai}`,
+    plan2Price: `$${PRICING.aalim.ai_only}`,
+    color: "from-purple-500/10 to-purple-500/5 border-purple-200 dark:border-purple-800",
+    iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     slug: "aalim-course",
     duration: "2-8 years",
+    thumbnail: "/images/courses/aalim.jpg",
   },
 ];
 
@@ -175,26 +175,34 @@ export default function CoursesPageClient() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: i * 0.1 }}
-                    className={`rounded-2xl border bg-gradient-to-b ${course.color} p-6 md:p-8 hover:shadow-xl transition-all`}
+                    className={`rounded-2xl border bg-gradient-to-b ${course.color} overflow-hidden hover:shadow-xl transition-all`}
                   >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 ${course.iconColor}`}
-                      >
-                        <Icon className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-foreground">
-                          {tc(`${course.key}Title`)}
-                        </h3>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {tc(`${course.key}Desc`)}
-                        </p>
-                        <Badge variant="secondary" className="mt-2 text-xs">
-                          {course.duration}
-                        </Badge>
+                    {/* Course Thumbnail */}
+                    <div className="relative h-40 w-full bg-primary/5">
+                      <Image
+                        src={course.thumbnail}
+                        alt={`${course.key} course`}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          const el = e.currentTarget as HTMLImageElement;
+                          el.style.display = "none";
+                        }}
+                      />
+                      <div className={`absolute top-3 left-3 w-10 h-10 rounded-xl flex items-center justify-center ${course.iconColor}`}>
+                        <Icon className="w-5 h-5" />
                       </div>
                     </div>
+                    <div className="p-6 md:p-8">
+                      <h3 className="text-xl font-bold text-foreground">
+                        {tc(`${course.key}Title`)}
+                      </h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {tc(`${course.key}Desc`)}
+                      </p>
+                      <Badge variant="secondary" className="mt-2 text-xs">
+                        {course.duration}
+                      </Badge>
 
                     {/* Features */}
                     <ul className="mt-5 space-y-2">
@@ -255,7 +263,8 @@ export default function CoursesPageClient() {
                           {t("freeTrial")}
                         </Button>
                       </Link>
-                    </div>
+                    </div>{/* /actions */}
+                    </div>{/* /p-6 md:p-8 */}
                   </motion.div>
                 );
               })}

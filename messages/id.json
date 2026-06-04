@@ -908,7 +908,6 @@
     "sidebarVideos": "Video",
     "sidebarMessages": "Pesan",
     "sidebarRecordings": "Rekaman",
-    "sidebarTrackProgress": "Lacak Kemajuan",
     "sidebarAssignments": "Tugas & Tes",
     "sidebarComplaints": "Ajukan Keluhan",
     "todaysClasses": "Kelas Hari Ini",
@@ -1104,7 +1103,6 @@
     "sidebarScheduleRequests": "Permintaan Jadwal",
     "sidebarClassRecordings": "Rekaman Kelas",
     "sidebarScheduleChanges": "Perubahan Jadwal",
-    "sidebarComplaints": "Keluhan",
     "sidebarDarsCircles": "Lingkaran Dars",
     "sidebarCertificates": "Sertifikat",
     "sidebarAgents": "Log Agen",
@@ -1275,7 +1273,32 @@
         "role": "Kepala Program Wanita & Anak-anak",
         "description": "Ustaza Fatima Al-Zahra mengawasi semua program wanita dan anak-anak di Tibyaan Academy. Pendekatan pengajarannya dibangun di atas metode inovatif dan gaya yang penuh kasih sayang yang telah membantu ribuan wanita dan anak-anak belajar Al-Quran dan ilmu Islam. Beliau adalah kekuatan kreatif di balik bagian Kegiatan Anak-anak Tibyaan. Beliau percaya bahwa setiap rumah Muslim harus menjadi sekolah pertama Deen."
       }
-    ]
+    ],
+    "ourStoryTitle": "Kisah Kami",
+    "ourStoryP1": "Tibyaan Academy lahir dari sebuah kesadaran sederhana namun kuat: jutaan Muslim di seluruh dunia sangat ingin belajar Al-Quran dan ilmu Islam — tetapi tidak memiliki akses ke guru yang berkualifikasi di komunitas lokal mereka.",
+    "ourStoryP2": "Profesor Muhammad Tahir Hasni menyadari kesenjangan ini. Dia mengumpulkan tim ulama dan pendidik Islam yang berkualifikasi dan membangun Tibyaan Academy — platform di mana pembelajaran Islam yang otentik bertemu dengan teknologi modern.",
+    "ourStoryP3": "Hari ini, Tibyaan Academy melayani siswa dari lebih dari 20 negara, mulai dari anak-anak kecil yang belajar huruf Arab pertama mereka hingga para sarjana yang mengambil kursus Aalim lengkap.",
+    "ourStoryHeading": "Dari Visi Menjadi Kenyataan",
+    "visionTitle": "Visi Kami",
+    "visionDesc": "Dunia di mana setiap Muslim memiliki akses ke guru Islam yang berkualifikasi dari rumah mereka, dalam bahasa mereka sendiri.",
+    "missionTitleV2": "Misi Kami",
+    "missionDescV2": "Menjadikan pendidikan Islam yang otentik dan berkualitas tinggi dapat diakses oleh setiap Muslim di bumi.",
+    "whyChooseTitle": "Mengapa Memilih Tibyaan Academy?",
+    "whyChoosePoints": [
+      "Kelas tatap muka 1-on-1 langsung dengan ulama bersertifikat",
+      "AI Ustaz tersedia 24/7 dalam 5 bahasa",
+      "Kurikulum lengkap dari Nazra hingga kursus Aalim",
+      "Jadwal fleksibel untuk semua zona waktu",
+      "Uji coba gratis 5 hari, tidak perlu kartu kredit",
+      "Diskon keluarga hingga 30%"
+    ],
+    "teamSectionTitle": "Tim Ahli Kami",
+    "teamSectionSubtitle": "Ulama dan pendidik berkualifikasi dari lembaga Islam terkemuka",
+    "statStudents": "2000+ Siswa",
+    "statCountries": "20+ Negara",
+    "statTeachers": "15+ Guru",
+    "statYears": "3+ Tahun",
+    "whatsappBtn": "WhatsApp"
   },
   "contactPage": {
     "title": "Hubungi Kami",

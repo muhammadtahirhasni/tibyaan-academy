@@ -1,17 +1,39 @@
+import { PRICING } from "@/lib/pricing";
+
 export const COURSE_FEES = {
-  nazra:  { plan1Monthly: 25, plan2Monthly: 18, plan1Yearly: 250, plan2Yearly: 180 },
-  hifz:   { plan1Monthly: 30, plan2Monthly: 22, plan1Yearly: 300, plan2Yearly: 220 },
-  arabic: { plan1Monthly: 28, plan2Monthly: 20, plan1Yearly: 280, plan2Yearly: 200 },
-  aalim:  { plan1Monthly: 35, plan2Monthly: 25, plan1Yearly: 350, plan2Yearly: 250 },
+  nazra: {
+    plan1Monthly: PRICING.nazra.human_ai,
+    plan2Monthly: PRICING.nazra.ai_only,
+    plan1Yearly: PRICING.nazra.human_ai_yearly,
+    plan2Yearly: PRICING.nazra.ai_only_yearly,
+  },
+  hifz: {
+    plan1Monthly: PRICING.hifz.human_ai,
+    plan2Monthly: PRICING.hifz.ai_only,
+    plan1Yearly: PRICING.hifz.human_ai_yearly,
+    plan2Yearly: PRICING.hifz.ai_only_yearly,
+  },
+  arabic: {
+    plan1Monthly: PRICING.arabic.human_ai,
+    plan2Monthly: PRICING.arabic.ai_only,
+    plan1Yearly: PRICING.arabic.human_ai_yearly,
+    plan2Yearly: PRICING.arabic.ai_only_yearly,
+  },
+  aalim: {
+    plan1Monthly: PRICING.aalim.human_ai,
+    plan2Monthly: PRICING.aalim.ai_only,
+    plan1Yearly: PRICING.aalim.human_ai_yearly,
+    plan2Yearly: PRICING.aalim.ai_only_yearly,
+  },
 } as const;
 
 export type CourseKey = keyof typeof COURSE_FEES;
 
 export const COURSE_PRICING_TABLE = [
-  { course: "Nazra Quran",     key: "nazra"  as CourseKey },
-  { course: "Hifz Quran",      key: "hifz"   as CourseKey },
+  { course: "Nazra Quran", key: "nazra" as CourseKey },
+  { course: "Hifz Quran", key: "hifz" as CourseKey },
   { course: "Arabic Language", key: "arabic" as CourseKey },
-  { course: "Aalim Course",    key: "aalim"  as CourseKey },
+  { course: "Aalim Course", key: "aalim" as CourseKey },
 ] as const;
 
 export function formatFee(amount: number): string {

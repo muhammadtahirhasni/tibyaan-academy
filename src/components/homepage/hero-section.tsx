@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const stats = [
   { key: "students", value: "500+" },
@@ -102,50 +103,66 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right Column — Info Card */}
+          {/* Right Column — Hero Image */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-card rounded-3xl p-7 shadow-[0_20px_50px_rgba(15,23,42,0.12)] border border-border"
+            className="flex flex-col gap-4"
           >
-            <h3 className="font-bold text-foreground text-lg mt-0">Contact Information</h3>
-
-            <div className="mt-4 space-y-3 text-sm">
-              <div>
-                <div className="font-semibold text-foreground">WhatsApp</div>
-                <a
-                  href="https://wa.me/923129114002"
-                  className="text-primary hover:underline"
-                >
-                  +92 312 9114002
-                </a>
-              </div>
-              <div>
-                <div className="font-semibold text-foreground">Email</div>
-                <a
-                  href="mailto:academytibyaan@gmail.com"
-                  className="text-primary hover:underline"
-                >
-                  academytibyaan@gmail.com
-                </a>
+            {/* Hero Family Image */}
+            <div className="relative w-full h-72 md:h-80 rounded-2xl overflow-hidden shadow-xl">
+              <Image
+                src="/images/hero-family.jpg"
+                alt="Muslim family learning Quran with Tibyaan Academy"
+                fill
+                className="object-cover"
+                priority
+                onError={(e) => {
+                  const el = e.currentTarget as HTMLImageElement;
+                  el.style.display = "none";
+                  const parent = el.parentElement;
+                  if (parent) {
+                    parent.style.background = "#1B4332";
+                    parent.style.display = "flex";
+                    parent.style.alignItems = "center";
+                    parent.style.justifyContent = "center";
+                  }
+                }}
+              />
+              {/* Fallback overlay — shown only if image fails */}
+              <div className="absolute inset-0 bg-primary/5 flex items-center justify-center">
+                <div className="text-6xl">🕌</div>
               </div>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-border space-y-2">
-              {highlights.map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="text-accent font-bold">✓</span>
-                  {item}
+            {/* Contact Info Card */}
+            <div className="bg-card rounded-2xl p-5 shadow-md border border-border">
+              <h3 className="font-bold text-foreground text-sm mb-3">Contact Information</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#25D366] font-bold text-xs">WA</span>
+                  <a href="https://wa.me/923129114002" className="text-primary hover:underline">+92 312 9114002</a>
                 </div>
-              ))}
+                <div className="flex items-center gap-2">
+                  <span className="text-primary font-bold text-xs">@</span>
+                  <a href="mailto:academytibyaan@gmail.com" className="text-primary hover:underline text-xs">academytibyaan@gmail.com</a>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-border space-y-1">
+                {highlights.map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="text-accent font-bold">✓</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <Link href="/courses" className="block mt-4">
+                <Button className="w-full rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm h-9">
+                  {t("cta2")}
+                </Button>
+              </Link>
             </div>
-
-            <Link href="/courses" className="block mt-6">
-              <Button className="w-full rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                {t("cta2")}
-              </Button>
-            </Link>
           </motion.div>
 
         </div>

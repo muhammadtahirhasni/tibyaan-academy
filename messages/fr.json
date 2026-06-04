@@ -898,7 +898,7 @@
     "sidebarStudents": "Étudiants",
     "sidebarSchedule": "Emploi du Temps",
     "sidebarLessons": "Leçons",
-    "sidebarTrackProgress": "Suivi des progrès",
+    "sidebarTrackProgress": "Suivi des Progrès",
     "sidebarTests": "Tests",
     "sidebarTestsAssignments": "Assigner des Tests",
     "sidebarAIAssistant": "Assistant IA",
@@ -908,7 +908,6 @@
     "sidebarVideos": "Vidéos",
     "sidebarMessages": "Messages",
     "sidebarRecordings": "Enregistrements",
-    "sidebarTrackProgress": "Suivi des Progrès",
     "sidebarAssignments": "Devoirs et Tests",
     "sidebarComplaints": "Soumettre une Plainte",
     "todaysClasses": "Cours d'Aujourd'hui",
@@ -1104,7 +1103,6 @@
     "sidebarScheduleRequests": "Demandes de Planning",
     "sidebarClassRecordings": "Enregistrements de Cours",
     "sidebarScheduleChanges": "Changements de Planning",
-    "sidebarComplaints": "Plaintes",
     "sidebarDarsCircles": "Cercles de Dars",
     "sidebarCertificates": "Certificats",
     "sidebarAgents": "Journaux des agents",
@@ -1275,7 +1273,32 @@
         "role": "Responsable des Programmes Femmes & Enfants",
         "description": "Ustaza Fatima Al-Zahra supervise tous les programmes pour femmes et enfants de Tibyaan Academy. Son approche pédagogique est basée sur des méthodes innovantes et un style nourricier et compatissant qui a aidé des milliers de femmes et d'enfants à apprendre le Coran et les sciences islamiques. Elle est la force créative derrière la section Activités pour enfants de Tibyaan. Elle croit que chaque foyer musulman devrait être la première école de Deen."
       }
-    ]
+    ],
+    "ourStoryTitle": "Notre Histoire",
+    "ourStoryP1": "Tibyaan Academy est née d'une réalisation simple mais puissante : des millions de musulmans dans le monde veulent apprendre le Coran et les sciences islamiques, mais n'ont pas accès à des enseignants qualifiés dans leurs communautés locales.",
+    "ourStoryP2": "Le Professeur Muhammad Tahir Hasni a reconnu ce vide. Il a rassemblé une équipe d'érudits et d'enseignants islamiques qualifiés et a construit Tibyaan Academy — une plateforme où l'apprentissage islamique authentique rencontre la technologie moderne.",
+    "ourStoryP3": "Aujourd'hui, Tibyaan Academy sert des étudiants de plus de 20 pays, des jeunes enfants apprenant leurs premières lettres arabes aux adultes poursuivant le cours Aalim complet.",
+    "ourStoryHeading": "De la Vision à la Réalité",
+    "visionTitle": "Notre Vision",
+    "visionDesc": "Un monde où chaque musulman a accès à un enseignant islamique qualifié depuis son domicile, dans sa propre langue.",
+    "missionTitleV2": "Notre Mission",
+    "missionDescV2": "Rendre l'éducation islamique authentique et de haute qualité accessible à chaque musulman sur terre.",
+    "whyChooseTitle": "Pourquoi Choisir Tibyaan Academy ?",
+    "whyChoosePoints": [
+      "Cours individuels en direct avec des érudits certifiés",
+      "AI Ustaz disponible 24h/24 en 5 langues",
+      "Programme complet de Nazra au cours Aalim",
+      "Horaires flexibles pour tous les fuseaux horaires",
+      "Essai gratuit 5 jours, aucune carte de crédit",
+      "Réductions familiales jusqu'à 30%"
+    ],
+    "teamSectionTitle": "Notre Équipe d'Experts",
+    "teamSectionSubtitle": "Des érudits et éducateurs qualifiés d'institutions islamiques renommées",
+    "statStudents": "2000+ Étudiants",
+    "statCountries": "20+ Pays",
+    "statTeachers": "15+ Professeurs",
+    "statYears": "3+ Ans",
+    "whatsappBtn": "WhatsApp"
   },
   "contactPage": {
     "title": "Contactez-nous",

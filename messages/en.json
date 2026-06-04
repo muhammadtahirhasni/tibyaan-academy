@@ -1262,7 +1262,32 @@
         "role": "Head of Women's & Children's Programs",
         "description": "Ustaza Fatima Al-Zahra oversees all women's and children's programs at Tibyaan Academy. Her teaching approach is built on innovative methods and a nurturing, compassionate style that has helped thousands of women and children learn the Quran and Islamic sciences. She is the creative force behind Tibyaan's Kids Activities section. She believes that every Muslim home should be the first school of Deen."
       }
-    ]
+    ],
+    "ourStoryTitle": "Our Story",
+    "ourStoryP1": "Tibyaan Academy was born from a simple but powerful realization: millions of Muslims around the world desperately want to learn the Quran and Islamic sciences — but lack access to qualified teachers in their local communities.",
+    "ourStoryP2": "Professor Muhammad Tahir Hasni, a dedicated educator with decades of experience, recognized this gap. He gathered a team of qualified Islamic scholars and educators and built Tibyaan Academy — a platform where authentic Islamic learning meets modern technology.",
+    "ourStoryP3": "Today, Tibyaan Academy serves students from 20+ countries. Our students include children as young as 5 learning their first Arabic letters, young adults memorizing the Quran, professionals learning Arabic, and scholars pursuing the complete Aalim course — all from the comfort of their homes.",
+    "ourStoryHeading": "From Vision to Reality",
+    "visionTitle": "Our Vision",
+    "visionDesc": "A world where every Muslim child and adult has access to a qualified Islamic teacher — from their home, in their own language.",
+    "missionTitleV2": "Our Mission",
+    "missionDescV2": "To make authentic, high-quality Islamic education accessible to every Muslim on earth — regardless of location, age, or background.",
+    "whyChooseTitle": "Why Choose Tibyaan Academy?",
+    "whyChoosePoints": [
+      "Live 1-on-1 classes with certified scholars",
+      "AI Ustaz available 24/7 in 5 languages",
+      "Complete curriculum from Nazra to Aalim",
+      "Flexible scheduling for all time zones",
+      "5-day free trial, no credit card needed",
+      "Family discounts up to 30%"
+    ],
+    "teamSectionTitle": "Our Expert Team",
+    "teamSectionSubtitle": "Qualified scholars and educators from renowned Islamic institutions",
+    "statStudents": "2000+ Students",
+    "statCountries": "20+ Countries",
+    "statTeachers": "15+ Teachers",
+    "statYears": "3+ Years",
+    "whatsappBtn": "WhatsApp"
   },
   "contactPage": {
     "title": "Contact Us",

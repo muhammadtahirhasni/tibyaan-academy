@@ -88,9 +88,13 @@ export async function generateMetadata({
     languages[loc] = `${BASE_URL}/${loc}/dars/${slug}`;
   }
 
+  const countryKeywords = ["UK", "USA", "UAE", "Canada", "Australia", "Germany", "Indonesia", "Saudi Arabia"];
+  const randomCountry = countryKeywords[Math.floor(Date.now() / 86400000) % countryKeywords.length];
+
   return {
-    title,
+    title: title.includes("Tibyaan") ? title : `${title} | Tibyaan Academy`,
     description,
+    keywords: ["Islamic education", "Quran", "Tibyaan Academy", `online Islamic classes ${randomCountry}`],
     alternates: {
       canonical: `${BASE_URL}/${locale}/dars/${slug}`,
       languages,
@@ -101,6 +105,12 @@ export async function generateMetadata({
       url: `${BASE_URL}/${locale}/dars/${slug}`,
       type: "article",
       publishedTime: publishedAt?.toISOString(),
+      siteName: "Tibyaan Academy",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
