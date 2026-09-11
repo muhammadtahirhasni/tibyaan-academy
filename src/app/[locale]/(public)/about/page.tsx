@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
+import { AvatarImage } from "@/components/shared/avatar-image";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import {
@@ -301,15 +301,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                     className="bg-background rounded-2xl border overflow-hidden hover:shadow-lg transition-shadow flex flex-col"
                   >
                     <div className="relative w-full h-[280px]">
-                      <Image
+                      <AvatarImage
                         src={member.image}
                         alt={member.name}
                         fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "/placeholder-teacher.svg";
-                        }}
                       />
                     </div>
                     <div className="p-5 flex flex-col flex-1">
