@@ -4,14 +4,11 @@ import { users, studentProfiles, parentReports } from "@/lib/db/schema";
 import { eq, isNotNull } from "drizzle-orm";
 import { generateWeeklyReport } from "@/lib/whatsapp/generate-report";
 import { sendWhatsAppMessage } from "@/lib/whatsapp/send-message";
-import { assertCronAuth } from "@/lib/cron-auth";
+import { withCron } from "@/lib/cron-auth";
 
 // Cron endpoint: GET /api/parent-reports/weekly
 // Runs every Sunday at 8 AM UTC
-export async function GET(request: Request) {
-  const denied = assertCronAuth(request);
-  if (denied) return denied;
-
+async function runWeeklyParentReports() {
   try {
     const db = getDb();
 
@@ -74,3 +71,5 @@ export async function GET(request: Request) {
     );
   }
 }
+
+export const GET = withCron("/api/parent-reports/weekly", runWeeklyParentReports);

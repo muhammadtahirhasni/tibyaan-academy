@@ -1,4 +1,5 @@
 import { inngest } from "@/lib/inngest";
+import { inngestFailureHandler } from "@/lib/alerts";
 import { db } from "@/lib/db";
 import { blogPosts } from "@/lib/db/schema";
 import { eq, count } from "drizzle-orm";
@@ -26,6 +27,7 @@ const TARGET_COUNTRIES = ["UK", "USA", "Canada", "Australia", "UAE", "Germany", 
 export const blogQueueManager = inngest.createFunction(
   {
     id: "blog-queue-manager",
+    onFailure: inngestFailureHandler("blog-queue-manager"),
     triggers: [{ cron: "0 9 * * 1" }],
   },
   async ({ step }: { step: any }) => {

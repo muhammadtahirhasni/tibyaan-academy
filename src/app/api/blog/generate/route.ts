@@ -6,7 +6,7 @@ import {
   getBlogGenerationPrompt,
   getBlogTranslationPrompt,
 } from "@/lib/claude/blog";
-import { assertCronAuth } from "@/lib/cron-auth";
+import { withCron } from "@/lib/cron-auth";
 
 async function callClaude(
   apiKey: string,
@@ -59,9 +59,7 @@ function parseJsonResponse(text: string): Record<string, unknown> {
   }
 }
 
-async function generateBlog(request: NextRequest) {
-  const denied = assertCronAuth(request, { allowAdminSecret: true });
-  if (denied) return denied;
+async function generateBlog() {
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -176,28 +174,10 @@ async function generateBlog(request: NextRequest) {
   });
 }
 
-// GET handler for Vercel cron jobs
-export async function GET(request: NextRequest) {
-  try {
-    return await generateBlog(request);
-  } catch (error) {
-    console.error("Blog generation error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
-}
-
-// POST handler for manual triggers
-export async function POST(request: NextRequest) {
-  try {
-    return await generateBlog(request);
-  } catch (error) {
-    console.error("Blog generation error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
-}
+// withCron adds auth + failure alerting to both entry points.
+export const GET = withCron("/api/blog/generate", generateBlog, {
+  allowAdminSecret: true,
+});
+export const POST = withCron("/api/blog/generate", generateBlog, {
+  allowAdminSecret: true,
+});

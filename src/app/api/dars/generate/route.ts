@@ -1,22 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { orchestrate } from "@/lib/agents/orchestrator";
-import { assertCronAuth } from "@/lib/cron-auth";
+import { withCron } from "@/lib/cron-auth";
 
 const CATEGORIES = ["quran", "hadith", "fiqh", "seerah", "dua"] as const;
 
-export async function GET(request: NextRequest) {
-  const denied = assertCronAuth(request);
-  if (denied) return denied;
+export const GET = withCron("/api/dars/generate", generateDars);
 
-  return generateDars();
-}
-
-export async function POST(request: NextRequest) {
-  const denied = assertCronAuth(request, { allowAdminSecret: true });
-  if (denied) return denied;
-
-  return generateDars();
-}
+export const POST = withCron("/api/dars/generate", generateDars, {
+  allowAdminSecret: true,
+});
 
 async function generateDars() {
   try {

@@ -3,15 +3,13 @@ import { getDb } from "@/lib/db";
 import { classRecordings } from "@/lib/db/schema";
 import { and, eq, lte } from "drizzle-orm";
 import { deleteFromStorage } from "@/lib/r2/client";
-import { assertCronAuth } from "@/lib/cron-auth";
+import { withCron } from "@/lib/cron-auth";
 
 /**
  * GET /api/recordings/cleanup — Vercel Cron: auto-delete expired recordings
  * Runs daily at midnight UTC (configured in vercel.json)
  */
-export async function GET(request: NextRequest) {
-  const denied = assertCronAuth(request);
-  if (denied) return denied;
+async function runRecordingsCleanup() {
 
   const db = getDb();
   const now = new Date();
@@ -65,3 +63,5 @@ export async function GET(request: NextRequest) {
     errors: errors.length > 0 ? errors : undefined,
   });
 }
+
+export const GET = withCron("/api/recordings/cleanup", runRecordingsCleanup);

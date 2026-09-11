@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendFailureAlert } from "@/lib/alerts";
 
 /**
  * Shared auth gate for cron-triggered routes.
@@ -37,4 +38,81 @@ export function assertCronAuth(
   }
 
   return null;
+}
+
+/** Did this request come from Vercel Cron rather than a random caller? */
+function isVercelCron(request: Request): boolean {
+  return (
+    request.headers.get("x-vercel-cron") !== null ||
+    (request.headers.get("user-agent") ?? "").startsWith("vercel-cron/")
+  );
+}
+
+/**
+ * Wraps a cron route handler with auth and failure alerting.
+ *
+ * Alerts on three things:
+ *  - a rejected request that Vercel Cron itself made (the silent-401 case: a
+ *    missing or rotated CRON_SECRET, which is how the dars job went unnoticed
+ *    from May to September),
+ *  - a thrown exception,
+ *  - a non-2xx response returned by the handler.
+ *
+ * A 401 from an ordinary caller is NOT alerted — otherwise anyone could fill
+ * the inbox by curling the endpoint.
+ */
+export function withCron(
+  name: string,
+  handler: (request: Request) => Promise<Response>,
+  options: { allowAdminSecret?: boolean } = {}
+) {
+  return async function cronRoute(request: Request): Promise<Response> {
+    const denied = assertCronAuth(request, options);
+    if (denied) {
+      if (isVercelCron(request)) {
+        await sendFailureAlert({
+          source: `cron:${name}`,
+          summary: `${name} rejected its own scheduled call (401)`,
+          error: new Error(
+            "Vercel Cron called this route but the Authorization header did not " +
+              "match CRON_SECRET. Check CRON_SECRET in the project environment."
+          ),
+          context: { route: name, status: 401 },
+        });
+      }
+      return denied;
+    }
+
+    try {
+      const response = await handler(request);
+
+      if (!response.ok) {
+        let bodyText = "";
+        try {
+          bodyText = (await response.clone().text()).slice(0, 500);
+        } catch {
+          // body already consumed or not readable — the status is enough
+        }
+        await sendFailureAlert({
+          source: `cron:${name}`,
+          summary: `${name} returned ${response.status}`,
+          error: new Error(bodyText || `HTTP ${response.status}`),
+          context: { route: name, status: response.status },
+        });
+      }
+
+      return response;
+    } catch (error) {
+      await sendFailureAlert({
+        source: `cron:${name}`,
+        summary: `${name} threw`,
+        error,
+        context: { route: name },
+      });
+      return NextResponse.json(
+        { error: "Internal server error" },
+        { status: 500 }
+      );
+    }
+  };
 }

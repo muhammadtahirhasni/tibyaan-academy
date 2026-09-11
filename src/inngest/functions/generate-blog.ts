@@ -1,4 +1,5 @@
 import { inngest } from "@/lib/inngest";
+import { inngestFailureHandler } from "@/lib/alerts";
 import { SITE_URL } from "@/lib/site-config";
 import { db } from "@/lib/db";
 import { blogPosts } from "@/lib/db/schema";
@@ -6,6 +7,7 @@ import { blogPosts } from "@/lib/db/schema";
 export const generateBlogArticle = inngest.createFunction(
   {
     id: "generate-blog-article",
+    onFailure: inngestFailureHandler("generate-blog-article"),
     triggers: [{ event: "blog/generate.requested" }],
   },
   async ({ event, step }: { event: { data: { keyword: string; country: string; language: string } }; step: any }) => {

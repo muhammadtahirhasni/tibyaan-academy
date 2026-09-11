@@ -1,4 +1,5 @@
 import { inngest } from "@/lib/inngest";
+import { inngestFailureHandler } from "@/lib/alerts";
 import {
   SITE_URL,
   SUPPORT_EMAIL,
@@ -13,6 +14,7 @@ const ADMIN_WHATSAPP = SITE_ADMIN_WHATSAPP;
 export const trialExpiryWorkflow = inngest.createFunction(
   {
     id: "trial-expiry-reminder",
+    onFailure: inngestFailureHandler("trial-expiry-reminder"),
     triggers: [{ event: "user/trial.started" }],
   },
   async ({ event, step }: { event: { data: { userId: string; userName: string } }; step: any }) => {
@@ -49,6 +51,7 @@ export const trialExpiryWorkflow = inngest.createFunction(
 export const welcomeWorkflow = inngest.createFunction(
   {
     id: "welcome-flow",
+    onFailure: inngestFailureHandler("welcome-flow"),
     triggers: [{ event: "user/signed.up" }],
   },
   async ({ event, step }: { event: { data: { userId: string; userName: string; whatsapp?: string } }; step: any }) => {
@@ -77,6 +80,7 @@ export const welcomeWorkflow = inngest.createFunction(
 export const inactivityWorkflow = inngest.createFunction(
   {
     id: "student-inactivity-alert",
+    onFailure: inngestFailureHandler("student-inactivity-alert"),
     triggers: [{ event: "user/login.detected" }],
   },
   async ({ event, step }: { event: { data: { userId: string; userName: string; whatsapp?: string } }; step: any }) => {
@@ -102,6 +106,7 @@ export const inactivityWorkflow = inngest.createFunction(
 export const apiLimitMonitor = inngest.createFunction(
   {
     id: "api-limit-monitor",
+    onFailure: inngestFailureHandler("api-limit-monitor"),
     triggers: [{ cron: "0 * * * *" }],
   },
   async ({ step }: { step: any }) => {
@@ -122,6 +127,7 @@ export const apiLimitMonitor = inngest.createFunction(
 export const weeklySeoreport = inngest.createFunction(
   {
     id: "weekly-seo-report",
+    onFailure: inngestFailureHandler("weekly-seo-report"),
     triggers: [{ cron: "0 4 * * 5" }], // Friday 4 AM UTC = 9 AM PKT
   },
   async ({ step }: { step: any }) => {
