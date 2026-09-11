@@ -152,6 +152,18 @@ export const agentTaskStatusEnum = pgEnum("agent_task_status", [
   "error",
 ]);
 
+/**
+ * Review state for generated content. Nothing reaches the public site until a
+ * human moves it to "published" — there is no timeout and no auto-publish path.
+ */
+export const contentStatusEnum = pgEnum("content_status", [
+  "draft",
+  "pending_review",
+  "published",
+  "rejected",
+  "needs_revision",
+]);
+
 export const pointActionEnum = pgEnum("point_action", [
   "sabaq_complete",
   "sabqi_review",
@@ -554,6 +566,12 @@ export const blogPosts = pgTable("blog_posts", {
   metaDescriptionEn: varchar("meta_description_en", { length: 300 }),
   metaDescriptionUr: varchar("meta_description_ur", { length: 300 }),
   keywords: text("keywords").array(),
+  status: contentStatusEnum("status").notNull().default("pending_review"),
+  reviewedBy: uuid("reviewed_by").references(() => users.id, {
+    onDelete: "set null",
+  }),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  reviewNote: text("review_note"),
   isPublished: boolean("is_published").notNull().default(false),
   publishedAt: timestamp("published_at", { withTimezone: true }),
   aiGenerated: boolean("ai_generated").notNull().default(false),
@@ -700,6 +718,11 @@ export const teacherVideos = pgTable("teacher_videos", {
     .references(() => users.id, { onDelete: "cascade" }),
   title: varchar("title", { length: 500 }).notNull(),
   description: text("description"),
+  // What is being recited — gives the page real indexable text and feeds VideoObject.
+  surahName: varchar("surah_name", { length: 120 }),
+  surahNumber: integer("surah_number"),
+  ayahFrom: integer("ayah_from"),
+  ayahTo: integer("ayah_to"),
   videoUrl: text("video_url").notNull(),
   thumbnailUrl: text("thumbnail_url"),
   duration: integer("duration"),
@@ -814,6 +837,12 @@ export const dailyDars = pgTable("daily_dars", {
   category: darsCategoryEnum("category").notNull(),
   sourceReference: text("source_reference"),
   generatedBy: varchar("generated_by", { length: 100 }),
+  status: contentStatusEnum("status").notNull().default("pending_review"),
+  reviewedBy: uuid("reviewed_by").references(() => users.id, {
+    onDelete: "set null",
+  }),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  reviewNote: text("review_note"),
   isPublished: boolean("is_published").notNull().default(false),
   publishedAt: timestamp("published_at", { withTimezone: true }),
   viewCount: integer("view_count").notNull().default(0),
@@ -1602,6 +1631,22 @@ export const scheduleRequestsRelations = relations(
     }),
   })
 );
+
+// ========================
+// 39. POST_COUNTRY_LINKS TABLE
+// ========================
+// One row per country link placed inside a generated post. The next post links
+// to whichever country page has gone longest without a row here, so all eight
+// get coverage over time instead of every post linking to all eight.
+export const postCountryLinks = pgTable("post_country_links", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  country: varchar("country", { length: 60 }).notNull(),
+  postType: varchar("post_type", { length: 20 }).notNull(), // "dars" | "blog"
+  postSlug: varchar("post_slug", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
 
 // ========================
 // 38. ENROLLMENT_REQUESTS TABLE (homepage form submissions)

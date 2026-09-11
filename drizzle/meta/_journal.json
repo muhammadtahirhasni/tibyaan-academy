@@ -15,6 +15,13 @@
       "when": 1778265530671,
       "tag": "0001_melted_zombie",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788906166898,
+      "tag": "0002_mean_agent_brand",
+      "breakpoints": true
     }
   ]
 }
