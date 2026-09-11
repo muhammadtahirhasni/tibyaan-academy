@@ -5,11 +5,14 @@ import { publishedBlogPosts, publishedDars } from "@/lib/content/publication";
 
 const locales = [...SITE_LOCALES];
 
+// A sitemap must list only URLs that resolve. "/blog" is deliberately absent:
+// next.config.ts permanently redirects /:locale/blog → /:locale/dars, so listing
+// it would advertise a 308. Individual /blog/[slug] articles are NOT redirected
+// and are still included below.
 const staticPages = [
   "",
   "/courses",
   "/pricing",
-  "/blog",
   "/dars",
   "/about",
   "/teachers",
