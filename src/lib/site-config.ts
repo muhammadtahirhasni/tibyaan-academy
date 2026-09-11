@@ -1,5 +1,23 @@
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+/**
+ * The canonical public origin — every canonical, hreflang, og:url, sitemap,
+ * robots, RSS, share and referral URL is built from it.
+ *
+ * There is deliberately NO silent fallback outside `next dev`. A preview built
+ * without NEXT_PUBLIC_SITE_URL once shipped "http://localhost:3000" in every
+ * canonical; a wrong domain in every page is worse than a visible failure.
+ * next.config.ts fails the production build first; this is the runtime guard.
+ */
+function resolveSiteUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (raw) return raw.replace(/\/+$/, "");
+  if (process.env.NODE_ENV === "development") return "http://localhost:3000";
+  throw new Error(
+    "NEXT_PUBLIC_SITE_URL is not set. It is required outside `next dev` — " +
+      "set it to the site's public origin, e.g. https://tibyaanacademy.com."
+  );
+}
+
+export const SITE_URL = resolveSiteUrl();
 
 export const SITE_NAME = "Tibyaan Academy";
 
