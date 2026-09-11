@@ -410,11 +410,11 @@
     "footnote": "تبيان أكاديمي — بيانات مايو 2026"
   },
   "pricingTeaser": {
-    "title": "Starting from just $38/month",
+    "title": "Starting from just $25/month",
     "plan1": "الخطة 1: معلم + ذكاء اصطناعي",
     "plan2": "الخطة 2: ذكاء اصطناعي فقط",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $33/mo",
+    "plan1Price": "From $33/mo",
+    "plan2Price": "From $25/mo",
     "viewPricing": "عرض الأسعار الكاملة"
   },
   "socialLinks": {
@@ -672,14 +672,14 @@
     "course": "الدورة",
     "plan1Monthly": "الخطة 1 (شهري)",
     "plan2Monthly": "الخطة 2 (شهري)",
-    "nazraPrice1": "$25",
-    "nazraPrice2": "$18",
-    "hifzPrice1": "$30",
-    "hifzPrice2": "$22",
-    "arabicPrice1": "$28",
-    "arabicPrice2": "$20",
-    "aalimPrice1": "$35",
-    "aalimPrice2": "$25",
+    "nazraPrice1": "$33",
+    "nazraPrice2": "$25",
+    "hifzPrice1": "$45",
+    "hifzPrice2": "$37",
+    "arabicPrice1": "$43",
+    "arabicPrice2": "$35",
+    "aalimPrice1": "$50",
+    "aalimPrice2": "$40",
     "familyTitle": "خصم العائلة",
     "familyDesc": "تدرسون معاً؟ احصلوا على خصومات لعدة طلاب!",
     "family2": "الطالب الثاني: خصم 20%",
@@ -1176,7 +1176,8 @@
     "joined": "الانضمام",
     "status": "الحالة",
     "noResults": "لا توجد نتائج",
-    "sidebarEnrollmentRequests": "طلبات التسجيل"
+    "sidebarEnrollmentRequests": "طلبات التسجيل",
+    "sidebarContentReview": "مراجعة المحتوى"
   },
   "notifications": {
     "title": "الإشعارات",
@@ -1322,7 +1323,7 @@
     "section4Title": "خصوصية الأطفال",
     "section4Content": "نأخذ خصوصية الأطفال على محمل الجد. بالنسبة للطلاب الذين تقل أعمارهم عن 13 عاماً، نطلب موافقة ولي الأمر قبل إنشاء الحساب. يمكن لأولياء الأمور مراجعة معلومات أطفالهم أو تعديلها أو حذفها في أي وقت عن طريق التواصل معنا.",
     "section5Title": "تواصل معنا",
-    "section5Content": "إذا كانت لديك أسئلة حول سياسة الخصوصية هذه أو بياناتك الشخصية، يرجى التواصل معنا على support@tibyaan.com. سنرد على استفسارك خلال 30 يوماً."
+    "section5Content": "إذا كانت لديك أسئلة حول سياسة الخصوصية هذه أو بياناتك الشخصية، يرجى التواصل معنا على academytibyaan@gmail.com. سنرد على استفسارك خلال 30 يوماً."
   },
   "termsPage": {
     "title": "الشروط والأحكام",
@@ -1576,6 +1577,6 @@
     "cancelTitle": "الإلغاء",
     "cancelContent": "يمكنك إلغاء اشتراكك في أي وقت.\nإذا تم الإلغاء قبل بدء دورة الفوترة التالية، فلن يتم محاسبتك.",
     "requestTitle": "طلب الاسترداد",
-    "requestContent": "البريد الإلكتروني: support@tibyaan.com\nواتساب: +92 312 9114002\nسنرد خلال 48 ساعة."
+    "requestContent": "البريد الإلكتروني: academytibyaan@gmail.com\nواتساب: +92 312 9114002\nسنرد خلال 48 ساعة."
   }
 }

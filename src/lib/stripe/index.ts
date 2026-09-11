@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { PRICING } from "@/lib/pricing";
 
 // Lazy initialization to avoid build-time errors when env vars are empty
 let _stripe: Stripe | null = null;
@@ -12,12 +13,14 @@ export function getStripe(): Stripe {
   return _stripe;
 }
 
-// Course pricing configuration (monthly USD)
+// Course pricing configuration (monthly USD).
+// Derived from the single pricing source of truth so billed amounts can never
+// drift from the amounts advertised on the site.
 export const COURSE_PRICES = {
-  nazra: { plan1: 25, plan2: 18 },
-  hifz:  { plan1: 30, plan2: 22 },
-  arabic:{ plan1: 28, plan2: 20 },
-  aalim: { plan1: 35, plan2: 25 },
+  nazra:  { plan1: PRICING.nazra.human_ai,  plan2: PRICING.nazra.ai_only },
+  hifz:   { plan1: PRICING.hifz.human_ai,   plan2: PRICING.hifz.ai_only },
+  arabic: { plan1: PRICING.arabic.human_ai, plan2: PRICING.arabic.ai_only },
+  aalim:  { plan1: PRICING.aalim.human_ai,  plan2: PRICING.aalim.ai_only },
 } as const;
 
 export type CourseType = keyof typeof COURSE_PRICES;

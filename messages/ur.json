@@ -410,11 +410,11 @@
     "footnote": "تبیان اکیڈمی — مئی 2026 کا ڈیٹا"
   },
   "pricingTeaser": {
-    "title": "Starting from just $38/month",
+    "title": "Starting from just $25/month",
     "plan1": "پلان 1: انسانی استاد + AI",
     "plan2": "پلان 2: صرف AI",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $33/mo",
+    "plan1Price": "From $33/mo",
+    "plan2Price": "From $25/mo",
     "viewPricing": "پوری قیمتیں دیکھیں"
   },
   "socialLinks": {
@@ -672,14 +672,14 @@
     "course": "کورس",
     "plan1Monthly": "پلان 1 (ماہانہ)",
     "plan2Monthly": "پلان 2 (ماہانہ)",
-    "nazraPrice1": "$25",
-    "nazraPrice2": "$18",
-    "hifzPrice1": "$30",
-    "hifzPrice2": "$22",
-    "arabicPrice1": "$28",
-    "arabicPrice2": "$20",
-    "aalimPrice1": "$35",
-    "aalimPrice2": "$25",
+    "nazraPrice1": "$33",
+    "nazraPrice2": "$25",
+    "hifzPrice1": "$45",
+    "hifzPrice2": "$37",
+    "arabicPrice1": "$43",
+    "arabicPrice2": "$35",
+    "aalimPrice1": "$50",
+    "aalimPrice2": "$40",
     "familyTitle": "فیملی ڈسکاؤنٹ",
     "familyDesc": "ساتھ پڑھ رہے ہیں؟ متعدد طلبا پر رعایت حاصل کریں!",
     "family2": "دوسرا طالب علم: 20% رعایت",
@@ -1165,7 +1165,8 @@
     "joined": "شمولیت",
     "status": "حیثیت",
     "noResults": "کوئی نتائج نہیں ملے",
-    "sidebarEnrollmentRequests": "داخلہ درخواستیں"
+    "sidebarEnrollmentRequests": "داخلہ درخواستیں",
+    "sidebarContentReview": "مواد کا جائزہ"
   },
   "notifications": {
     "title": "اطلاعات",
@@ -1311,7 +1312,7 @@
     "section4Title": "بچوں کی رازداری",
     "section4Content": "ہم بچوں کی رازداری کو بہت سنجیدگی سے لیتے ہیں۔ 13 سال سے کم عمر طلبا کے لیے ہم اکاؤنٹ بنانے سے پہلے والدین کی رضامندی ضروری قرار دیتے ہیں۔ والدین کسی بھی وقت ہم سے رابطہ کر کے اپنے بچے کی معلومات کا جائزہ لے سکتے ہیں، تبدیل کر سکتے ہیں، یا حذف کر سکتے ہیں۔",
     "section5Title": "ہم سے رابطہ کریں",
-    "section5Content": "اگر آپ کو اس پرائیویسی پالیسی یا اپنے ذاتی ڈیٹا کے بارے میں کوئی سوال ہے تو براہ کرم support@tibyaan.com پر ہم سے رابطہ کریں۔ ہم آپ کی استفسار کا 30 دن کے اندر جواب دیں گے۔"
+    "section5Content": "اگر آپ کو اس پرائیویسی پالیسی یا اپنے ذاتی ڈیٹا کے بارے میں کوئی سوال ہے تو براہ کرم academytibyaan@gmail.com پر ہم سے رابطہ کریں۔ ہم آپ کی استفسار کا 30 دن کے اندر جواب دیں گے۔"
   },
   "termsPage": {
     "title": "شرائط و ضوابط",
@@ -1565,6 +1566,6 @@
     "cancelTitle": "منسوخ کرنا",
     "cancelContent": "آپ کسی بھی وقت سبسکرپشن منسوخ کر سکتے ہیں۔\nاگلا بلنگ سائیکل شروع ہونے سے پہلے منسوخ کیا تو چارج نہیں ہوگا۔",
     "requestTitle": "واپسی کی درخواست",
-    "requestContent": "Email: support@tibyaan.com\nWhatsApp: +92 312 9114002\nہم 48 گھنٹوں میں جواب دیں گے۔"
+    "requestContent": "Email: academytibyaan@gmail.com\nWhatsApp: +92 312 9114002\nہم 48 گھنٹوں میں جواب دیں گے۔"
   }
 }

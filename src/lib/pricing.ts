@@ -42,3 +42,7 @@ export function getLowestPrice(): number {
 export function getLowestHumanAiPrice(): number {
   return Math.min(...Object.values(PRICING).map((p) => p.human_ai));
 }
+
+export function getHighestPrice(): number {
+  return Math.max(...Object.values(PRICING).map((p) => p.human_ai));
+}

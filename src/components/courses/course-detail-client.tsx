@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { PRICING } from "@/lib/pricing";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import { Button } from "@/components/ui/button";
@@ -53,8 +54,8 @@ const courseData: Record<
     color: "emerald",
     iconColor: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
     heroGradient: "from-emerald-600/10 via-background to-emerald-600/5",
-    plan1Price: "$33",
-    plan2Price: "$25",
+    plan1Price: `$${PRICING.nazra.human_ai}`,
+    plan2Price: `$${PRICING.nazra.ai_only}`,
     duration: "3-6 months",
   },
   "hifz-quran": {
@@ -63,8 +64,8 @@ const courseData: Record<
     color: "amber",
     iconColor: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
     heroGradient: "from-amber-600/10 via-background to-amber-600/5",
-    plan1Price: "$45",
-    plan2Price: "$37",
+    plan1Price: `$${PRICING.hifz.human_ai}`,
+    plan2Price: `$${PRICING.hifz.ai_only}`,
     duration: "2-4 years",
   },
   "arabic-language": {
@@ -73,8 +74,8 @@ const courseData: Record<
     color: "blue",
     iconColor: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
     heroGradient: "from-blue-600/10 via-background to-blue-600/5",
-    plan1Price: "$43",
-    plan2Price: "$35",
+    plan1Price: `$${PRICING.arabic.human_ai}`,
+    plan2Price: `$${PRICING.arabic.ai_only}`,
     duration: "6-12 months",
   },
   "aalim-course": {
@@ -83,8 +84,8 @@ const courseData: Record<
     color: "purple",
     iconColor: "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
     heroGradient: "from-purple-600/10 via-background to-purple-600/5",
-    plan1Price: "$50",
-    plan2Price: "$40",
+    plan1Price: `$${PRICING.aalim.human_ai}`,
+    plan2Price: `$${PRICING.aalim.ai_only}`,
     duration: "2-8 years",
   },
 };

@@ -410,11 +410,11 @@
     "footnote": "Tibyaan Academy — Data per Mei 2026"
   },
   "pricingTeaser": {
-    "title": "Starting from just $38/month",
+    "title": "Starting from just $25/month",
     "plan1": "Paket 1: Guru + AI",
     "plan2": "Paket 2: AI Saja",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $33/mo",
+    "plan1Price": "From $33/mo",
+    "plan2Price": "From $25/mo",
     "viewPricing": "Lihat Semua Harga"
   },
   "socialLinks": {
@@ -672,14 +672,14 @@
     "course": "Kursus",
     "plan1Monthly": "Paket 1 (Bulanan)",
     "plan2Monthly": "Paket 2 (Bulanan)",
-    "nazraPrice1": "$25",
-    "nazraPrice2": "$18",
-    "hifzPrice1": "$30",
-    "hifzPrice2": "$22",
-    "arabicPrice1": "$28",
-    "arabicPrice2": "$20",
-    "aalimPrice1": "$35",
-    "aalimPrice2": "$25",
+    "nazraPrice1": "$33",
+    "nazraPrice2": "$25",
+    "hifzPrice1": "$45",
+    "hifzPrice2": "$37",
+    "arabicPrice1": "$43",
+    "arabicPrice2": "$35",
+    "aalimPrice1": "$50",
+    "aalimPrice2": "$40",
     "familyTitle": "Diskon Keluarga",
     "familyDesc": "Belajar bersama? Dapatkan diskon untuk banyak siswa!",
     "family2": "Siswa ke-2: diskon 20%",
@@ -1176,7 +1176,8 @@
     "joined": "Bergabung",
     "status": "Status",
     "noResults": "Tidak ada hasil",
-    "sidebarEnrollmentRequests": "Permintaan Pendaftaran"
+    "sidebarEnrollmentRequests": "Permintaan Pendaftaran",
+    "sidebarContentReview": "Tinjauan Konten"
   },
   "notifications": {
     "title": "Notifikasi",
@@ -1322,7 +1323,7 @@
     "section4Title": "Privasi Anak-Anak",
     "section4Content": "Kami menangani privasi anak-anak dengan serius. Untuk siswa di bawah 13 tahun, kami memerlukan persetujuan orang tua sebelum pembuatan akun. Orang tua dapat meninjau, mengubah, atau menghapus informasi anak mereka kapan saja dengan menghubungi kami.",
     "section5Title": "Hubungi Kami",
-    "section5Content": "Jika Anda memiliki pertanyaan tentang kebijakan privasi ini atau data pribadi Anda, silakan hubungi kami di support@tibyaan.com. Kami akan merespons pertanyaan Anda dalam 30 hari."
+    "section5Content": "Jika Anda memiliki pertanyaan tentang kebijakan privasi ini atau data pribadi Anda, silakan hubungi kami di academytibyaan@gmail.com. Kami akan merespons pertanyaan Anda dalam 30 hari."
   },
   "termsPage": {
     "title": "Syarat & Ketentuan",
@@ -1576,6 +1577,6 @@
     "cancelTitle": "Pembatalan",
     "cancelContent": "Anda dapat membatalkan langganan kapan saja.\nJika dibatalkan sebelum siklus penagihan berikutnya dimulai, Anda tidak akan dikenai biaya.",
     "requestTitle": "Meminta Pengembalian Dana",
-    "requestContent": "Email: support@tibyaan.com\nWhatsApp: +92 312 9114002\nKami akan merespons dalam 48 jam."
+    "requestContent": "Email: academytibyaan@gmail.com\nWhatsApp: +92 312 9114002\nKami akan merespons dalam 48 jam."
   }
 }

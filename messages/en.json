@@ -410,11 +410,11 @@
     "footnote": "Tibyaan Academy — Data as of May 2026"
   },
   "pricingTeaser": {
-    "title": "Starting from just $38/month",
+    "title": "Starting from just $25/month",
     "plan1": "Plan 1: Human Teacher + AI",
     "plan2": "Plan 2: AI Only",
-    "plan1Price": "From $40/mo",
-    "plan2Price": "From $33/mo",
+    "plan1Price": "From $33/mo",
+    "plan2Price": "From $25/mo",
     "viewPricing": "View Full Pricing"
   },
   "socialLinks": {
@@ -672,14 +672,14 @@
     "course": "Course",
     "plan1Monthly": "Plan 1 (Monthly)",
     "plan2Monthly": "Plan 2 (Monthly)",
-    "nazraPrice1": "$25",
-    "nazraPrice2": "$18",
-    "hifzPrice1": "$30",
-    "hifzPrice2": "$22",
-    "arabicPrice1": "$28",
-    "arabicPrice2": "$20",
-    "aalimPrice1": "$35",
-    "aalimPrice2": "$25",
+    "nazraPrice1": "$33",
+    "nazraPrice2": "$25",
+    "hifzPrice1": "$45",
+    "hifzPrice2": "$37",
+    "arabicPrice1": "$43",
+    "arabicPrice2": "$35",
+    "aalimPrice1": "$50",
+    "aalimPrice2": "$40",
     "familyTitle": "Family Discount",
     "familyDesc": "Studying together? Get discounts for multiple students!",
     "family2": "2nd student: 20% off",
@@ -1165,7 +1165,8 @@
     "joined": "Joined",
     "status": "Status",
     "noResults": "No results found",
-    "sidebarEnrollmentRequests": "Enrollment Requests"
+    "sidebarEnrollmentRequests": "Enrollment Requests",
+    "sidebarContentReview": "Content Review"
   },
   "notifications": {
     "title": "Notifications",
@@ -1311,7 +1312,7 @@
     "section4Title": "Children's Privacy",
     "section4Content": "We take children's privacy seriously. For students under 13, we require parental consent before account creation. Parents can review, modify, or delete their child's information at any time by contacting us.",
     "section5Title": "Contact Us",
-    "section5Content": "If you have questions about this privacy policy or your personal data, please contact us at support@tibyaan.com. We will respond to your inquiry within 30 days."
+    "section5Content": "If you have questions about this privacy policy or your personal data, please contact us at academytibyaan@gmail.com. We will respond to your inquiry within 30 days."
   },
   "termsPage": {
     "title": "Terms & Conditions",
@@ -1565,6 +1566,6 @@
     "cancelTitle": "Cancellation",
     "cancelContent": "You can cancel your subscription at any time.\nIf cancelled before the next billing cycle starts, you will not be charged.",
     "requestTitle": "Requesting a Refund",
-    "requestContent": "Email: support@tibyaan.com\nWhatsApp: +92 312 9114002\nWe will respond within 48 hours."
+    "requestContent": "Email: academytibyaan@gmail.com\nWhatsApp: +92 312 9114002\nWe will respond within 48 hours."
   }
 }
