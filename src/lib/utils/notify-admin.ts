@@ -1,9 +1,10 @@
+import { MAIL_FROM, SUPPORT_EMAIL } from "@/lib/site-config";
 /**
  * Send admin email notification for important events
  * Uses Resend API for transactional emails
  */
 
-const ADMIN_EMAIL = "admin@tibyaan.com";
+const ADMIN_EMAIL = SUPPORT_EMAIL;
 
 export async function notifyAdminNewSignup({
   email,
@@ -28,7 +29,7 @@ export async function notifyAdminNewSignup({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Tibyaan Academy <notifications@tibyaan.com>",
+        from: MAIL_FROM,
         to: [ADMIN_EMAIL],
         subject: `New ${role} signup: ${fullName}`,
         html: `

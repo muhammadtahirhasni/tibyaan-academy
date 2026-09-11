@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getUpcomingReminders, getCircleEnrolledStudents } from "@/lib/db/dars-circle-queries";
+import { MAIL_FROM } from "@/lib/site-config";
 
 /**
  * GET /api/dars-circles/reminders — Cron endpoint
@@ -42,7 +43,7 @@ export async function GET() {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                from: "Tibyaan Academy <notifications@tibyaan.com>",
+                from: MAIL_FROM,
                 to: [student.email],
                 subject: `Reminder: "${circleTitle}" starts soon`,
                 html: `

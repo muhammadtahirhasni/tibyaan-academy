@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { MAIL_FROM } from "@/lib/site-config";
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
             Authorization: `Bearer ${resendKey}`,
           },
           body: JSON.stringify({
-            from: "Tibyaan Academy <noreply@tibyaan.com>",
+            from: MAIL_FROM,
             to: parentEmail,
             subject: `Daily Activity Report — ${studentName}`,
             html: `

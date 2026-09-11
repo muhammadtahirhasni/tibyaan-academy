@@ -2,6 +2,7 @@ import { getDb } from "@/lib/db";
 import { notifications } from "@/lib/db/schema";
 import { BaseAgent } from "./base-agent";
 import type { AgentName, AgentTask } from "./types";
+import { MAIL_FROM } from "@/lib/site-config";
 
 const NOTIFICATION_TEMPLATES: Record<
   string,
@@ -130,7 +131,7 @@ You format and route notifications to users in their preferred language.`;
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        from: "Tibyaan Academy <noreply@tibyaan.com>",
+        from: MAIL_FROM,
         to: [to],
         subject,
         html: `<div style="font-family:sans-serif;direction:${locale === "ur" || locale === "ar" ? "rtl" : "ltr"}">

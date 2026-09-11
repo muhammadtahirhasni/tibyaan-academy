@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
+import { trackEnrollmentSubmit } from "@/lib/analytics";
 
 const countries = [
   "Pakistan", "UK", "USA", "UAE", "Canada",
@@ -37,6 +38,7 @@ export function EnrollmentFormSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, locale }),
       });
+      trackEnrollmentSubmit(form.country, form.course);
       setSubmitted(true);
     } catch {
       // fail silently, still show success to not frustrate user

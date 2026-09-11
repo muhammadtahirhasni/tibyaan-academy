@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getDb } from "@/lib/db";
 import { notifications, users } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { MAIL_FROM } from "@/lib/site-config";
 
 export const dynamic = "force-dynamic";
 
@@ -63,7 +64,7 @@ export async function POST(request: NextRequest) {
 
         for (const targetUser of targetUsers) {
           await resend.emails.send({
-            from: "Tibyaan Academy <noreply@tibyaan.com>",
+            from: MAIL_FROM,
             to: targetUser.email,
             subject: titleEn,
             text: message,

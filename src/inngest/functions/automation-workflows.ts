@@ -1,7 +1,13 @@
 import { inngest } from "@/lib/inngest";
+import {
+  SITE_URL,
+  SUPPORT_EMAIL,
+  MAIL_FROM,
+  ADMIN_WHATSAPP as SITE_ADMIN_WHATSAPP,
+} from "@/lib/site-config";
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "academytibyaan@gmail.com";
-const ADMIN_WHATSAPP = process.env.ADMIN_WHATSAPP || "+923129114002";
+const ADMIN_EMAIL = SUPPORT_EMAIL;
+const ADMIN_WHATSAPP = SITE_ADMIN_WHATSAPP;
 
 // Workflow A — Trial Expiry Reminder
 export const trialExpiryWorkflow = inngest.createFunction(
@@ -49,7 +55,7 @@ export const welcomeWorkflow = inngest.createFunction(
     const { userId, userName, whatsapp } = event.data;
 
     await step.run("send-welcome", async () => {
-      const msg = `Assalamu Alaikum ${userName}! 🕌 Tibyaan Academy mein khush amdeed! https://tibyaan-academy.vercel.app/dashboard`;
+      const msg = `Assalamu Alaikum ${userName}! 🕌 Tibyaan Academy mein khush amdeed! ${SITE_URL}/dashboard`;
       if (whatsapp) await sendWhatsAppMessage(whatsapp, msg);
     });
 
@@ -60,7 +66,7 @@ export const welcomeWorkflow = inngest.createFunction(
 
     await step.sleep("wait-7-days", "7d");
     await step.run("send-review-request", async () => {
-      if (whatsapp) await sendWhatsAppMessage(whatsapp, `JazakAllah ${userName}! Review karein: https://tibyaan-academy.vercel.app/reviews`);
+      if (whatsapp) await sendWhatsAppMessage(whatsapp, `JazakAllah ${userName}! Review karein: ${SITE_URL}/reviews`);
     });
 
     return { userId, status: "welcome_flow_complete" };
@@ -120,7 +126,7 @@ export const weeklySeoreport = inngest.createFunction(
   },
   async ({ step }: { step: any }) => {
     await step.run("generate-seo-report", async () => {
-      const report = `Tibyaan Academy - Weekly SEO Report (${new Date().toDateString()})\n\nPlatform: tibyaan-academy.vercel.app\nStatus: Active`;
+      const report = `Tibyaan Academy - Weekly SEO Report (${new Date().toDateString()})\n\nPlatform: ${SITE_URL}\nStatus: Active`;
       await sendEmailNotification(ADMIN_EMAIL, "Weekly SEO Report — Tibyaan Academy", report);
     });
   }
@@ -146,7 +152,7 @@ async function sendEmailNotification(to: string, subject: string, body: string) 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: "Tibyaan Academy <noreply@tibyaan.com>", to, subject, text: body }),
+      body: JSON.stringify({ from: MAIL_FROM, to, subject, text: body }),
     });
     if (!response.ok) console.error("Email send failed:", await response.text());
   } catch (err) {
