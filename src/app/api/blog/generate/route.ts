@@ -170,8 +170,10 @@ async function generateBlog(request: NextRequest) {
     metaDescriptionEn: englishArticle.metaDescription,
     metaDescriptionUr: translations.ur.metaDescription,
     keywords: englishArticle.keywords,
-    isPublished: true,
-    publishedAt: new Date(),
+    // Generated content enters the review queue. Only a human approval in the
+    // admin review page moves it to 'published'.
+    status: "pending_review",
+    isPublished: false,
     aiGenerated: true,
   });
 
@@ -179,6 +181,7 @@ async function generateBlog(request: NextRequest) {
     success: true,
     slug,
     title: englishArticle.title,
+    status: "pending_review",
     languages: ["en", "ur", "ar", "fr", "id"],
   });
 }

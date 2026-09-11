@@ -2,6 +2,11 @@ import { getDb } from "@/lib/db";
 import { dailyDars, blogPosts } from "@/lib/db/schema";
 import { BaseAgent } from "./base-agent";
 import type { AgentName, AgentTask } from "./types";
+import {
+  internalLinkInstructions,
+  planInternalLinks,
+  recordCountryLink,
+} from "@/lib/content/internal-links";
 
 const DARS_CATEGORIES = ["quran", "hadith", "fiqh", "seerah", "dua"] as const;
 
@@ -61,11 +66,6 @@ interface DarsContent {
   sourceReference: string;
 }
 
-interface TranslatedDars {
-  title: string;
-  content: string;
-}
-
 interface BlogContent {
   slug: string;
   title: string;
@@ -119,6 +119,8 @@ Rules:
       dua: "Generate a Daily Dua post. Pick a Sunnah dua, provide Arabic text, transliteration, translation, and when to recite it. Include source.",
     };
 
+    const linkPlan = await planInternalLinks(category);
+
     const { text: englishJson, tokensUsed: genTokens } = await this.callClaude(
       [
         {
@@ -131,10 +133,10 @@ SEO Requirements:
 - PRIMARY TARGET COUNTRY TODAY: ${countrySeo.country}
   - Mention specifically: "${countrySeo.mention}"
   - Naturally weave in these keywords: ${countrySeo.keywords.join(", ")}
-- Also mention Muslim communities in UK, USA, UAE, Canada, Australia, Indonesia, Germany, and Saudi Arabia broadly
-- Use proper HTML heading hierarchy: one <h2>, 2-3 <h3>s as needed
-- End with a call to action linking to Tibyaan Academy courses
+- Use proper HTML heading hierarchy: start at <h2> (the page renders the title as the only <h1>), with 2-3 <h3>s as needed
 - Write content in proper HTML (not Markdown)
+
+${internalLinkInstructions(linkPlan)}
 
 Respond in JSON format (valid JSON only, no extra text):
 \`\`\`json
@@ -145,9 +147,9 @@ Respond in JSON format (valid JSON only, no extra text):
   "metaDescription": "SEO description — max 160 characters, include primary keyword and call to action",
   "primaryKeyword": "${countrySeo.keywords[0]}",
   "secondaryKeywords": ${JSON.stringify(countrySeo.keywords.slice(1))},
-  "targetCountries": ["UK", "USA", "UAE", "Canada", "Australia", "Indonesia", "Germany", "Saudi Arabia"],
+  "targetCountries": ["${countrySeo.country}"],
   "targetAudience": "Muslim parents, adult learners, children in ${countrySeo.country}",
-  "contentEn": "Full article content in proper HTML with H2, H3 tags, minimum 600 words. End with CTA linking to /en/courses/nazra-quran or relevant course.",
+  "contentEn": "Full article content in proper HTML starting at H2, minimum 600 words, containing exactly the two internal links specified above.",
   "sourceReference": "Source reference (e.g., Sahih Bukhari #123)"
 }
 \`\`\``,
@@ -160,60 +162,38 @@ Respond in JSON format (valid JSON only, no extra text):
     const today = new Date().toISOString().split("T")[0];
     const slug = `${today}-${parsed.slug}`;
 
-    const translations: Record<string, TranslatedDars> = {};
-    let totalTokens = genTokens;
-
-    for (const lang of ["ur", "ar", "fr", "id"] as const) {
-      const { text, tokensUsed } = await this.callClaude(
-        [
-          {
-            role: "user",
-            content: `Translate this Islamic educational content to ${lang === "ur" ? "Urdu" : lang === "ar" ? "Arabic" : lang === "fr" ? "French" : "Indonesian"}.
-Keep Quran/Hadith Arabic text as-is. Only translate explanatory text.
-
-Title: ${parsed.titleEn}
-Content: ${parsed.contentEn}
-
-Respond in JSON:
-\`\`\`json
-{ "title": "Translated title", "content": "Translated content in Markdown" }
-\`\`\``,
-          },
-        ],
-        { maxTokens: 2048 }
-      );
-      translations[lang] = this.parseJSON<TranslatedDars>(text);
-      totalTokens += tokensUsed;
-    }
-
+    // English only. Existing translated dars are left untouched; new dars are
+    // written in English and the other locales fall back to the English field.
     const db = getDb();
     await db.insert(dailyDars).values({
       slug,
       titleEn: parsed.titleEn,
-      titleUr: translations.ur.title,
-      titleAr: translations.ar.title,
-      titleFr: translations.fr.title,
-      titleId: translations.id.title,
       contentEn: parsed.contentEn,
-      contentUr: translations.ur.content,
-      contentAr: translations.ar.content,
-      contentFr: translations.fr.content,
-      contentId: translations.id.content,
       category: category as typeof DARS_CATEGORIES[number],
       sourceReference: parsed.sourceReference,
       generatedBy: this.name,
-      isPublished: true,
-      publishedAt: new Date(),
+      status: "pending_review",
+      isPublished: false,
     });
 
+    await recordCountryLink(linkPlan.country.country, "dars", slug);
+
     return {
-      output: { slug, category, titleEn: parsed.titleEn },
-      tokensUsed: totalTokens,
+      output: {
+        slug,
+        category,
+        titleEn: parsed.titleEn,
+        status: "pending_review",
+        countryLinked: linkPlan.country.country,
+      },
+      tokensUsed: genTokens,
     };
   }
 
   private async generateBlog(task: AgentTask) {
     const topic = task.input.topic as string;
+
+    const linkPlan = await planInternalLinks(topic);
 
     const { text: englishJson, tokensUsed: genTokens } = await this.callClaude(
       [
@@ -221,6 +201,10 @@ Respond in JSON:
           role: "user",
           content: `Write a comprehensive SEO-optimized blog article about: "${topic}"
 Target audience: Muslim parents and students interested in Islamic education online.
+
+Headings start at "##" — the page renders the title as the only H1.
+
+${internalLinkInstructions(linkPlan)}
 
 Respond in JSON:
 \`\`\`json
@@ -280,13 +264,20 @@ Respond in JSON:
       contentId: translations.id.content,
       metaDescriptionEn: parsed.metaDescription,
       keywords: parsed.keywords,
-      isPublished: true,
-      publishedAt: new Date(),
+      status: "pending_review",
+      isPublished: false,
       aiGenerated: true,
     });
 
+    await recordCountryLink(linkPlan.country.country, "blog", parsed.slug);
+
     return {
-      output: { slug: parsed.slug, titleEn: parsed.title },
+      output: {
+        slug: parsed.slug,
+        titleEn: parsed.title,
+        status: "pending_review",
+        countryLinked: linkPlan.country.country,
+      },
       tokensUsed: totalTokens,
     };
   }

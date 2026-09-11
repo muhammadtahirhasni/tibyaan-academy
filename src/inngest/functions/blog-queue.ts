@@ -30,10 +30,12 @@ export const blogQueueManager = inngest.createFunction(
   },
   async ({ step }: { step: any }) => {
     const queueCount = await step.run("check-queue", async () => {
+      // Only count items actually awaiting review — rejected drafts should not
+      // hold the queue open and stop new generation.
       const result = await db
         .select({ count: count() })
         .from(blogPosts)
-        .where(eq(blogPosts.isPublished, false));
+        .where(eq(blogPosts.status, "pending_review"));
       return result[0]?.count ?? 0;
     });
 
@@ -54,27 +56,7 @@ export const blogQueueManager = inngest.createFunction(
   }
 );
 
-export const blogPublisher = inngest.createFunction(
-  {
-    id: "blog-publisher",
-    triggers: [{ cron: "0 10 */2 * *" }],
-  },
-  async ({ step }: { step: any }) => {
-    await step.run("publish-next", async () => {
-      const unpublished = await db
-        .select({ id: blogPosts.id })
-        .from(blogPosts)
-        .where(eq(blogPosts.isPublished, false))
-        .limit(1);
-
-      if (unpublished.length > 0) {
-        await db
-          .update(blogPosts)
-          .set({ isPublished: true, publishedAt: new Date() })
-          .where(eq(blogPosts.id, unpublished[0].id));
-        return { published: unpublished[0].id };
-      }
-      return { published: null };
-    });
-  }
-);
+// NOTE: `blogPublisher` was removed deliberately. It ran every two days and
+// flipped the oldest unpublished post to live with no human involvement. There
+// is no auto-publish path any more — items sit in the review queue until a
+// human approves them in /admin/content-review, however long that takes.

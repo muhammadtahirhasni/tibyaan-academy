@@ -30,6 +30,7 @@ import {
   AlertCircle,
   RefreshCw,
   ClipboardList,
+  FileCheck,
 } from "lucide-react";
 import { NotificationBell } from "@/components/shared/notification-bell";
 
@@ -38,6 +39,7 @@ const navItems = [
   { key: "sidebarUsers", href: "/admin/users", icon: Users },
   { key: "sidebarCourses", href: "/admin/courses", icon: BookOpen },
   { key: "sidebarVideos", href: "/admin/videos", icon: Video },
+  { key: "sidebarContentReview", href: "/admin/content-review", icon: FileCheck },
   { key: "sidebarRecordings", href: "/admin/recordings", icon: Disc },
   { key: "sidebarClassRecordings", href: "/admin/class-recordings", icon: Video },
   { key: "sidebarMatches", href: "/admin/matches", icon: UserCheck },

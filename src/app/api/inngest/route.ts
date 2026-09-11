@@ -1,7 +1,7 @@
 import { serve } from "inngest/next";
 import { inngest } from "@/lib/inngest";
 import { generateBlogArticle } from "@/inngest/functions/generate-blog";
-import { blogQueueManager, blogPublisher } from "@/inngest/functions/blog-queue";
+import { blogQueueManager } from "@/inngest/functions/blog-queue";
 import {
   trialExpiryWorkflow,
   welcomeWorkflow,
@@ -15,7 +15,6 @@ export const { GET, POST, PUT } = serve({
   functions: [
     generateBlogArticle,
     blogQueueManager,
-    blogPublisher,
     trialExpiryWorkflow,
     welcomeWorkflow,
     inactivityWorkflow,

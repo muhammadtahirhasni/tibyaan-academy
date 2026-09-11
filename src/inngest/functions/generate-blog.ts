@@ -1,4 +1,5 @@
 import { inngest } from "@/lib/inngest";
+import { SITE_URL } from "@/lib/site-config";
 import { db } from "@/lib/db";
 import { blogPosts } from "@/lib/db/schema";
 
@@ -11,7 +12,7 @@ export const generateBlogArticle = inngest.createFunction(
     const { keyword, country, language } = event.data;
 
     const article = await step.run("generate-with-claude", async () => {
-      const prompt = `You are an SEO expert writing for Tibyaan Academy (https://tibyaan-academy.vercel.app),
+      const prompt = `You are an SEO expert writing for Tibyaan Academy (${SITE_URL}),
 an online Islamic education platform.
 
 Write a complete SEO blog article with these requirements:
@@ -74,6 +75,7 @@ Return ONLY valid JSON (no markdown, no code blocks):
         contentId: article.content,
         metaDescriptionEn: article.meta_description,
         keywords: article.keywords,
+        status: "pending_review",
         isPublished: false,
         aiGenerated: true,
       }).onConflictDoNothing();

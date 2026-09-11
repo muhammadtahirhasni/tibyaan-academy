@@ -1,62 +1,11 @@
+import { renderPostContent } from "@/lib/markdown";
+
 interface BlogContentProps {
   content: string;
 }
 
-function markdownToHtml(md: string): string {
-  let html = md;
-
-  // Headings
-  html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
-  html = html.replace(/^## (.+)$/gm, "<h2>$1</h2>");
-  html = html.replace(/^# (.+)$/gm, "<h1>$1</h1>");
-
-  // Bold and italic
-  html = html.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
-
-  // Blockquotes
-  html = html.replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>");
-
-  // Unordered lists
-  html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
-  html = html.replace(
-    /(<li>.*<\/li>\n?)+/g,
-    (match) => `<ul>${match}</ul>`
-  );
-
-  // Ordered lists
-  html = html.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
-
-  // Links
-  html = html.replace(
-    /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" rel="noopener noreferrer">$1</a>'
-  );
-
-  // Line breaks → paragraphs
-  html = html
-    .split(/\n\n+/)
-    .map((block) => {
-      const trimmed = block.trim();
-      if (!trimmed) return "";
-      if (
-        trimmed.startsWith("<h") ||
-        trimmed.startsWith("<ul") ||
-        trimmed.startsWith("<ol") ||
-        trimmed.startsWith("<blockquote")
-      ) {
-        return trimmed;
-      }
-      return `<p>${trimmed}</p>`;
-    })
-    .join("\n");
-
-  return html;
-}
-
 export function BlogContent({ content }: BlogContentProps) {
-  const html = markdownToHtml(content);
+  const html = renderPostContent(content);
 
   return (
     <div

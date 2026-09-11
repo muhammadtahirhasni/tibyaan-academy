@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { dailyDars } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
+import { publishedDars } from "@/lib/content/publication";
 
 /**
  * GET /api/dars/recent
@@ -28,7 +29,7 @@ export async function GET() {
         createdAt: dailyDars.createdAt,
       })
       .from(dailyDars)
-      .where(eq(dailyDars.isPublished, true))
+      .where(publishedDars())
       .orderBy(desc(dailyDars.createdAt))
       .limit(3);
 
