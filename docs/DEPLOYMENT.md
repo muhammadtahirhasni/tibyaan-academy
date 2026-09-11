@@ -4,7 +4,7 @@
 
 - GitHub repository with all code pushed
 - Accounts: Vercel, Neon, Supabase, Stripe, Anthropic, Resend, Sentry
-- Custom domain (tibyaan.com) with DNS access
+- Custom domain (tibyaanacademy.com) with DNS access
 
 ---
 
@@ -26,8 +26,8 @@
 1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
 2. Create a production project (or use existing)
 3. Go to **Authentication > URL Configuration**:
-   - Site URL: `https://tibyaan.com`
-   - Redirect URLs: `https://tibyaan.com/**`
+   - Site URL: `https://tibyaanacademy.com`
+   - Redirect URLs: `https://tibyaanacademy.com/**`
 4. Go to **Authentication > Providers** and configure OAuth providers if needed
 5. Copy: Project URL, Anon Key, Service Role Key
 
@@ -39,7 +39,7 @@
 2. Toggle from **Test mode** to **Live mode**
 3. Copy live API keys (publishable + secret)
 4. Create a production webhook:
-   - Endpoint: `https://tibyaan.com/api/webhooks/stripe`
+   - Endpoint: `https://tibyaanacademy.com/api/webhooks/stripe`
    - Events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`
 5. Copy the webhook signing secret
 
@@ -78,7 +78,7 @@ Add all variables from `.env.example` in Vercel dashboard (**Settings > Environm
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Production |
 | `STRIPE_WEBHOOK_SECRET` | Production |
 | `RESEND_API_KEY` | Production |
-| `NEXT_PUBLIC_APP_URL` | Production (`https://tibyaan.com`) |
+| `NEXT_PUBLIC_SITE_URL` | Production (`https://tibyaanacademy.com`) |
 | `CRON_SECRET` | Production |
 | `ADMIN_SECRET` | Production |
 | `SENTRY_DSN` | Production |
@@ -114,7 +114,7 @@ Add these DNS records at your domain registrar:
 | A | @ | `76.76.21.21` |
 | CNAME | www | `cname.vercel-dns.com` |
 
-Then in Vercel: **Settings > Domains > Add `tibyaan.com`** and `www.tibyaan.com`.
+Then in Vercel: **Settings > Domains > Add `tibyaanacademy.com`** and `www.tibyaanacademy.com`.
 
 ---
 
@@ -125,7 +125,7 @@ Then in Vercel: **Settings > Domains > Add `tibyaan.com`** and `www.tibyaan.com`
 1. Go to [UptimeRobot](https://uptimerobot.com)
 2. Add new monitor:
    - Type: HTTP(s)
-   - URL: `https://tibyaan.com/api/health`
+   - URL: `https://tibyaanacademy.com/api/health`
    - Monitoring interval: 5 minutes
 3. Add alert contacts (email / Slack / Telegram)
 
@@ -133,7 +133,7 @@ Then in Vercel: **Settings > Domains > Add `tibyaan.com`** and `www.tibyaan.com`
 
 ## Post-Deployment Checklist
 
-- [ ] Site loads at `https://tibyaan.com`
+- [ ] Site loads at `https://tibyaanacademy.com`
 - [ ] HTTPS redirect works (http → https)
 - [ ] All 5 locales load (`/en`, `/ur`, `/ar`, `/fr`, `/id`)
 - [ ] Supabase auth works (sign up, sign in, sign out)
@@ -143,10 +143,10 @@ Then in Vercel: **Settings > Domains > Add `tibyaan.com`** and `www.tibyaan.com`
 - [ ] Kids activities page loads
 - [ ] Stripe checkout completes (use test card first if needed)
 - [ ] Blog posts display correctly
-- [ ] Health endpoint returns 200: `curl https://tibyaan.com/api/health`
+- [ ] Health endpoint returns 200: `curl https://tibyaanacademy.com/api/health`
 - [ ] Cron job appears in Vercel dashboard
 - [ ] Sentry captures test error (check Sentry dashboard)
-- [ ] Security headers present: `curl -I https://tibyaan.com`
+- [ ] Security headers present: `curl -I https://tibyaanacademy.com`
 - [ ] UptimeRobot monitoring active
 
 ---
@@ -183,4 +183,4 @@ npm run lint           # Run ESLint
 - **CRON_SECRET**: Vercel uses this to authenticate cron job requests. Must match in both Vercel env vars and `vercel.json` cron config.
 - **DATABASE_URL**: Use the **pooled** connection string from Neon for serverless environments.
 - **STRIPE_WEBHOOK_SECRET**: Different for test vs live mode. Update when switching.
-- **NEXT_PUBLIC_APP_URL**: Must be `https://tibyaan.com` in production (no trailing slash).
+- **NEXT_PUBLIC_SITE_URL**: Must be `https://tibyaanacademy.com` in production (no trailing slash).

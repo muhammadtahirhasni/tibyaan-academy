@@ -5,9 +5,9 @@
 ## Overview
 
 **Tibyaan Academy** is a modern digital Madrasah (Islamic school) for Quran & Islamic Sciences.
-Live URL: `https://tibyaan.com` | Vercel region: `iad1` (US East)
+Live URL: `https://tibyaanacademy.com` | Vercel region: `iad1` (US East)
 
-**Core value proposition**: Live 1-on-1 teachers + AI Ustaz (tutor), affordable plans from $8/month, 5 languages, gamified learning for kids.
+**Core value proposition**: Live 1-on-1 teachers + AI Ustaz (tutor), affordable plans from $25/month, 5 languages, gamified learning for kids.
 
 ## Tech Stack
 
@@ -55,7 +55,7 @@ Defined in `.env.local` (see `.env.example`):
 | `RESEND_API_KEY` | Transactional email |
 | `CRON_SECRET` / `ADMIN_SECRET` | Cron job & admin API auth |
 | `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` | Error tracking |
-| `NEXT_PUBLIC_APP_URL` | App base URL |
+| `NEXT_PUBLIC_SITE_URL` | Canonical public base URL (metadata, canonicals, sitemap, robots, share links) |
 | `WHATSAPP_ACCESS_TOKEN` / `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp API |
 
 ## Project Structure
@@ -295,10 +295,10 @@ Custom CSS variables: `--color-islamic-green`, `--color-islamic-gold` + light/da
 
 | Course | Plan 1 (Human+AI) | Plan 2 (AI-only) |
 |---|---|---|
-| Nazra Quran | $25/mo | $18/mo |
-| Hifz Quran | $30/mo | $22/mo |
-| Arabic | $28/mo | $20/mo |
-| Aalim | $35/mo | $25/mo |
+| Nazra Quran | $33/mo | $25/mo |
+| Hifz Quran | $45/mo | $37/mo |
+| Arabic | $43/mo | $35/mo |
+| Aalim | $50/mo | $40/mo |
 
 - **Yearly**: 10-month price (2 months free)
 - **Family discount**: 2nd student 20% off, 3rd+ 30% off
