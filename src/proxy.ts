@@ -13,6 +13,21 @@ function getPathnameWithoutLocale(pathname: string): string {
   return pathname.replace(localePattern, "/");
 }
 
+/**
+ * Whole-segment prefix match.
+ *
+ * `startsWith("/teacher")` also matches `/teachers`, which put the public
+ * teacher directory behind the login wall. Matching on segment boundaries
+ * keeps `/teacher` and `/teacher/dashboard` protected while leaving
+ * `/teachers` and `/teachers/[id]` public.
+ */
+function isUnderSection(pathWithoutLocale: string, section: string): boolean {
+  return (
+    pathWithoutLocale === section ||
+    pathWithoutLocale.startsWith(`${section}/`)
+  );
+}
+
 function getLocaleFromPathname(pathname: string): string {
   const match = pathname.match(/^\/(ur|ar|en|fr|id)(\/|$)/);
   return match ? match[1] : "ur";
@@ -38,10 +53,10 @@ export async function proxy(request: NextRequest) {
   const locale = getLocaleFromPathname(request.nextUrl.pathname);
 
   const isProtectedRoute = protectedPaths.some((path) =>
-    pathWithoutLocale.startsWith(path)
+    isUnderSection(pathWithoutLocale, path)
   );
   const isAuthRoute = authPaths.some((path) =>
-    pathWithoutLocale.startsWith(path)
+    isUnderSection(pathWithoutLocale, path)
   );
 
   // Only check auth for protected or auth routes
@@ -57,13 +72,13 @@ export async function proxy(request: NextRequest) {
     }
 
     // Logged in trying to access auth pages (except onboarding) → redirect to role-based dashboard
-    if (user && isAuthRoute && !pathWithoutLocale.startsWith("/onboarding")) {
+    if (user && isAuthRoute && !isUnderSection(pathWithoutLocale, "/onboarding")) {
       const dashboardPath = getDashboardByRole(role, locale);
       return NextResponse.redirect(new URL(dashboardPath, request.url));
     }
 
     // Role-based access control for admin routes
-    if (user && pathWithoutLocale.startsWith("/admin")) {
+    if (user && isUnderSection(pathWithoutLocale, "/admin")) {
       if (role !== "admin") {
         const redirectPath = getDashboardByRole(role, locale);
         return NextResponse.redirect(new URL(redirectPath, request.url));
@@ -71,7 +86,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Role-based access control for teacher routes
-    if (user && pathWithoutLocale.startsWith("/teacher")) {
+    if (user && isUnderSection(pathWithoutLocale, "/teacher")) {
       if (role !== "teacher" && role !== "admin") {
         const redirectPath = getDashboardByRole(role, locale);
         return NextResponse.redirect(new URL(redirectPath, request.url));
@@ -79,7 +94,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Role-based access control for student routes
-    if (user && pathWithoutLocale.startsWith("/student")) {
+    if (user && isUnderSection(pathWithoutLocale, "/student")) {
       if (role !== "student" && role !== undefined) {
         // Admin/teacher shouldn't be on student routes
         if (role === "admin" || role === "teacher") {
