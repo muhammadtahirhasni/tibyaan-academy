@@ -9,7 +9,7 @@ import { randomUUID } from "crypto";
 /**
  * POST /api/videos/upload
  * Teacher requests a presigned upload URL for direct browser upload.
- * Body (JSON): { title, description?, contentType, fileName }
+ * Body (JSON): { title, description?, surahName?, surahNumber?, ayahFrom?, ayahTo?, duration?, contentType, fileName }
  * Returns: { signedUrl, videoId, key }
  */
 export async function POST(request: NextRequest) {
@@ -58,9 +58,24 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { title, description, contentType, fileName } = body as {
+    const {
+      title,
+      description,
+      surahName,
+      surahNumber,
+      ayahFrom,
+      ayahTo,
+      duration,
+      contentType,
+      fileName,
+    } = body as {
       title: string;
       description?: string;
+      surahName?: string;
+      surahNumber?: number;
+      ayahFrom?: number;
+      ayahTo?: number;
+      duration?: number;
       contentType: string;
       fileName: string;
     };
@@ -97,6 +112,11 @@ export async function POST(request: NextRequest) {
         teacherId: authUser.id,
         title: title.trim(),
         description: description?.trim() || null,
+        surahName: surahName?.trim() || null,
+        surahNumber: surahNumber ?? null,
+        ayahFrom: ayahFrom ?? null,
+        ayahTo: ayahTo ?? null,
+        duration: duration ?? null,
         videoUrl: publicUrl,
         status: "pending",
         isPublic: false,
