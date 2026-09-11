@@ -8,7 +8,7 @@ import {
   Video, Bot, Shield, Check, Clock, Layers, Percent
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { SITE_URL } from "@/lib/site-config";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
 
 const aboutMeta: Record<string, { title: string; description: string }> = {
   ur: { title: "ہمارے بارے میں — تبیان اکیڈمی", description: "تبیان اکیڈمی ایک جدید ڈیجیٹل مدرسہ ہے جو آن لائن قرآن، حفظ، عربی اور اسلامی تعلیم فراہم کرتا ہے۔" },
@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `${SITE_URL}/${locale}/about` },
-    openGraph: { title: meta.title, description: meta.description, url: `${SITE_URL}/${locale}/about` },
+    alternates: localeMetadataAlternates(locale, "/about"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/about") },
   };
 }
 

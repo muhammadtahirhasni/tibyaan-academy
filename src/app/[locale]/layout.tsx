@@ -9,14 +9,15 @@ import { PWAInstallPrompt } from "@/components/shared/pwa-install-prompt";
 import { ServiceWorkerRegistration } from "@/components/shared/sw-register";
 import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
 import { ExitIntentPopup } from "@/components/shared/exit-intent-popup";
+import { WhatsAppClickTracker } from "@/components/shared/whatsapp-click-tracker";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://tibyaan-academy.vercel.app";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
 
 const localeMetadata: Record<string, { title: string; description: string }> = {
   ur: {
     title: "تبیان اکیڈمی — آن لائن قرآن و اسلامی تعلیم",
     description:
-      "قرآن، حفظ، عربی اور اسلامی علوم آن لائن سیکھیں — لائیو اساتذہ + AI استاذ کے ساتھ۔ ماہانہ صرف $33 سے۔",
+      "قرآن، حفظ، عربی اور اسلامی علوم آن لائن سیکھیں — لائیو اساتذہ + AI استاذ کے ساتھ۔ ماہانہ صرف $25 سے۔",
   },
   ar: {
     title: "أكاديمية تبيان — تعليم القرآن والعلوم الإسلامية",
@@ -26,7 +27,7 @@ const localeMetadata: Record<string, { title: string; description: string }> = {
   en: {
     title: "Tibyaan Academy — Online Quran & Islamic Education",
     description:
-      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. Plans from $33/month.",
+      "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. Plans from $25/month.",
   },
   fr: {
     title: "Tibyaan Academy — Éducation Coranique et Islamique en Ligne",
@@ -36,7 +37,7 @@ const localeMetadata: Record<string, { title: string; description: string }> = {
   id: {
     title: "Tibyaan Academy — Pendidikan Quran & Islam Online",
     description:
-      "Belajar Quran, Hifz, Bahasa Arab & Ilmu Islam online dengan guru langsung + AI Ustaz. Mulai dari $33/bulan.",
+      "Belajar Quran, Hifz, Bahasa Arab & Ilmu Islam online dengan guru langsung + AI Ustaz. Mulai dari $25/bulan.",
   },
 };
 
@@ -46,24 +47,27 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const meta = localeMetadata[locale] || localeMetadata.en;
 
-  const languages: Record<string, string> = {};
-  for (const loc of routing.locales) {
-    languages[loc] = `${BASE_URL}/${loc}`;
+  // An unknown segment here is a 404 (e.g. /uk, whose real URL is /en/uk).
+  // Emitting a self-canonical and hreflang for it would tell Google the 404 is
+  // a real page, so return noindex metadata instead.
+  if (!hasLocale(routing.locales, locale)) {
+    return {
+      title: "Page Not Found",
+      robots: { index: false, follow: false },
+    };
   }
+
+  const meta = localeMetadata[locale] || localeMetadata.en;
 
   return {
     title: meta.title,
     description: meta.description,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-      languages,
-    },
+    alternates: localeMetadataAlternates(locale),
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `${BASE_URL}/${locale}`,
+      url: absoluteUrl(locale),
       locale: locale,
       alternateLocale: routing.locales.filter((l) => l !== locale),
     },
@@ -92,6 +96,7 @@ export default async function LocaleLayout({
     >
       <NextIntlClientProvider>
         {children}
+        <WhatsAppClickTracker />
         <PWAInstallPrompt />
         <FloatingWhatsApp />
         <ExitIntentPopup />

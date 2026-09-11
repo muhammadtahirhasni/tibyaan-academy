@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Copy, Check, Gift, Users, Calendar, Share2 } from "lucide-react";
+import { SITE_URL } from "@/lib/site-config";
 
 export function ReferralCard() {
   const t = useTranslations("referral");
@@ -23,7 +24,7 @@ export function ReferralCard() {
   }, []);
 
   const referralLink = data?.referralCode
-    ? `https://tibyaan.com/signup?ref=${data.referralCode}`
+    ? `${SITE_URL}/signup?ref=${data.referralCode}`
     : "";
 
   const handleCopy = () => {

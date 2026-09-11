@@ -8,7 +8,9 @@ import { Link } from "@/i18n/navigation";
 import { BookOpen } from "lucide-react";
 import { STATIC_BLOG_POSTS } from "@/lib/data/blog-seed";
 
-const BASE_URL = "https://tibyaan.com";
+import { SITE_URL as BASE_URL, localeMetadataAlternates } from "@/lib/site-config";
+import { contentToPlainText, truncateText } from "@/lib/markdown";
+import { publishedBlogPosts, publishedDars } from "@/lib/content/publication";
 
 type LocaleKey = "en" | "ur" | "ar" | "fr" | "id";
 
@@ -51,9 +53,7 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/blog`,
-    },
+    alternates: localeMetadataAlternates(locale, "/blog"),
     openGraph: {
       title: meta.title,
       description: meta.description,
@@ -101,15 +101,8 @@ function getExcerpt(post: BlogPost, locale: string): string {
     id: post.contentId,
   };
   const content = map[locale as LocaleKey] || post.contentEn || "";
-  // Strip markdown and take first 150 chars
-  const plain = content
-    .replace(/#{1,3}\s/g, "")
-    .replace(/\*\*(.+?)\*\*/g, "$1")
-    .replace(/\*(.+?)\*/g, "$1")
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/^>\s/gm, "")
-    .replace(/^-\s/gm, "");
-  return plain.slice(0, 150) + (plain.length > 150 ? "..." : "");
+  // Handles both Markdown and HTML sources — list mixes blog posts and dars.
+  return truncateText(contentToPlainText(content), 150);
 }
 
 export default async function BlogPage({
@@ -147,7 +140,7 @@ export default async function BlogPage({
         aiGenerated: blogPosts.aiGenerated,
       })
       .from(blogPosts)
-      .where(eq(blogPosts.isPublished, true))
+      .where(publishedBlogPosts())
       .orderBy(desc(blogPosts.publishedAt));
 
     // Fetch daily dars posts — same source as homepage DailyDarsSection
@@ -168,7 +161,7 @@ export default async function BlogPage({
         publishedAt: dailyDars.publishedAt,
       })
       .from(dailyDars)
-      .where(eq(dailyDars.isPublished, true))
+      .where(publishedDars())
       .orderBy(desc(dailyDars.publishedAt))
       .limit(20);
 

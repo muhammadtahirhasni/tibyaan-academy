@@ -2,7 +2,8 @@ import { getDb } from "@/lib/db";
 import { blogPosts } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 
-const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://tibyaan-academy.vercel.app";
+import { SITE_URL } from "@/lib/site-config";
+import { publishedBlogPosts } from "@/lib/content/publication";
 
 export async function GET() {
   try {
@@ -10,7 +11,7 @@ export async function GET() {
     const posts = await db
       .select()
       .from(blogPosts)
-      .where(eq(blogPosts.isPublished, true))
+      .where(publishedBlogPosts())
       .orderBy(desc(blogPosts.publishedAt))
       .limit(50);
 

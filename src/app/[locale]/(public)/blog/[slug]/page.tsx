@@ -16,7 +16,8 @@ import {
 } from "lucide-react";
 import { STATIC_BLOG_POSTS } from "@/lib/data/blog-seed";
 
-const BASE_URL = "https://tibyaan.com";
+import { SITE_URL as BASE_URL, localeMetadataAlternates } from "@/lib/site-config";
+import { publishedBlogPosts } from "@/lib/content/publication";
 
 type LocaleKey = "en" | "ur" | "ar" | "fr" | "id";
 
@@ -81,7 +82,7 @@ async function getPost(slug: string): Promise<BlogPostData | null> {
     const results = await db
       .select()
       .from(blogPosts)
-      .where(and(eq(blogPosts.slug, slug), eq(blogPosts.isPublished, true)))
+      .where(and(eq(blogPosts.slug, slug), publishedBlogPosts()))
       .limit(1);
 
     if (results[0]) return results[0];
@@ -130,19 +131,27 @@ export async function generateMetadata({
   const title = getTitle(post, locale);
   const description = getMetaDesc(post, locale);
 
+  // Rendered on demand by /api/og/blog/[slug] — also the plain URL to grab for
+  // manual posting.
+  const posterUrl = `${BASE_URL}/api/og/blog/${slug}`;
+
   return {
     title,
     description,
-    keywords: post.keywords ?? undefined,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/blog/${slug}`,
-    },
+    alternates: localeMetadataAlternates(locale, `/blog/${slug}`),
     openGraph: {
       title,
       description,
       url: `${BASE_URL}/${locale}/blog/${slug}`,
       type: "article",
       publishedTime: post.publishedAt?.toISOString(),
+      images: [{ url: posterUrl, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [posterUrl],
     },
   };
 }

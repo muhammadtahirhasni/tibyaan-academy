@@ -1,8 +1,34 @@
+import type { Metadata } from "next";
 import { getDb } from "@/lib/db";
 import { dailyDars } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { Link } from "@/i18n/navigation";
 import { BookOpen, Calendar } from "lucide-react";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
+import { publishedDars } from "@/lib/content/publication";
+
+const darsMeta: Record<string, { title: string; description: string }> = {
+  ur: { title: "روزانہ درس — قرآن، حدیث، فقہ و سیرت", description: "تبیان اکیڈمی کا روزانہ درس — قرآن، حدیث، فقہ، سیرت اور دعا۔" },
+  ar: { title: "الدرس اليومي — القرآن والحديث والفقه والسيرة", description: "الدرس اليومي من أكاديمية تبيان — القرآن والحديث والفقه والسيرة والدعاء." },
+  en: { title: "Daily Dars — Quran, Hadith, Fiqh & Seerah", description: "Daily Islamic lessons from Tibyaan Academy — Quran, Hadith, Fiqh, Seerah and Dua." },
+  fr: { title: "Dars Quotidien — Coran, Hadith, Fiqh et Sîra", description: "Leçons islamiques quotidiennes de Tibyaan Academy — Coran, Hadith, Fiqh, Sîra et Dua." },
+  id: { title: "Dars Harian — Quran, Hadits, Fiqih & Sirah", description: "Pelajaran Islam harian dari Tibyaan Academy — Quran, Hadits, Fiqih, Sirah dan Doa." },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = darsMeta[locale] || darsMeta.en;
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: localeMetadataAlternates(locale, "/dars"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/dars") },
+  };
+}
 
 const categoryColors: Record<string, string> = {
   quran: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300",
@@ -33,7 +59,7 @@ export default async function DarsListPage({
     posts = await db
       .select()
       .from(dailyDars)
-      .where(eq(dailyDars.isPublished, true))
+      .where(publishedDars())
       .orderBy(desc(dailyDars.publishedAt))
       .limit(50);
   } catch (err) {

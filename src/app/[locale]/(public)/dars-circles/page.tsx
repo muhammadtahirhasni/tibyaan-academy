@@ -1,8 +1,33 @@
+import type { Metadata } from "next";
 import { getDb } from "@/lib/db";
 import { darsCircles, users } from "@/lib/db/schema";
 import { eq, gte } from "drizzle-orm";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Calendar, Users, BookOpen } from "lucide-react";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
+
+const circlesMeta: Record<string, { title: string; description: string }> = {
+  ur: { title: "درس سرکل — لائیو گروپ کلاسز", description: "تبیان اکیڈمی کے لائیو درس سرکل میں شامل ہوں — گروپ اسلامی کلاسز۔" },
+  ar: { title: "حلقات الدرس — دروس جماعية مباشرة", description: "انضم إلى حلقات الدرس المباشرة في أكاديمية تبيان." },
+  en: { title: "Dars Circles — Live Group Study Classes", description: "Join Tibyaan Academy's live Dars Circles — group Islamic study sessions." },
+  fr: { title: "Cercles de Dars — Cours Collectifs en Direct", description: "Rejoignez les Cercles de Dars en direct de Tibyaan Academy." },
+  id: { title: "Lingkaran Dars — Kelas Kelompok Langsung", description: "Ikuti Lingkaran Dars langsung Tibyaan Academy — kajian Islam berkelompok." },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = circlesMeta[locale] || circlesMeta.en;
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: localeMetadataAlternates(locale, "/dars-circles"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/dars-circles") },
+  };
+}
 
 function getLocalizedTitle(
   circle: { titleUr: string | null; titleAr: string | null; titleEn: string | null; titleFr: string | null; titleId: string | null },

@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import { SITE_URL } from "@/lib/site-config";
 import { getDashboardPath } from "@/lib/auth/get-dashboard-path";
 import { getUserById } from "@/lib/db/queries";
 
@@ -49,7 +50,7 @@ export async function loginWithEmail(formData: FormData) {
 export async function loginWithGoogle(locale: string) {
   const supabase = await createClient();
   const headersList = await headers();
-  const origin = headersList.get("origin") || process.env.NEXT_PUBLIC_APP_URL;
+  const origin = headersList.get("origin") || SITE_URL;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",

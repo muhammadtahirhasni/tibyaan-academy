@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CountryPageTemplate } from "@/components/country/country-page-template";
 import { AUSTRALIA_PAGE } from "@/lib/data/country-pages";
-import { SITE_URL } from "@/lib/site-config";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
 
 const metaByLocale: Record<string, { title: string; description: string }> = {
   en: { title: "Quran Classes Online Australia | Tibyaan Academy", description: "Join Muslim families across Australia learning Quran online. 5-day free trial." },
@@ -14,7 +14,12 @@ const metaByLocale: Record<string, { title: string; description: string }> = {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const meta = metaByLocale[locale] || metaByLocale.en;
-  return { title: meta.title, description: meta.description, alternates: { canonical: `${SITE_URL}/${locale}/australia` } };
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: localeMetadataAlternates(locale, "/australia"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/australia") },
+  };
 }
 
 export default async function AustraliaLandingPage({ params }: { params: Promise<{ locale: string }> }) {

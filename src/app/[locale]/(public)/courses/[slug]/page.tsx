@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import CourseDetailClient from "@/components/courses/course-detail-client";
 
-const BASE_URL = "https://tibyaan.com";
+import { SITE_URL as BASE_URL, localeMetadataAlternates } from "@/lib/site-config";
+import { PRICING } from "@/lib/pricing";
 
 const courseInfo: Record<
   string,
@@ -23,10 +24,10 @@ const courseInfo: Record<
     nameFr: "Nazra Coran — Apprendre à lire le Coran",
     nameId: "Nazra Quran — Belajar Membaca Quran",
     descEn:
-      "Learn to read Quran with proper Tajweed from certified teachers + AI Ustaz. 3-6 months program. From $33/month.",
+      "Learn to read Quran with proper Tajweed from certified teachers + AI Ustaz. 3-6 months program. From $25/month.",
     descUr:
-      "تجوید کے ساتھ قرآن پاک پڑھنا سیکھیں۔ مستند اساتذہ + AI استاذ۔ 3-6 ماہ۔ $33 ماہانہ سے۔",
-    price: "33",
+      "تجوید کے ساتھ قرآن پاک پڑھنا سیکھیں۔ مستند اساتذہ + AI استاذ۔ 3-6 ماہ۔ $25 ماہانہ سے۔",
+    price: String(PRICING.nazra.ai_only),
   },
   "hifz-quran": {
     nameEn: "Hifz Quran — Memorize the Holy Quran",
@@ -38,7 +39,7 @@ const courseInfo: Record<
       "Complete Hifz program with daily Sabaq, Sabqi & Manzil tracking. AI-powered revision. From $37/month.",
     descUr:
       "مکمل حفظ پروگرام — روزانہ سبق، سبقی اور منزل ٹریکنگ۔ AI سے ریویژن۔ $37 ماہانہ سے۔",
-    price: "37",
+    price: String(PRICING.hifz.ai_only),
   },
   "arabic-language": {
     nameEn: "Arabic Language — Learn Arabic for Quran",
@@ -50,7 +51,7 @@ const courseInfo: Record<
       "Learn Arabic grammar, vocabulary & conversation with Quran focus. 6-12 months. From $35/month.",
     descUr:
       "عربی گرامر، الفاظ اور مکالمہ سیکھیں — قرآنی عربی پر فوکس۔ 6-12 ماہ۔ $35 ماہانہ سے۔",
-    price: "35",
+    price: String(PRICING.arabic.ai_only),
   },
   "aalim-course": {
     nameEn: "Aalim Course — Dars-e-Nizami Online",
@@ -62,7 +63,7 @@ const courseInfo: Record<
       "Complete Dars-e-Nizami / Aalim program online — Fiqh, Hadith, Tafseer & more. 2-8 years. From $40/month.",
     descUr:
       "مکمل درس نظامی / عالم کورس — فقہ، حدیث، تفسیر اور مزید۔ 2-8 سال۔ $40 ماہانہ سے۔",
-    price: "40",
+    price: String(PRICING.aalim.ai_only),
   },
 };
 
@@ -108,9 +109,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/courses/${slug}`,
-    },
+    alternates: localeMetadataAlternates(locale, `/courses/${slug}`),
     openGraph: {
       title,
       description,

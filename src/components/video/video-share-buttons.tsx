@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Share2, Copy, Check } from "lucide-react";
 import { useLocale } from "next-intl";
+import { SITE_URL } from "@/lib/site-config";
 
 interface VideoShareButtonsProps {
   videoId: string;
@@ -14,9 +15,7 @@ interface VideoShareButtonsProps {
 
 function buildShareUrl(videoId: string, locale: string): string {
   const base =
-    typeof window !== "undefined"
-      ? window.location.origin
-      : "https://tibyaan-academy.vercel.app";
+    typeof window !== "undefined" ? window.location.origin : SITE_URL;
   return `${base}/${locale}/videos/${videoId}`;
 }
 

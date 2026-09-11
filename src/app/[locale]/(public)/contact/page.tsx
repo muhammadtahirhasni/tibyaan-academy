@@ -4,7 +4,7 @@ import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 import { Mail, MessageSquare } from "lucide-react";
 
-const BASE_URL = "https://tibyaan.com";
+import { SITE_URL as BASE_URL, localeMetadataAlternates } from "@/lib/site-config";
 
 const contactMeta: Record<string, { title: string; description: string }> = {
   ur: {
@@ -40,7 +40,7 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `${BASE_URL}/${locale}/contact` },
+    alternates: localeMetadataAlternates(locale, "/contact"),
     openGraph: {
       title: meta.title,
       description: meta.description,

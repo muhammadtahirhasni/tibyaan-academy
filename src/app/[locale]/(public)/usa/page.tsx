@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CountryPageTemplate } from "@/components/country/country-page-template";
 import { USA_PAGE } from "@/lib/data/country-pages";
-import { SITE_URL } from "@/lib/site-config";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
 
 const metaByLocale: Record<string, { title: string; description: string }> = {
   en: {
@@ -36,9 +36,8 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
-    keywords: ["online Quran classes USA", "Quran tutor America", "Hifz program USA", "Islamic education USA"],
-    alternates: { canonical: `${SITE_URL}/${locale}/usa` },
-    openGraph: { title: meta.title, description: meta.description, url: `${SITE_URL}/${locale}/usa` },
+    alternates: localeMetadataAlternates(locale, "/usa"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/usa") },
   };
 }
 

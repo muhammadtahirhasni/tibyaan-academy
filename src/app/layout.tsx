@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,7 +14,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://tibyaan-academy.vercel.app";
+import { SITE_URL as BASE_URL } from "@/lib/site-config";
+import { getLowestPrice, getHighestPrice } from "@/lib/pricing";
+
 const rtlLocales = ["ur", "ar"];
 
 const organizationJsonLd = {
@@ -42,8 +45,8 @@ const organizationJsonLd = {
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
-    lowPrice: "8",
-    highPrice: "25",
+    lowPrice: String(getLowestPrice()),
+    highPrice: String(getHighestPrice()),
     offerCount: "8",
   },
 };
@@ -56,28 +59,6 @@ export const metadata: Metadata = {
   },
   description:
     "Learn Quran, Hifz, Arabic & Islamic Sciences online with live teachers + AI Ustaz. 5-day free trial. Available in UK, USA, UAE, Canada, Australia.",
-  keywords: [
-    "online Quran classes",
-    "learn Quran online",
-    "Hifz program online",
-    "Tajweed course",
-    "Arabic language course",
-    "Islamic education online",
-    "online madrasah",
-    "AI Quran tutor",
-    "Dars-e-Nizami online",
-    "Aalim course online",
-    "Quran classes UK",
-    "Quran classes USA",
-    "Quran classes UAE",
-    "Quran classes Canada",
-    "Quran classes Australia",
-    "online Quran classes Indonesia",
-    "islamische Kurse online",
-    "تعلم القرآن أونلاين",
-    "کوئٹین آنلاین قرآن",
-    "Tibyaan Academy",
-  ],
   authors: [{ name: "Tibyaan Academy" }],
   creator: "Tibyaan Academy",
   publisher: "Tibyaan Academy",
@@ -130,6 +111,8 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const dir = rtlLocales.includes(locale) ? "rtl" : "ltr";
+  // Measurement ID comes from the environment — never hard-coded.
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
     <html
@@ -156,6 +139,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
       </body>
+      {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
     </html>
   );
 }

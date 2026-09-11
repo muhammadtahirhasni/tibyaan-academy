@@ -1,8 +1,33 @@
+import type { Metadata } from "next";
 import { getDb } from "@/lib/db";
 import { users, teacherProfiles, teacherVideos } from "@/lib/db/schema";
 import { eq, and, sql, desc } from "drizzle-orm";
 import { Link } from "@/i18n/navigation";
 import { Users, Star, BookOpen, Play } from "lucide-react";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
+
+const teachersMeta: Record<string, { title: string; description: string }> = {
+  ur: { title: "ہمارے اساتذہ — مستند قرآن ٹیچرز", description: "تبیان اکیڈمی کے مستند اساتذہ سے ملیں — قرآن، حفظ، عربی اور اسلامی علوم۔" },
+  ar: { title: "أساتذتنا — معلمو القرآن المعتمدون", description: "تعرف على معلمي أكاديمية تبيان المعتمدين — القرآن والحفظ والعربية." },
+  en: { title: "Our Teachers — Certified Quran Tutors", description: "Meet Tibyaan Academy's certified teachers for Quran, Hifz, Arabic and Islamic sciences." },
+  fr: { title: "Nos Enseignants — Professeurs de Coran Certifiés", description: "Rencontrez les enseignants certifiés de Tibyaan Academy — Coran, Hifz et arabe." },
+  id: { title: "Guru Kami — Pengajar Quran Bersertifikat", description: "Kenali guru bersertifikat Tibyaan Academy — Quran, Hifz, Bahasa Arab." },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = teachersMeta[locale] || teachersMeta.en;
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: localeMetadataAlternates(locale, "/teachers"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/teachers") },
+  };
+}
 
 const pageTitle: Record<string, string> = {
   en: "Our Teachers",

@@ -6,8 +6,8 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Calendar, BookOpen } from "lucide-react";
 
-const BASE_URL = "https://tibyaan.com";
-const locales = ["ur", "ar", "en", "fr", "id"];
+import { SITE_URL as BASE_URL, localeMetadataAlternates } from "@/lib/site-config";
+import { renderPostContent, contentToPlainText, truncateText } from "@/lib/markdown";
 
 const categoryLabels: Record<string, Record<string, string>> = {
   quran: { en: "Quran", ur: "قرآن", ar: "القرآن", fr: "Coran", id: "Al-Quran" },
@@ -34,14 +34,8 @@ function getLocalizedField(
   return (post[key] as string) || (post[`${field}En`] as string) || "";
 }
 
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function truncate(text: string, max: number): string {
-  if (text.length <= max) return text;
-  return text.slice(0, max - 1) + "…";
-}
+const stripHtml = contentToPlainText;
+const truncate = truncateText;
 
 export async function generateMetadata({
   params,
@@ -64,7 +58,7 @@ export async function generateMetadata({
       .limit(1);
 
     const post = result[0];
-    if (post && post.isPublished) {
+    if (post && post.status === "published") {
       const rawTitle = getLocalizedField(
         post as unknown as Record<string, unknown>,
         "title",
@@ -83,22 +77,14 @@ export async function generateMetadata({
     // DB unavailable at build time
   }
 
-  const languages: Record<string, string> = {};
-  for (const loc of locales) {
-    languages[loc] = `${BASE_URL}/${loc}/dars/${slug}`;
-  }
-
-  const countryKeywords = ["UK", "USA", "UAE", "Canada", "Australia", "Germany", "Indonesia", "Saudi Arabia"];
-  const randomCountry = countryKeywords[Math.floor(Date.now() / 86400000) % countryKeywords.length];
+  // Rendered on demand by /api/og/dars/[slug] — also the plain URL to grab for
+  // manual posting.
+  const posterUrl = `${BASE_URL}/api/og/dars/${slug}`;
 
   return {
     title: title.includes("Tibyaan") ? title : `${title} | Tibyaan Academy`,
     description,
-    keywords: ["Islamic education", "Quran", "Tibyaan Academy", `online Islamic classes ${randomCountry}`],
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/dars/${slug}`,
-      languages,
-    },
+    alternates: localeMetadataAlternates(locale, `/dars/${slug}`),
     openGraph: {
       title,
       description,
@@ -106,11 +92,13 @@ export async function generateMetadata({
       type: "article",
       publishedTime: publishedAt?.toISOString(),
       siteName: "Tibyaan Academy",
+      images: [{ url: posterUrl, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [posterUrl],
     },
   };
 }
@@ -130,15 +118,14 @@ export default async function DarsDetailPage({
     .limit(1);
 
   const post = result[0];
-  if (!post || !post.isPublished) notFound();
+  if (!post || post.status !== "published") notFound();
 
   const title =
     getLocalizedField(post as unknown as Record<string, unknown>, "title", locale) || "Untitled";
   const content =
     getLocalizedField(post as unknown as Record<string, unknown>, "content", locale) || "";
 
-  const isHtml = /^<[a-zA-Z]/.test(content.trimStart());
-  const htmlContent = isHtml ? content : content.replace(/\n/g, "<br>");
+  const htmlContent = renderPostContent(content);
 
   const articleJsonLd = {
     "@context": "https://schema.org",

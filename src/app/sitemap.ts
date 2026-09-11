@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://tibyaan.com";
+import { SITE_URL as BASE_URL, SITE_LOCALES } from "@/lib/site-config";
+import { publishedBlogPosts, publishedDars } from "@/lib/content/publication";
 
-const locales = ["ur", "ar", "en", "fr", "id"];
+const locales = [...SITE_LOCALES];
 
 const staticPages = [
   "",
@@ -61,7 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const posts = await db
       .select({ slug: blogPosts.slug, publishedAt: blogPosts.publishedAt })
       .from(blogPosts)
-      .where(eq(blogPosts.isPublished, true));
+      .where(publishedBlogPosts());
 
     for (const post of posts) {
       for (const locale of locales) {
@@ -77,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const darsPosts = await db
       .select({ slug: dailyDars.slug, publishedAt: dailyDars.publishedAt })
       .from(dailyDars)
-      .where(eq(dailyDars.isPublished, true));
+      .where(publishedDars());
 
     for (const post of darsPosts) {
       for (const locale of locales) {

@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
 
-const BASE_URL = "https://tibyaan.com";
+import { SITE_URL as BASE_URL, localeMetadataAlternates } from "@/lib/site-config";
 
 const termsMeta: Record<string, { title: string; description: string }> = {
   ur: {
@@ -39,7 +39,7 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `${BASE_URL}/${locale}/terms` },
+    alternates: localeMetadataAlternates(locale, "/terms"),
     openGraph: {
       title: meta.title,
       description: meta.description,

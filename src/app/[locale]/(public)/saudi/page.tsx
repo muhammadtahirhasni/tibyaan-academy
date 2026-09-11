@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CountryPageTemplate } from "@/components/country/country-page-template";
 import { SAUDI_PAGE } from "@/lib/data/country-pages";
-import { SITE_URL } from "@/lib/site-config";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
 
 const metaByLocale: Record<string, { title: string; description: string }> = {
   en: { title: "تعلم القرآن أونلاين — المملكة العربية السعودية | Tibyaan Academy", description: "Join Muslim families across Saudi Arabia learning Quran online." },
@@ -14,7 +14,12 @@ const metaByLocale: Record<string, { title: string; description: string }> = {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const meta = metaByLocale[locale] || metaByLocale.en;
-  return { title: meta.title, description: meta.description, alternates: { canonical: `${SITE_URL}/${locale}/saudi` } };
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: localeMetadataAlternates(locale, "/saudi"),
+    openGraph: { title: meta.title, description: meta.description, url: absoluteUrl(locale, "/saudi") },
+  };
 }
 
 export default async function SaudiLandingPage({ params }: { params: Promise<{ locale: string }> }) {

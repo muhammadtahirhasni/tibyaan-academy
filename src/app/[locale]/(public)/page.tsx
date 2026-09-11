@@ -16,7 +16,7 @@ import { DashboardPreviewSection } from "@/components/homepage/dashboard-preview
 import { EnrollmentFormSection } from "@/components/homepage/enrollment-form-section";
 import { Footer } from "@/components/shared/footer";
 
-const BASE_URL = "https://tibyaan.com";
+import { localeMetadataAlternates, absoluteUrl } from "@/lib/site-config";
 
 const homeMeta: Record<string, { title: string; description: string }> = {
   ur: {
@@ -57,13 +57,11 @@ export async function generateMetadata({
   return {
     title: meta.title,
     description: meta.description,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-    },
+    alternates: localeMetadataAlternates(locale),
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `${BASE_URL}/${locale}`,
+      url: absoluteUrl(locale),
     },
   };
 }
@@ -80,7 +78,6 @@ export default function HomePage() {
         <HowItWorksSection />
         <DailyDarsSection />
         <TestimonialsSection />
-        <EnrollmentFormSection />
         <TrustSignalsSection />
         <DashboardPreviewSection />
         <PricingTeaserSection />
