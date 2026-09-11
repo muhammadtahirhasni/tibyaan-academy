@@ -1,28 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { orchestrate } from "@/lib/agents/orchestrator";
+import { assertCronAuth } from "@/lib/cron-auth";
 
 const CATEGORIES = ["quran", "hadith", "fiqh", "seerah", "dua"] as const;
 
 export async function GET(request: NextRequest) {
-  // Vercel Cron auth
-  const authHeader = request.headers.get("authorization");
-  const token = authHeader?.replace("Bearer ", "");
-
-  if (token !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = assertCronAuth(request);
+  if (denied) return denied;
 
   return generateDars();
 }
 
 export async function POST(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  const token = authHeader?.replace("Bearer ", "");
-  const validTokens = [process.env.CRON_SECRET, process.env.ADMIN_SECRET].filter(Boolean);
-
-  if (!token || !validTokens.includes(token)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = assertCronAuth(request, { allowAdminSecret: true });
+  if (denied) return denied;
 
   return generateDars();
 }

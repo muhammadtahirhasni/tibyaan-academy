@@ -3,19 +3,15 @@ import { getDb } from "@/lib/db";
 import { classRecordings } from "@/lib/db/schema";
 import { and, eq, lte } from "drizzle-orm";
 import { deleteFromStorage } from "@/lib/r2/client";
+import { assertCronAuth } from "@/lib/cron-auth";
 
 /**
  * GET /api/recordings/cleanup — Vercel Cron: auto-delete expired recordings
  * Runs daily at midnight UTC (configured in vercel.json)
  */
 export async function GET(request: NextRequest) {
-  // Vercel Cron auth
-  const authHeader = request.headers.get("authorization");
-  const token = authHeader?.replace("Bearer ", "");
-
-  if (token !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = assertCronAuth(request);
+  if (denied) return denied;
 
   const db = getDb();
   const now = new Date();

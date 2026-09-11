@@ -6,7 +6,7 @@ import {
   getBlogGenerationPrompt,
   getBlogTranslationPrompt,
 } from "@/lib/claude/blog";
-import { eq } from "drizzle-orm";
+import { assertCronAuth } from "@/lib/cron-auth";
 
 async function callClaude(
   apiKey: string,
@@ -60,18 +60,8 @@ function parseJsonResponse(text: string): Record<string, unknown> {
 }
 
 async function generateBlog(request: NextRequest) {
-  // Simple auth check — admin secret or cron secret
-  const authHeader = request.headers.get("authorization");
-  const cronSecret = process.env.CRON_SECRET;
-  const adminSecret = process.env.ADMIN_SECRET;
-
-  if (
-    !authHeader ||
-    (authHeader !== `Bearer ${cronSecret}` &&
-      authHeader !== `Bearer ${adminSecret}`)
-  ) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = assertCronAuth(request, { allowAdminSecret: true });
+  if (denied) return denied;
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {

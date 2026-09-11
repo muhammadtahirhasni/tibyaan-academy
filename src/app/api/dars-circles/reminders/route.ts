@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { getUpcomingReminders, getCircleEnrolledStudents } from "@/lib/db/dars-circle-queries";
 import { MAIL_FROM } from "@/lib/site-config";
+import { assertCronAuth } from "@/lib/cron-auth";
 
 /**
  * GET /api/dars-circles/reminders — Cron endpoint
  * Find circles starting within 1 hour and send email reminders to enrolled students.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const denied = assertCronAuth(request);
+  if (denied) return denied;
+
   try {
     const upcomingCircles = await getUpcomingReminders();
 

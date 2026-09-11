@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { sql } from "drizzle-orm";
+import { requireAdmin } from "@/lib/api-auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,7 +37,11 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// Admin only: this returns every lead — name, email, WhatsApp number, country.
 export async function GET() {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const db = getDb();
     const rows = await db.execute(sql`

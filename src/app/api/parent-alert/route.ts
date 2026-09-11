@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MAIL_FROM } from "@/lib/site-config";
+import { requireUser } from "@/lib/api-auth";
 
+// Signed-in only. Unauthenticated, this is an open mail relay: it sends to any
+// address given in the body, from our verified domain.
 export async function POST(request: NextRequest) {
+  const auth = await requireUser();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json();
     const {
